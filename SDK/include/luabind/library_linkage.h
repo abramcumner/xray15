@@ -9,6 +9,4 @@
 #ifndef LUABIND_LIBRARY_LINKAGE_H_INCLUDED
 #define LUABIND_LIBRARY_LINKAGE_H_INCLUDED
 
-#pragma comment(lib, "luabind.beta7-devel.rc4.lib" )
-
 #endif // #ifndef LUABIND_LIBRARY_LINKAGE_H_INCLUDED

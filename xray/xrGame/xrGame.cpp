@@ -15,9 +15,6 @@
 #include "lua/library_linkage.h"
 #include "luabind/library_linkage.h"
 
-#pragma comment(lib,"ode.lib")
-#pragma comment(lib,"xrEngine.lib")
-
 extern "C" {
 	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
 	{
@@ -38,17 +35,6 @@ extern "C" {
 
 void CCC_RegisterCommands	();
 void setup_luabind_allocator();
-
-#ifdef NDEBUG
-
-namespace std {
-	void terminate			()
-	{
-		abort				();
-	}
-} // namespace std
-
-#endif // #ifdef NDEBUG
 
 BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
 {

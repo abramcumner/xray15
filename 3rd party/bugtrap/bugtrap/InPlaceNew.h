@@ -14,6 +14,10 @@
 
 #pragma once
 
+#if _MSC_VER >= 1900
+#define _NEW_
+#endif
+
 #ifndef _NEW_
 
 /**

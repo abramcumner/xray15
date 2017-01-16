@@ -58,7 +58,7 @@ void test_draw	();
 void test_key	(int dik);
 
 #include "../Include/xrRender/Kinematics.h"
-
+#include <functional>
 
 using namespace InventoryUtilities;
 //BOOL		g_old_style_ui_hud			= FALSE;

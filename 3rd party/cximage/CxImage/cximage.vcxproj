@@ -111,11 +111,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0809</Culture>
     </ResourceCompile>
-    <Link>
-      <OutputFile>..\..\..\..\..\binaries\$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\..\..\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ProgramDatabaseFile>..\..\..\..\..\binaries\$(ProjectName).pdb</ProgramDatabaseFile>
-    </Link>
+    <Link />
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <OutputFile>.\Debug/cximage.bsc</OutputFile>
@@ -148,9 +144,8 @@
     <ClInclude Include="xmemfile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\xrCore\xrCore.vcxproj">
+    <ProjectReference Include="..\..\..\xray\xrCore\xrCore.vcxproj">
       <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\jpeg\Jpeg.vcxproj">
       <Project>{e6343391-13fc-479e-b62f-1c24f7b85408}</Project>

@@ -9,6 +9,4 @@
 #ifndef LUA_LIBRARY_LINKAGE_H_INCLUDED
 #define LUA_LIBRARY_LINKAGE_H_INCLUDED
 
-#pragma comment(lib, "lua.JIT.1.1.4.lib" )
-
 #endif // #ifndef LUA_LIBRARY_LINKAGE_H_INCLUDED
