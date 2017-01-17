@@ -208,24 +208,21 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer)
 {
 	if (!Device.b_is_Ready)			return;
-	if ((psDeviceFlags.test(rsFullscreen)) == 0) {
-		Log("~ Can't capture screen while in windowed mode...");
-		return;
-	}
 
 	// Create temp-surface
 	IDirect3DSurface9*	pFB;
 	D3DLOCKED_RECT		D;
 	HRESULT				hr;
-	hr					= HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth,Device.dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
-	if(hr!=D3D_OK)		return;
-
-	hr					= HW.pDevice->GetFrontBufferData(0,pFB);
-	if(hr!=D3D_OK)		return;
-
-	
-	hr					= pFB->LockRect(&D,0,D3DLOCK_NOSYSLOCK);
-	if(hr!=D3D_OK)		return;
+	hr = HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth, Device.dwHeight, HW.DevPP.BackBufferFormat,
+		D3DPOOL_SYSTEMMEM, &pFB, NULL);
+	if (FAILED(hr))
+		return;
+	hr = HW.pDevice->GetRenderTargetData(HW.pBaseRT, pFB);
+	if (FAILED(hr))
+		goto _end_;
+	hr = pFB->LockRect(&D, 0, D3DLOCK_NOSYSLOCK);
+	if (FAILED(hr))
+		goto _end_;
 
 	// Image processing (gamma-correct)
 	u32* pPixel		= (u32*)D.pBits;
