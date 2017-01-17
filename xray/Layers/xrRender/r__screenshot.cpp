@@ -346,6 +346,10 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 					format = D3DXIFF_TGA;
 					ext = ".tga";
 				}
+				else if (strstr(Core.Params, "-ss_png")) {
+					format = D3DXIFF_PNG;
+					ext = ".png";
+				}
 				sprintf_s			(buf,sizeof(buf),"ss_%s_%s_(%s)%s",Core.UserName,timestamp(t_stemp),(g_pGameLevel)?g_pGameLevel->name().c_str():"mainmenu", ext);
 				ID3DBlob*		saved	= 0;
 				CHK_DX				(D3DXSaveSurfaceToFileInMemory (&saved, format,pFB,0,0));
