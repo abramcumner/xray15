@@ -1,4 +1,4 @@
-[![Build status]()](https://ci.appveyor.com/project/abramcumner/xray15)
+[![Build status](https://ci.appveyor.com/api/projects/status/au84qs0smablpyh5?svg=true)](https://ci.appveyor.com/project/abramcumner/xray15)
 
 XRAY 1.5
 ========
