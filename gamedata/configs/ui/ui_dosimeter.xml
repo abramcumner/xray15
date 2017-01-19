@@ -1,0 +1,19 @@
+<w>
+	<dosimeter x="0" y="0" width="0.0576" height="0.029">
+		<wrk_area width="0.0576" height="0.029">
+			<auto_static width="0.0576" height="0.029" stretch="1">
+				<texture shader="hud\p3d">ui_temp_ad3_radar_glow</texture>
+			</auto_static>
+		</wrk_area>
+
+		<seg1 x = "0.010" y = "0.015" width="0.018" height="0.024" stretch="1" alignment="c">
+			<texture shader="hud\p3d">seg7_digit1</texture>
+		</seg1>
+		<seg2 x = "0.029" y = "0.015" width="0.018" height="0.024" stretch="1" alignment="c">
+			<texture shader="hud\p3d">seg7_digit4</texture>
+		</seg2>
+		<seg3 x = "0.048" y = "0.015" width="0.018" height="0.024" stretch="1" alignment="c">
+			<texture shader="hud\p3d">seg7_digit3</texture>
+		</seg3>
+	</dosimeter>
+</w>

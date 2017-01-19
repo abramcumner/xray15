@@ -1,0 +1,29 @@
+
+function init()
+	_G.spawn_in_inv = spawn_in_inv
+	_G.teleport = teleport
+	_G.spawn_new_devices = spawn_new_devices
+end
+
+function spawn_in_inv(section, quantity)
+	if quantity == nil then quantity = 1 end
+	for i = 1, quantity do
+		alife():create(section, db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id())
+	end
+end
+
+local places = {
+	["rad_field"] = vector():set(200, -35, -705),
+}
+
+function teleport(pos)
+	if type(pos) == "string" then
+		pos = places[pos]
+	end
+	db.actor:set_actor_position(pos)
+end
+
+function spawn_new_devices()
+	spawn_in_inv("compass")
+	spawn_in_inv("dosimeter")
+end

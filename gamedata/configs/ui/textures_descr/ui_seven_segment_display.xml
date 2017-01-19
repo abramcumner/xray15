@@ -1,0 +1,14 @@
+<w>
+	<file name="ui\ui_seven_segment_display">
+		<texture id="seg7_digit0" x="4"   y="2"   width="76" height="100" />
+		<texture id="seg7_digit1" x="80"  y="2"   width="76" height="100" />
+		<texture id="seg7_digit2" x="156" y="2"   width="76" height="100" />
+		<texture id="seg7_digit3" x="232" y="2"   width="76" height="100" />
+		<texture id="seg7_digit4" x="308" y="2"   width="76" height="100" />
+		<texture id="seg7_digit5" x="4"   y="102" width="76" height="100" />
+		<texture id="seg7_digit6" x="80"  y="102" width="76" height="100" />
+		<texture id="seg7_digit7" x="156" y="102" width="76" height="100" />
+		<texture id="seg7_digit8" x="232" y="102" width="76" height="100" />
+		<texture id="seg7_digit9" x="308" y="102" width="76" height="100" />	
+	</file>
+</w>
