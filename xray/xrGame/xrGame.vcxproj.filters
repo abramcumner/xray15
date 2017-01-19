@@ -7473,6 +7473,12 @@
     <ClInclude Include="ui\UIGameTutorial.h">
       <Filter>UI\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="objects\devices\Compass.h">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\devices\Dosimeter.h">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11122,6 +11128,12 @@
     </ClCompile>
     <ClCompile Include="ui\UIGameTutorialVideoItem.cpp">
       <Filter>UI\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\devices\Compass.cpp">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\devices\Dosimeter.cpp">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
