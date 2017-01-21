@@ -3,6 +3,7 @@ function init()
 	_G.spawn_in_inv = spawn_in_inv
 	_G.teleport = teleport
 	_G.spawn_new_devices = spawn_new_devices
+	log("console_funcs initialized")
 end
 
 function spawn_in_inv(section, quantity)
@@ -10,6 +11,7 @@ function spawn_in_inv(section, quantity)
 	for i = 1, quantity do
 		alife():create(section, db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), db.actor:id())
 	end
+	log("spawned "..section.."quan "..quantity)
 end
 
 local places = {
@@ -21,6 +23,7 @@ function teleport(pos)
 		pos = places[pos]
 	end
 	db.actor:set_actor_position(pos)
+	log(string.format("actor teleported in (%.3f, %.3f, %.3f)", pos.x, pos.y, pos.z))
 end
 
 function spawn_new_devices()
