@@ -291,18 +291,18 @@ void CScriptStorage::reinit	()
 int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType, LPCSTR caFormat, va_list marker)
 {
 #ifndef NO_XRGAME_SCRIPT_ENGINE
-#	ifdef DEBUG
-	if (!psAI_Flags.test(aiLua) && (tLuaMessageType != ScriptStorage::eLuaMessageTypeError))
-		return(0);
-#	endif
+//#	ifdef DEBUG
+//	if (!psAI_Flags.test(aiLua) && (tLuaMessageType != ScriptStorage::eLuaMessageTypeError))
+//		return(0);
+//#	endif
 #endif
 
 #ifndef PRINT_CALL_STACK
 	return		(0);
 #else // #ifdef PRINT_CALL_STACK
 #	ifndef NO_XRGAME_SCRIPT_ENGINE
-		if (!psAI_Flags.test(aiLua) && (tLuaMessageType != ScriptStorage::eLuaMessageTypeError))
-			return(0);
+		//if (!psAI_Flags.test(aiLua) && (tLuaMessageType != ScriptStorage::eLuaMessageTypeError))
+		//	return(0);
 #	endif // #ifndef NO_XRGAME_SCRIPT_ENGINE
 
 	LPCSTR		S = "", SS = "";
@@ -347,6 +347,10 @@ int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType
 		case ScriptStorage::eLuaMessageTypeHookTailReturn : {
 			S	= "[LUA][HOOK_TAIL_RETURN] ";
 			SS	= "[TAIL_RETURN] ";
+			break;
+		case ScriptStorage::eLuaMessageTypeUser:
+			S = "";
+			SS = "";
 			break;
 		}
 		default : NODEFAULT;

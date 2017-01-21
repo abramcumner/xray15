@@ -31,10 +31,10 @@ using namespace Script;
 
 int __cdecl Lua::LuaOut(Lua::ELuaMessageType tLuaMessageType, LPCSTR caFormat, ...)
 {
-#ifndef ENGINE_BUILD
-	if (!psAI_Flags.test(aiLua))
-		return(0);
-#endif
+//#ifndef ENGINE_BUILD
+//	if (!psAI_Flags.test(aiLua))
+//		return(0);
+//#endif
 
 	LPCSTR		S = "", SS = "";
 	LPSTR		S1;
