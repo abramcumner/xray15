@@ -218,6 +218,7 @@ public:
 	void					create_block			();
 	virtual void			w						( const void* ptr, u32 count )	;
 	virtual	void			send_and_clear			(  );
+	void flush() override {}
 };
 
 class XRLC_LIGHT_API INetFileBuffWriter:
