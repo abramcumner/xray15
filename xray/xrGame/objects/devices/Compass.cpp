@@ -23,7 +23,7 @@ void CCompass::shedule_Update(u32 dt)
 
 void CCompass::UpdateAf()
 {
-	ui().SetValue(0.0f, Fvector().set(0.0f, 0.0f, 2.0f));
+	ui().SetValue(0.0f, Fvector().set(0.0f, 0.0f, 1.0f));
 }
 
 void CCompass::CreateUI()
