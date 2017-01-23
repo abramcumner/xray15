@@ -11,13 +11,13 @@ static const float	max_distance		= source_offset*1.25f;
 static const float	sink_offset			= -(max_distance-source_offset);
 static const float	drop_length			= 5.f;
 static const float	drop_width			= 0.30f;
-static const float	drop_angle			= 3.0f;
-static const float	drop_max_angle		= deg2rad(10.f);
-static const float	drop_max_wind_vel	= 20.0f;
-static const float	drop_speed_min		= 40.f;
-static const float	drop_speed_max		= 80.f;
-
-const int	max_particles		= 1000;
+//static const float	drop_angle			= 3.0f;
+//static const float	drop_max_angle		= deg2rad(10.f);
+//static const float	drop_max_wind_vel	= 20.0f;
+//static const float	drop_speed_min		= 40.f;
+//static const float	drop_speed_max		= 80.f;
+//
+//const int	max_particles		= 1000;
 const int	particles_cache		= 400;
 const float particles_time		= .3f;
 
