@@ -286,7 +286,6 @@ IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
     if (desc.size<256*1024)	R = xr_new<CFileReader>			(fname);
     else			  		R = xr_new<CVirtualFileReader>	(fname);
     
-#ifdef DEBUG
 	if ( R && m_Flags.is(flBuildCopy|flReady) ){
 		string_path	cpy_name;
 		string_path	e_cpy_name;
@@ -340,7 +339,6 @@ IReader* CLocatorAPI::r_open	(LPCSTR path, LPCSTR _fname)
             }
 		}
 	}
-#endif // DEBUG
 	return R;
 }
 
