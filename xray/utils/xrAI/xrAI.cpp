@@ -35,8 +35,13 @@ static const char* h_str =
 	"-f<NAME>   == compile level in gamedata/levels/<NAME>/\n"
 	"-o         == modify build options\n"
 	"-s         == build game spawn data\n"
-	"\n"
-	"NOTE: The last key is required for any functionality\n";
+	"-silent    == suppress congratulation message\n"
+	"-verify\n"
+	"-out\n"
+	"-draft\n"
+	"-pure_covers\n"
+	"-start\n"
+	"-no_separator_check\n";
 
 void Help()
 {	MessageBox(0,h_str,"Command line options",MB_OK|MB_ICONINFORMATION); }
