@@ -106,8 +106,6 @@
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <MapFileName />
       <SubSystem>Windows</SubSystem>
-      <StackReserveSize>0</StackReserveSize>
-      <StackCommitSize>0</StackCommitSize>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>comctl32.lib;winmm.lib;MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
