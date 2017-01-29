@@ -11,6 +11,7 @@
 #include "xrface.h"
 #include "serialize.h"
 #include "ETextureParams.h"
+#include "xrLC_GlobalData.h"
 
 extern "C" bool __declspec(dllimport) __stdcall DXTCompress(LPCSTR out_name, u8* raw_data, u8* normal_map, u32 w, u32 h, u32 pitch, STextureParams* fmt, u32 depth);
 
@@ -153,7 +154,7 @@ void CLightmap::Save( LPCSTR path )
 		u32	pitch				= w*4;
 
 		STextureParams fmt;
-		fmt.fmt					= STextureParams::tfDXT5;
+		fmt.fmt = lc_global_data()->b_lmap_rgba() ? STextureParams::tfRGBA : STextureParams::tfDXT5;
 		fmt.flags.set			(STextureParams::flDitherColor,		FALSE);
 		fmt.flags.set			(STextureParams::flGenerateMipMaps,	FALSE);
 		fmt.flags.set			(STextureParams::flBinaryAlpha,		FALSE);
@@ -174,7 +175,7 @@ void CLightmap::Save( LPCSTR path )
 		BYTE*	raw_data		= LPBYTE(&*packed.begin());
 
 		STextureParams fmt;
-		fmt.fmt					= STextureParams::tfDXT5;
+		fmt.fmt = lc_global_data()->b_lmap_rgba() ? STextureParams::tfRGBA : STextureParams::tfDXT5;
 		fmt.flags.set			(STextureParams::flDitherColor,		FALSE);
 		fmt.flags.set			(STextureParams::flGenerateMipMaps,	FALSE);
 		fmt.flags.set			(STextureParams::flBinaryAlpha,		FALSE);

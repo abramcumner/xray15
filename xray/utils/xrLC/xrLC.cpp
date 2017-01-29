@@ -23,14 +23,15 @@ extern volatile BOOL bClose;
 
 static const char* h_str = 
 	"The following keys are supported / required:\n"
-	"-? or -h	== this help\n"
-	"-o			== modify build options\n"
-	"-nosun		== disable sun-lighting\n"
-	"-norgb			== disable common lightmap calculating\n"
-	"-nolmaps		== disable lightmaps calculating\n"
-	"-skipinvalid	== skip crash if invalid faces exists\n"
-	"-lmap_quality	== lightmap quality\n"
-	"-f<NAME>	== compile level in GameData\\Levels\\<NAME>\\\n"
+	"-? or -h      == this help\n"
+	"-o            == modify build options\n"
+	"-nosun        == disable sun-lighting\n"
+	"-norgb        == disable common lightmap calculating\n"
+	"-nolmaps      == disable lightmaps calculating\n"
+	"-skipinvalid  == skip crash if invalid faces exists\n"
+	"-lmap_quality == lightmap quality\n"
+	"-lmap_rgba    == save lightmaps with lossless format\n"
+	"-f<NAME>      == compile level in GameData\\Levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
 
@@ -103,9 +104,10 @@ void Startup(LPSTR     lpCmdLine)
 	VERIFY( lc_global_data() );
 	lc_global_data()->b_nosun_set						( !!strstr(cmd,"-nosun") );
 	//if (strstr(cmd,"-nosun"))							b_nosun			= TRUE;
-	lc_global_data()->b_norgb_set(!!strstr(cmd, "-norgb"));
-	lc_global_data()->b_no_lmaps_set(!!strstr(cmd, "-nolmaps"));
-	lc_global_data()->b_skip_invalid_set(!!strstr(cmd, "-skipinvalid"));
+	lc_global_data()->b_norgb_set(strstr(cmd, "-norgb") != nullptr);
+	lc_global_data()->b_no_lmaps_set(strstr(cmd, "-nolmaps") != nullptr);
+	lc_global_data()->b_skip_invalid_set(strstr(cmd, "-skipinvalid") != nullptr);
+	lc_global_data()->b_lmap_rgba_set(strstr(cmd, "-lmap_rgba") != nullptr);
 	
 	// Give a LOG-thread a chance to startup
 	//_set_sbh_threshold(1920);
