@@ -14,6 +14,7 @@ static const char* h_str =
 	"-? or -h   == this help\n"
 	"-o         == modify build options\n"
 	"-norgb     == disable common lightmap calculating\n"
+	"-nosun     == disable sun-lighting\n"
 	"-f<NAME>   == compile level in gamedata\\levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
@@ -76,6 +77,7 @@ void Startup(LPSTR     lpCmdLine)
 	if (strstr(cmd,"-f")==0)							{ Help(); return; }
 	if (strstr(cmd,"-o"))								bModifyOptions = TRUE;
 	if (strstr(cmd, "-norgb"))							gl_data.b_norgb = true;
+	if (strstr(cmd, "-nosun"))							gl_data.b_nosun = true;
 
 	// Give a LOG-thread a chance to startup
 	InitCommonControls	();

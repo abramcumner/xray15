@@ -29,8 +29,9 @@ struct global_claculation_data
 	xr_vector<b_rc_face>			g_rc_faces;
 
 	bool							b_norgb;
+	bool							b_nosun;
 ///////////////////////////////////////////////////////////////////
-			global_claculation_data		(): g_shaders_xrlc( 0 ), b_norgb(false) {}
+			global_claculation_data		(): g_shaders_xrlc( 0 ), b_norgb(false), b_nosun(false) {}
 	void	xrLoad						( );
 };
 extern global_claculation_data	gl_data;

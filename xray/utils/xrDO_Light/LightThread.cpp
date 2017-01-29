@@ -365,6 +365,8 @@ void	LightThread::	Execute()
 						u32 flags = 0;
 						if (gl_data.b_norgb)
 							flags |= LP_dont_rgb;
+						if (gl_data.b_nosun)
+							flags |= LP_dont_sun;
 						LightPoint(&DB, amount, P, t_n, Selected, flags);
 						count			+= 1;
 					}
