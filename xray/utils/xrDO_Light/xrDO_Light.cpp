@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "process.h"
+#include "global_calculation_data.h"
 
 extern void	xrCompiler			();
 extern void logThread			(void *dummy);
@@ -10,9 +11,10 @@ extern volatile BOOL bClose;
 
 static const char* h_str = 
 	"The following keys are supported / required:\n"
-	"-? or -h	== this help\n"
-	"-f<NAME>	== compile level in gamedata\\levels\\<NAME>\\\n"
-	"-o			== modify build options\n"
+	"-? or -h   == this help\n"
+	"-o         == modify build options\n"
+	"-norgb     == disable common lightmap calculating\n"
+	"-f<NAME>   == compile level in gamedata\\levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
 
@@ -73,6 +75,7 @@ void Startup(LPSTR     lpCmdLine)
 	if (strstr(cmd,"-?") || strstr(cmd,"-h"))			{ Help(); return; }
 	if (strstr(cmd,"-f")==0)							{ Help(); return; }
 	if (strstr(cmd,"-o"))								bModifyOptions = TRUE;
+	if (strstr(cmd, "-norgb"))							gl_data.b_norgb = true;
 
 	// Give a LOG-thread a chance to startup
 	InitCommonControls	();

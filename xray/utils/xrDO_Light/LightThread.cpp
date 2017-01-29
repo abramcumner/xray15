@@ -362,7 +362,10 @@ void	LightThread::	Execute()
 						if (P.y<BB.min.y) continue;
 						
 						// light point
-						LightPoint		(&DB,amount,P,t_n,Selected,0);
+						u32 flags = 0;
+						if (gl_data.b_norgb)
+							flags |= LP_dont_rgb;
+						LightPoint(&DB, amount, P, t_n, Selected, flags);
 						count			+= 1;
 					}
 				}
