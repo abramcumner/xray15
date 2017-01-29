@@ -26,6 +26,10 @@ static const char* h_str =
 	"-? or -h	== this help\n"
 	"-o			== modify build options\n"
 	"-nosun		== disable sun-lighting\n"
+	"-norgb			== disable common lightmap calculating\n"
+	"-nolmaps		== disable lightmaps calculating\n"
+	"-skipinvalid	== skip crash if invalid faces exists\n"
+	"-lmap_quality	== lightmap quality\n"
 	"-f<NAME>	== compile level in GameData\\Levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
@@ -99,6 +103,9 @@ void Startup(LPSTR     lpCmdLine)
 	VERIFY( lc_global_data() );
 	lc_global_data()->b_nosun_set						( !!strstr(cmd,"-nosun") );
 	//if (strstr(cmd,"-nosun"))							b_nosun			= TRUE;
+	lc_global_data()->b_norgb_set(!!strstr(cmd, "-norgb"));
+	lc_global_data()->b_no_lmaps_set(!!strstr(cmd, "-nolmaps"));
+	lc_global_data()->b_skip_invalid_set(!!strstr(cmd, "-skipinvalid"));
 	
 	// Give a LOG-thread a chance to startup
 	//_set_sbh_threshold(1920);
@@ -148,6 +155,12 @@ void Startup(LPSTR     lpCmdLine)
 	// Header
 	b_params				Params;
 	F->r_chunk			(EB_Parameters,&Params);
+
+	const char* quality = strstr(cmd, "-lmap_quality ");
+	if (quality) {
+		int sz = xr_strlen("-lmap_quality ");
+		sscanf(quality + sz, "%f", &Params.m_lm_pixels_per_meter);
+	}
 
 	// Show options if needed
 	if (bModifyOptions)		

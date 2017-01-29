@@ -92,3 +92,5 @@ typedef  vector_serialize< t_write<CDeflector> >	twrite_deflectors;
 
 extern	tread_deflectors	*read_deflectors	;
 extern	twrite_deflectors	*write_deflectors	;
+
+u32 XRLC_LIGHT_API global_light_flags();

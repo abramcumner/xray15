@@ -137,7 +137,7 @@ public:
 								wP.from_bary(V1->P,V2->P,V3->P,B);
 								wN.from_bary(V1->N,V2->N,V3->N,B);
 								wN.normalize();
-								LightPoint	(&DB, inlc_global_data()->RCAST_Model(), C, wP, wN, inlc_global_data()->L_static(), (inlc_global_data()->b_nosun()?LP_dont_sun:0), F);
+								LightPoint	(&DB, inlc_global_data()->RCAST_Model(), C, wP, wN, inlc_global_data()->L_static(), 0 | global_light_flags(), F);
 								Fcount		++;
 							}
 						}

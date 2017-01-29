@@ -38,10 +38,14 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		CDB::MODEL*						_RCAST_Model;
 		bool							_b_nosun;
 		bool							_gl_linear;
+		bool							_b_norgb;
+		bool							_b_no_lmaps;
+		bool							_b_skip_invalid;
 public:
 
 public:
-									xrLC_GlobalData	():_RCAST_Model (0), _b_nosun(false),_gl_linear(false){}
+									xrLC_GlobalData	():_RCAST_Model (0), _b_nosun(false),_gl_linear(false),
+										_b_norgb(false), _b_no_lmaps(false), _b_skip_invalid(false){}
 									~xrLC_GlobalData();
 		IC xr_vector<b_BuildTexture>& textures		()		{	return _textures; }
 		IC xr_vector<CLightmap*>	& lightmaps		()		{	return _g_lightmaps; }
@@ -76,6 +80,13 @@ IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						create_read_faces()		;
 		void						destroy_read_faces()	;
 		void						gl_mesh_clear	()		;
+
+		bool						b_norgb()				{ return _b_norgb; }
+		void						b_norgb_set(bool v)		{ _b_norgb = v; }
+		bool						b_no_lmaps()			{ return _b_no_lmaps; }
+		void						b_no_lmaps_set(bool v)	{ _b_no_lmaps = v; }
+		bool						b_skip_invalid()		{ return _b_skip_invalid; }
+		void						b_skip_invalid_set(bool v){ _b_skip_invalid = v; }
 private:
 //std::pair<u32,u32>					get_id		( const _face * v ) const;
 //std::pair<u32,u32>					get_id		( const _vertex * v ) const;

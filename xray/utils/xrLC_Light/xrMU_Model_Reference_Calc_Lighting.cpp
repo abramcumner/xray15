@@ -7,6 +7,7 @@
 #include "fitter.h"
 #include "xrface.h"
 #include "xrLC_GlobalData.h"
+
 template <typename T, typename T2>
 T	simple_optimize				(xr_vector<T>& A, xr_vector<T>& B, T2& _scale, T2& _bias)
 {
@@ -99,10 +100,11 @@ void	o_test (int iA, int iB, int count, base_color* A, base_color* B, float& C, 
 	simple_optimize		(_A,_B,C,D);
 }
 
+u32 global_light_flags();
 
 void xrMU_Reference::calc_lighting	()
 {
-	model->calc_lighting		(color,xform,inlc_global_data()->RCAST_Model(),inlc_global_data()->L_static(),(inlc_global_data()->b_nosun()?LP_dont_sun:0)|LP_DEFAULT);
+	model->calc_lighting		(color,xform,inlc_global_data()->RCAST_Model(),inlc_global_data()->L_static(), LP_DEFAULT | global_light_flags());
 
 	R_ASSERT					(color.size()==model->color.size());
 

@@ -62,12 +62,6 @@ public:
 	}
 };
 
-
-
-
-
-
-
 void	CBuild::LMapsLocal				()
 {
 		FPU::m64r		();
@@ -272,7 +266,7 @@ public:
 			{
 				base_color_c		vC, old;
 				V->C._get			(old);
-				LightPoint			(&DB, lc_global_data()->RCAST_Model(), vC, V->P, V->N, pBuild->L_static(), (lc_global_data()->b_nosun()?LP_dont_sun:0)|LP_dont_hemi, 0);
+				LightPoint			(&DB, lc_global_data()->RCAST_Model(), vC, V->P, V->N, pBuild->L_static(), LP_dont_hemi | global_light_flags(), 0);
 				vC._tmp_			= v_trans;
 				vC.mul				(.5f);
 				vC.hemi				= old.hemi;			// preserve pre-calculated hemisphere

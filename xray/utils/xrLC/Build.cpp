@@ -267,8 +267,8 @@ void CBuild::Run	(LPCSTR P)
 	mu_base.wait				(500);
 	mu_secondary.wait			(500);
 #endif
-
-	Light						();
+	if (!lc_global_data()->b_no_lmaps())
+		Light					();
 	RunAfterLight				( fs );
 
 }
