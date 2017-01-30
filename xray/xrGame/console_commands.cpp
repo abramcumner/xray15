@@ -1451,36 +1451,35 @@ public:
 		}
 	}
 };
+#endif // DEBUG
 
 class CCC_InvDropAllItems : public IConsole_Command
 {
 public:
-	CCC_InvDropAllItems(LPCSTR N) : IConsole_Command(N)	{ bEmptyArgsHandled = TRUE; };
-	virtual void Execute( LPCSTR args )
+	CCC_InvDropAllItems(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
+	virtual void Execute(LPCSTR args)
 	{
-		if ( !g_pGameLevel )
+		if (!g_pGameLevel)
 		{
 			return;
 		}
-		CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>( HUD().GetUI()->UIGame() );
-		if ( !ui_game_sp )
+		CUIGameSP* ui_game_sp = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
+		if (!ui_game_sp)
 		{
 			return;
 		}
 		int d = 0;
-		sscanf( args, "%d", &d );
-		if ( ui_game_sp->ActorMenu().DropAllItemsFromRuck( d == 1 ) )
+		sscanf(args, "%d", &d);
+		if (ui_game_sp->ActorMenu().DropAllItemsFromRuck(d == 1))
 		{
-			Msg( "- All items from ruck of Actor is dropping now." );
+			Msg("- All items from ruck of Actor is dropping now.");
 		}
 		else
 		{
-			Msg( "! ActorMenu is not in state `Inventory`" );
+			Msg("! ActorMenu is not in state `Inventory`");
 		}
 	}
 }; // CCC_InvDropAllItems
-
-#endif // DEBUG
 
 class CCC_DumpObjects : public IConsole_Command {
 public:
