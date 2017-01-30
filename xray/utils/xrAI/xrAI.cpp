@@ -215,8 +215,6 @@ void Startup(LPSTR     lpCmdLine)
 Factory_Create	*create_entity	= 0;
 Factory_Destroy	*destroy_entity	= 0;
 
-void buffer_vector_test		();
-
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPSTR     lpCmdLine,
@@ -225,8 +223,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	Debug._initialize		(false);
 	compute_build_id();
 	Core._initialize		("xrAI");
-
-	buffer_vector_test		();
 
 	HMODULE					hFactory;
 	LPCSTR					g_name	= "xrSE_Factory.dll";
