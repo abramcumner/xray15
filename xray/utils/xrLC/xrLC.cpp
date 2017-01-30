@@ -224,10 +224,11 @@ int APIENTRY WinMain(HINSTANCE hInst,
 	Debug._initialize	(false);
 	compute_build_id();
 	Core._initialize	("xrLC");
-	
+
 	if(strstr(Core.Params,"-nosmg"))
 		g_using_smooth_groups = false;
 
+	Msg("Command line: '%s'", lpCmdLine);
 	Startup				(lpCmdLine);
 	Core._destroy		();
 	

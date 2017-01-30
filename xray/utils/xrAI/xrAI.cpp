@@ -238,6 +238,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	create_entity			= (Factory_Create*)		GetProcAddress(hFactory,"_create_entity@4");	R_ASSERT(create_entity);
 	destroy_entity			= (Factory_Destroy*)	GetProcAddress(hFactory,"_destroy_entity@4");	R_ASSERT(destroy_entity);
 
+	Msg("Command line: '%s'", lpCmdLine);
 	Startup					(lpCmdLine);
 
 	FreeLibrary				(hFactory);
