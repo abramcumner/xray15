@@ -39,9 +39,9 @@ after_build:
 
     xcopy gamedata dist\engine\gamedata /S /E
 
-    7z a cop_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\engine\*
+    7z a cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\engine\*
 
-    echo appveyor PushArtifact cop_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
+    echo appveyor PushArtifact cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
 
     echo ===================== sdk files =====================
 
@@ -65,15 +65,13 @@ after_build:
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrXMLParser.dll dist\sdk_%COR_PLAT%\
 
-    copy intermediate\%PLATFORM%-%CONFIGURATION%\luabind.0.9.dll dist\sdk_%COR_PLAT%\
-
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.exe dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.dll dist\sdk_%COR_PLAT%\
 
-    7z a cop_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\sdk_%COR_PLAT%\*
+    7z a cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\sdk_%COR_PLAT%\*
 
-    echo appveyor PushArtifact cop_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
+    echo appveyor PushArtifact cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
 artifacts:
 - path: .\cs_$(appveyor_repo_tag_name)_$(cor_plat).7z
   name: release
