@@ -192,6 +192,8 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 	MessageBox			(NULL,assertion_info,"X-Ray error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
 #else
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
+		ShowWindow(GetTopWindow(NULL), SW_MINIMIZE);
+		ShowCursor(TRUE);
 		int					result = 
 			MessageBox(
 				GetTopWindow(NULL),
