@@ -49,6 +49,8 @@ after_build:
 
     copy SDK\binaries\%COR_PLAT%\MagicFM.dll dist\sdk_%COR_PLAT%\
 
+    copy SDK\binaries\%COR_PLAT%\FreeImage.dll dist\sdk_%COR_PLAT%\
+
     copy SDK\binaries\%COR_PLAT%\nvtt.dll dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\BugTrap.dll dist\sdk_%COR_PLAT%\
