@@ -200,6 +200,8 @@ void Startup(LPSTR     lpCmdLine)
 	extern				HWND logWindow;
 	u32					dwEndTime = timeGetTime();
 	sprintf				(stats,"Time elapsed: %s",make_time((dwEndTime-dwStartupTime)/1000).c_str());
+	clMsg("Build succesful!\n%s", stats);
+
 	if (!strstr(cmd, "-silent"))
 		MessageBox			(logWindow,stats,"Congratulation!",MB_OK|MB_ICONINFORMATION);
 
