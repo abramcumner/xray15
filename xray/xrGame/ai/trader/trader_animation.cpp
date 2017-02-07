@@ -67,8 +67,8 @@ void CTraderAnimation::set_sound(LPCSTR sound, LPCSTR anim)
 	set_head_animation	(anim);
 
 	m_sound				= xr_new<ref_sound>();
-	m_sound->create		(sound,st_Effect,SOUND_TYPE_WORLD);
-	m_sound->play		(NULL, sm_2D);
+	m_sound->create		(sound, st_Effect, SOUND_TYPE_WORLD);
+	m_sound->play		(m_trader);
 }
 
 void CTraderAnimation::remove_sound()
@@ -115,7 +115,7 @@ void CTraderAnimation::external_sound_start(LPCSTR phrase)
 	
 	m_sound					= xr_new<ref_sound>();
 	m_sound->create			(phrase,st_Effect,SOUND_TYPE_WORLD);
-	m_sound->play			(NULL, sm_2D);
+	m_sound->play			(m_trader);
 
 	m_motion_head.invalidate();
 }
