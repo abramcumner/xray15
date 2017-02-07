@@ -34,6 +34,7 @@
 #include "actor.h"
 #include "actor_memory.h"
 #include "visual_memory_manager.h"
+#include "ActorCondition.h"
 
 
 class CScriptBinderObject;
@@ -68,17 +69,19 @@ BIND_FUNCTION10	(&object(),	CScriptGameObject::GetRange,			CEntityAlive,	ffGetRa
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetHealth,			CEntityAlive,	conditions().GetHealth,			float,							-1);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetPsyHealth,		CEntityAlive,	conditions().GetPsyHealth,		float,							-1);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetPower,			CEntityAlive,	conditions().GetPower,			float,							-1);
-//BIND_FUNCTION10	(&object(),	CScriptGameObject::GetSatiety,			CEntityAlive,	conditions().GetSatiety,			float,							-1);
+BIND_FUNCTION10	(&object(),	CScriptGameObject::GetSatiety,			CActor,			conditions().GetSatiety,		float,							1.0f);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetRadiation,		CEntityAlive,	conditions().GetRadiation,		float,							-1);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetBleeding,			CEntityAlive,	conditions().BleedingSpeed,		float,							-1);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetMorale,			CEntityAlive,	conditions().GetEntityMorale,	float,							-1);
+BIND_FUNCTION10 (&object(), CScriptGameObject::GetAlcohol,			CActor,			conditions().GetAlcohol,		float,							0.0f);
 BIND_FUNCTION01	(&object(),	CScriptGameObject::SetHealth,			CEntityAlive,	conditions().ChangeHealth,		float,							float);
 BIND_FUNCTION01	(&object(),	CScriptGameObject::SetPsyHealth,		CEntityAlive,	conditions().ChangePsyHealth,	float,							float);
 BIND_FUNCTION01	(&object(),	CScriptGameObject::SetPower,			CEntityAlive,	conditions().ChangePower,		float,							float);
-//BIND_FUNCTION01	(&object(),	CScriptGameObject::SetSatiety,			CEntityAlive,	conditions().ChangeSatiety,		float,							float);
+BIND_FUNCTION01	(&object(),	CScriptGameObject::SetSatiety,			CActor,			conditions().ChangeSatiety,		float,							float);
 BIND_FUNCTION01	(&object(),	CScriptGameObject::SetRadiation,		CEntityAlive,	conditions().ChangeRadiation,	float,							float);
-BIND_FUNCTION01	(&object(),	CScriptGameObject::SetCircumspection,	CEntityAlive,	conditions().ChangeCircumspection,float,							float);
-BIND_FUNCTION01	(&object(),	CScriptGameObject::SetMorale,			CEntityAlive,	conditions().ChangeEntityMorale,	float,							float);
+BIND_FUNCTION01	(&object(),	CScriptGameObject::SetCircumspection,	CEntityAlive,	conditions().ChangeCircumspection,float,						float);
+BIND_FUNCTION01	(&object(),	CScriptGameObject::SetMorale,			CEntityAlive,	conditions().ChangeEntityMorale,	float,						float);
+BIND_FUNCTION01 (&object(), CScriptGameObject::SetAlcohol,			CActor,			conditions().ChangeAlcohol,		float,							float);
 BIND_FUNCTION02	(&object(),	CScriptGameObject::SetScriptControl,	CScriptEntity,	SetScriptControl,	bool,								LPCSTR,					bool,					shared_str);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetScriptControl,	CScriptEntity,	GetScriptControl,	bool,								false);
 BIND_FUNCTION10	(&object(),	CScriptGameObject::GetScriptControlName,CScriptEntity,GetScriptControlName,LPCSTR,					"");
