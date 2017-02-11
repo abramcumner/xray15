@@ -7,13 +7,13 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
+#include "ai/stalker/ai_stalker.h"
 #include "stalker_movement_manager_smart_cover.h"
 #include "movement_manager_space.h"
 #include "smart_cover_animation_selector.h"
 #include "smart_cover_planner_target_selector.h"
 #include "smart_cover_loophole.h"
 #include "smart_cover.h"
-#include "ai/stalker/ai_stalker.h"
 #include "sight_manager.h"
 #include "stalker_animation_manager.h"
 #include "stalker_movement_params.h"

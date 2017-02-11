@@ -7,10 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#include "ai/stalker/ai_stalker.h"
 #include "stalker_movement_manager_obstacles.h"
 #include "stalker_movement_manager_space.h"
 #include "ai_space.h"
-#include "ai/stalker/ai_stalker.h"
 #include "restricted_object_obstacle.h"
 #include "level_path_manager.h"
 #include "ai_object_location.h"

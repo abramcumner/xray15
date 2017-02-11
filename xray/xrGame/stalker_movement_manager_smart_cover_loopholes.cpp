@@ -7,9 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
+#include "ai/stalker/ai_stalker.h"
 #include "stalker_movement_manager_smart_cover.h"
 #include "smart_cover_loophole.h"
-#include "ai/stalker/ai_stalker.h"
 #include "smart_cover.h"
 #include "ai_space.h"
 #include "graph_engine.h"

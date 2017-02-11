@@ -15,6 +15,7 @@
 #include "cover_manager.h"
 #include "smart_cover.h"
 #include "smart_cover_description.h"
+#include "ai/stalker/ai_stalker.h"
 #include "stalker_movement_manager_smart_cover.h"
 
 static const u32 time_before_selection	= 2000;

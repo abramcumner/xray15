@@ -11,6 +11,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
+#include "ai/stalker/ai_stalker.h"
 #include "stalker_movement_manager_smart_cover.h"
 #include "Inventory.h"
 #include "xrServer.h"

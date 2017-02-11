@@ -7,11 +7,11 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#include "ai/stalker/ai_stalker.h"
 #include "dynamic_obstacles_avoider.h"
 #include "ai_space.h"
 #include "moving_objects.h"
 #include "stalker_movement_manager_smart_cover.h"
-#include "ai/stalker/ai_stalker.h"
 #include "moving_object.h"
 
 void dynamic_obstacles_avoider::query			()
