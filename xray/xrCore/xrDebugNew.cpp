@@ -188,15 +188,20 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 	if (get_on_dialog())
 		get_on_dialog()	(true);
 
+	FlushLog();
+
 #ifdef XRCORE_STATIC
 	MessageBox			(NULL,assertion_info,"X-Ray error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
 #else
+	HWND wnd = GetActiveWindow();
+	if (wnd == NULL)
+		wnd = GetForegroundWindow();
+	ShowWindow(wnd, SW_MINIMIZE);
+	while (ShowCursor(TRUE) < 0);
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
-		ShowWindow(GetTopWindow(NULL), SW_MINIMIZE);
-		ShowCursor(TRUE);
 		int					result = 
 			MessageBox(
-				GetTopWindow(NULL),
+				wnd,
 				assertion_info,
 				"Fatal Error",
 				MB_CANCELTRYCONTINUE|MB_ICONERROR|MB_SYSTEMMODAL
@@ -225,8 +230,13 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
+#       ifndef DEBUG
+			TerminateProcess(GetCurrentProcess(), 1);
+#       else
 		DEBUG_INVOKE;
+#       endif
 #	endif // USE_OWN_ERROR_MESSAGE_WINDOW
+	ShowCursor(FALSE);
 #endif
 
 	if (get_on_dialog())
