@@ -39,7 +39,11 @@ after_build:
 
     xcopy gamedata dist\engine\gamedata /S /E	
 
-    7z a cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\engine\*
+    cd dist\engine
+
+    7z a ..\..\cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z
+
+    cd ..\..
 
     echo appveyor PushArtifact cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
 
