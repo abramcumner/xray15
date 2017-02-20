@@ -95,6 +95,7 @@ void CUIWindow::script_register(lua_State *L)
 		.def("SetWndRect",				(void (CUIWindow::*)(Frect))	&CUIWindow::SetWndRect_script)
 		.def("SetWndPos",				(void (CUIWindow::*)(Fvector2)) &CUIWindow::SetWndPos_script)
 		.def("SetWndSize",				(void (CUIWindow::*)(Fvector2)) &CUIWindow::SetWndSize_script)
+		.def("GetWndPos",				&CUIWindow::GetWndPos)
 		.def("GetWidth",				&CUIWindow::GetWidth)
 		.def("SetWidth",				&CUIWindow::SetWidth)
 		.def("GetHeight",				&CUIWindow::GetHeight)
@@ -143,7 +144,9 @@ void CUIWindow::script_register(lua_State *L)
 		.def("GetText",						&CUILabel::GetText),
 */
 		class_<CUIMMShniaga, CUIWindow>("CUIMMShniaga")
-		.def("SetVisibleMagnifier",			&CUIMMShniaga::SetVisibleMagnifier),
+		.def("SetVisibleMagnifier",			&CUIMMShniaga::SetVisibleMagnifier)
+		.def("GetSliderPos",				&CUIMMShniaga::GetSliderPos)
+		.def("AttachChildToSlider",			&CUIMMShniaga::AttachChildToSlider),
 
 		class_<CUIScrollView, CUIWindow>("CUIScrollView")
 		.def(							constructor<>())

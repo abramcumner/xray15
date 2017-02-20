@@ -374,3 +374,13 @@ void CUIMMShniaga::ProcessEvent(EVENT ev){
 									
 	}
 }
+
+Fvector2 CUIMMShniaga::GetSliderPos()
+{
+	return m_shniaga->GetWndPos();
+}
+
+void CUIMMShniaga::AttachChildToSlider(CUIWindow* child)
+{
+	m_shniaga->AttachChild(child);
+}
