@@ -119,7 +119,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	Debug._initialize	(false);
 	compute_build_id();
 	Core._initialize	("xrDO");
-	Msg("Command line: '%s'", lpCmdLine);
+	Msg("Command line: '%s'\n", lpCmdLine);
 	Startup				(lpCmdLine);
 	
 	return 0;

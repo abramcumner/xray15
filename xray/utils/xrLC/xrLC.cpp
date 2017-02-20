@@ -228,7 +228,7 @@ int APIENTRY WinMain(HINSTANCE hInst,
 	if(strstr(Core.Params,"-nosmg"))
 		g_using_smooth_groups = false;
 
-	Msg("Command line: '%s'", lpCmdLine);
+	Msg("Command line: '%s'\n", lpCmdLine);
 	Startup				(lpCmdLine);
 	Core._destroy		();
 	
