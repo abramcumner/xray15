@@ -35,6 +35,10 @@ after_build:
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\*.dll dist\engine\bin_%COR_PLAT%\
 
+    md dist\engine\gamedata
+
+    xcopy gamedata dist\engine\gamedata /S /E	
+
     7z a cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\engine\*
 
     echo appveyor PushArtifact cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
