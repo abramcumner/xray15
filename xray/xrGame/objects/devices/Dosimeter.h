@@ -18,7 +18,7 @@ protected:
 	CUIDosimeter& ui();
 };
 
-class CUIDosimeter :public CUIArtefactDetectorBase, public CUIWindow
+class CUIDosimeter : public CUIArtefactDetectorBase, public CUIWindow
 {
 public:
 	void update() override;
@@ -27,12 +27,13 @@ public:
 	void construct(CDosimeter* p);
 
 private:
-	CUIWindow*			m_wrk_area;
-	CUIStatic*			m_seg1;
-	CUIStatic*			m_seg2;
-	CUIStatic*			m_seg3;
-	CDosimeter*		m_parent;
-	Fmatrix				m_map_attach_offset;
+	CUIStatic* m_wrk_area;
+	CUIStatic* m_seg1;
+	CUIStatic* m_seg2;
+	CUIStatic* m_seg3;
+	CUIStatic* m_seg4;
+	CDosimeter* m_parent;
+	Fmatrix m_map_attach_offset;
 
-	void				GetUILocatorMatrix(Fmatrix& _m);
+	void GetUILocatorMatrix(Fmatrix& _m);
 };
