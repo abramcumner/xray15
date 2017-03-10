@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\WmlApprGaussPointsFit3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlBox3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlContBox3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlContMinBox3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlEigen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMatrix2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMatrix3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMatrix4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMinimize1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlMinimizeN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlQuaternion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlVector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlVector3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlVector4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WmlWinSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\WmlSystem.mcr" />
+    <None Include="WildMagic\WmlGMatrix.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlGVector.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlMath.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlMatrix.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlMatrix2.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlMatrix3.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlMatrix4.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlQuaternion.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlSystem.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlVector.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlVector2.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlVector3.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="WildMagic\WmlVector4.inl">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WildMagic\WmlApprGaussPointsFit3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlBox3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlContBox3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlContMinBox3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlEigen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlGMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlGVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMatrix2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMatrix3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMatrix4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMinimize1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlMinimizeN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlQuaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlVector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlVector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlVector4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMagic\WmlWinSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
