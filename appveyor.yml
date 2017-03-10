@@ -71,6 +71,8 @@ after_build:
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrXMLParser.dll dist\sdk_%COR_PLAT%\
 
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\ETools.dll dist\sdk_%COR_PLAT%\
+
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.exe dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.dll dist\sdk_%COR_PLAT%\
