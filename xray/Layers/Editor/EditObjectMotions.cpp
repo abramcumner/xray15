@@ -10,8 +10,8 @@
 	#include "ui_main.h"
 #endif
 
-#include "motion.h"
-#include "bone.h"
+#include "../../xrEngine/motion.h"
+#include "../../xrEngine/bone.h"
 #include "EditMesh.h"
 
 //----------------------------------------------------
@@ -194,71 +194,42 @@ bool CEditableObject::LoadSMotions(const char* fname)
 bool CEditableObject::AppendSMotion(LPCSTR fname, SMotionVec* inserted)
 {
 	VERIFY(IsSkeleton());
-
-    bool bRes	= true;
-    
 	LPCSTR ext	= strext(fname);
     if (0==stricmp(ext,".skl")){
         CSMotion* M = xr_new<CSMotion>();
-        if (!M->LoadMotion(fname)){
-            ELog.Msg(mtError,"Motion '%s' can't load. Append failed.",fname);
-            xr_delete(M);
-            bRes = false;
-        }else{
-        	string256 name;
-			_splitpath(fname,0,0,name,0);
-            if (CheckBoneCompliance(M)){
-                M->SortBonesBySkeleton(m_Bones);
-                string256 			m_name;
-                GenerateSMotionName	(m_name,name,M);
-                M->SetName			(m_name);
-                m_SMotions.push_back(M);
-                if (inserted)		inserted->push_back(M);
-                // optimize
-                M->Optimize			();
-            }else{
-                ELog.Msg(mtError,"Append failed.",fname);
-                xr_delete(M);
-	            bRes = false;
-            }
-        }
+		R_ASSERT3(M->LoadMotion(fname), "Motion '%s' can't load. Append failed.", fname);
+        string256 name;
+		_splitpath(fname,0,0,name,0);
+		R_ASSERT3(CheckBoneCompliance(M), "Append failed.", fname);
+        M->SortBonesBySkeleton(m_Bones);
+        string256 			m_name;
+        GenerateSMotionName	(m_name,name,M);
+        M->SetName			(m_name);
+        m_SMotions.push_back(M);
+        if (inserted)		inserted->push_back(M);
+        // optimize
+        M->Optimize			();
     }else if (0==stricmp(ext,".skls")){
         IReader* F	= FS.r_open(fname);
-        if (!F){
-        	ELog.Msg(mtError,"Can't open file '%s'.",fname);
-            bRes = false;
-    	}
-        if (bRes){
-            // object motions
-            int cnt 	= F->r_u32();
-            for (int k=0; k<cnt; k++){
-                CSMotion* M	= xr_new<CSMotion>();
-                if (!M->Load(*F)){
-                    ELog.Msg(mtError,"Motion '%s' has different version. Load failed.",M->Name());
-                    xr_delete(M);
-                    bRes = false;
-                    break;
-                }
-				if (!CheckBoneCompliance(M)){
-					xr_delete(M);
-					bRes = false;
-					break;
-				}
-                if (bRes){
-                    M->SortBonesBySkeleton(m_Bones);
-                    string256 			m_name;
-                    GenerateSMotionName	(m_name,M->Name(),M);
-                    M->SetName			(m_name);
-                    m_SMotions.push_back(M);
-                    if (inserted)		inserted->push_back(M);
-                    // optimize
-                    M->Optimize			();
-                }
-            }
+		R_ASSERT3(F, "Can't open file '%s'.", fname);
+        // object motions
+        int cnt 	= F->r_u32();
+        for (int k=0; k<cnt; k++){
+            CSMotion* M	= xr_new<CSMotion>();
+			R_ASSERT3(M->Load(*F), "Motion '%s' has different version. Load failed.", M->Name());
+			R_ASSERT3(CheckBoneCompliance(M), "Append failed.", fname);
+            M->SortBonesBySkeleton(m_Bones);
+            string256 			m_name;
+            GenerateSMotionName	(m_name,M->Name(),M);
+            M->SetName			(m_name);
+            m_SMotions.push_back(M);
+            if (inserted)		inserted->push_back(M);
+            // optimize
+            M->Optimize			();
         }
         FS.r_close(F);
     }
-    return bRes;
+    return true;
 }
 
 void CEditableObject::ClearSMotions()
@@ -383,7 +354,7 @@ int CEditableObject::GetRootBoneID()
 {
     for (BoneIt b_it=m_Bones.begin(); b_it!=m_Bones.end(); b_it++)
     	if ((*b_it)->IsRoot()) return b_it-m_Bones.begin();
-    THROW;
+	NODEFAULT;
     return -1;
 }
 

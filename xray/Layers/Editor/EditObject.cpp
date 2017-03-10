@@ -8,7 +8,7 @@
 #if defined (_MAX_EXPORT)
 	#include "..\..\..\xrEngine\fmesh.h"
 #else
-	#include "..\..\..\xrEngine\fmesh.h"
+	#include "..\..\xrEngine\fmesh.h"
 #endif
 
 #include "EditObject.h"

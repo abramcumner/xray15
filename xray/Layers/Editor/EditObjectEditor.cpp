@@ -3,16 +3,16 @@
 
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "motion.h"
-#include "bone.h"
+#include "../../xrEngine/motion.h"
+#include "../../xrEngine/bone.h"
 #include "ExportSkeleton.h"
 #include "ExportObjectOGF.h"
-#include "d3dutils.h"
-#include "ui_main.h"
-#include "render.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
-#include "ResourceManager.h"
-#include "ImageManager.h"
+//#include "d3dutils.h"
+//#include "ui_main.h"
+//#include "render.h"
+//#include "../../xrServerEntities/PropertiesListHelper.h"
+//#include "ResourceManager.h"
+//#include "ImageManager.h"
 
 const float tex_w	= LOD_SAMPLE_COUNT*LOD_IMAGE_SIZE;
 const float tex_h	= 1*LOD_IMAGE_SIZE;
@@ -40,6 +40,7 @@ bool CEditableObject::Reload()
     return Load(m_LoadName.c_str());
 }
 
+#ifdef _EDITOR
 bool CEditableObject::RayPick(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& inv_parent, SRayPickInfo* pinf)
 {
 	bool picked = false;
@@ -61,13 +62,13 @@ void CEditableObject::RayQuery(const Fmatrix& parent, const Fmatrix& inv_parent,
         (*m)->RayQuery(parent, inv_parent, pinf);
 }
 
+
 void CEditableObject::BoxQuery(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf)
 {
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
         (*m)->BoxQuery(parent, inv_parent, pinf);
 }
 
-#ifdef _EDITOR
 bool CEditableObject::FrustumPick(const CFrustum& frustum, const Fmatrix& parent){
 	for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
 		if((*m)->FrustumPick(frustum, parent))	return true;
@@ -83,7 +84,6 @@ bool CEditableObject::BoxPick(CCustomObject* obj, const Fbox& box, const Fmatrix
         }
 	return picked;
 }
-#endif
 
 extern float 	ssaLIMIT;
 extern float	g_fSCREEN;
@@ -303,6 +303,7 @@ void CEditableObject::EvictObject()
     }
     DefferedUnloadRP			();
 }
+#endif
 
 bool CEditableObject::PrepareOGF(IWriter& F, u8 infl, bool gen_tb, CEditableMesh* mesh)
 {
@@ -315,6 +316,7 @@ bool CEditableObject::PrepareRigidOGF(IWriter& F, bool gen_tb, CEditableMesh* me
     return E.Export(F,gen_tb,mesh);
 }
 
+#ifdef _EDITOR
 bool CEditableObject::PrepareSVGeometry(IWriter& F, u8 infl)
 {
     CExportSkeleton E(this);
@@ -332,6 +334,7 @@ bool CEditableObject::PrepareSVDefs(IWriter& F)
     CExportSkeleton E(this);
     return E.ExportMotionDefs(F);
 }
+#endif
 
 bool CEditableObject::PrepareSkeletonOGF(IWriter& F, u8 infl)
 {
@@ -339,6 +342,7 @@ bool CEditableObject::PrepareSkeletonOGF(IWriter& F, u8 infl)
     return E.Export(F,infl);
 }
 
+#ifdef _EDITOR
 bool CEditableObject::PrepareOMF(IWriter& F)
 {
     CExportSkeleton E(this);
@@ -378,7 +382,7 @@ bool CEditableObject::CheckShaderCompatible()
     }
     return bRes;
 }
-#ifdef _EDITOR
+
 void CEditableObject::AddBone(CBone* parent_bone)
 {
 	CBone* B 			= xr_new<CBone>();
@@ -458,7 +462,7 @@ void CEditableObject::DeleteBone(CBone* bone)
     	(*_M)->UnloadSVertices();
     }
 }
-#endif
+
 //---------------------------------------------------------------------------
 
 BPIt CEditableObject::BonePart(CBone* B)
@@ -500,4 +504,4 @@ void CEditableObject::RenameBone(CBone* bone, LPCSTR new_name)
     }
 	bone->SetName(new_name);
 }
-
+#endif

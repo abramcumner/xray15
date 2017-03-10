@@ -7,8 +7,8 @@
 
 #include "EditMesh.h"
 #include "EditObject.h"
-#include "Bone.h"
-#include "../../../common/itterate_adjacents.h"
+#include "../../xrEngine/bone.h"
+#include "../../common/itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
 #ifdef _EDITOR
 #	include "ETools.h"
@@ -339,13 +339,7 @@ void CEditableMesh::GenerateSVertices(u32 influence)
                 if (VM.type==vmtWeight)
                 {
                     wb.push_back			(st_WB(m_Parent->GetBoneIndexByWMap(VM.name.c_str()),VM.getW(vmpt_lst.pts[vmpt_id].index)));
-
-                    if (wb.back().bone==BI_NONE)
-                    {
-                        ELog.DlgMsg			(mtError,"Can't find bone assigned to weight map %s",*VM.name);
-                        FATAL				("Editor crashed.");
-                        return;
-                    }
+					R_ASSERT3(wb.back().bone != BI_NONE, "Can't find bone assigned to weight map %s", *VM.name);
                 }else if(VM.type==vmtUV)
                     SV.uv.set				(VM.getUV(vmpt_lst.pts[vmpt_id].index));
             }

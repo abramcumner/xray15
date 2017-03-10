@@ -1,7 +1,7 @@
 #ifndef _ITTERATE_ADJACENTS_DYNAMIC_H_
 #define _ITTERATE_ADJACENTS_DYNAMIC_H_
 
-#include "../../../common/face_smoth_flags.h"
+#include "../../common/face_smoth_flags.h"
 template<typename  typeVertex>
 struct itterate_adjacents_params_dynamic
 {
@@ -52,14 +52,14 @@ private:
 		F1_edge_index = u16(-1);
 		F2_edge_index = u16(-1);
 
-		for (int e=0; e<3; e++)
+		for (u8 e=0; e<3; e++)
 		{
 			type_vertex v1_a, v1_b;
 			F1->EdgeVerts(e,v1_a,v1_b);	
 			if ( v1_a.gt(v1_b) ) 
 					swap(v1_a,v1_b);
 
-			for (int r=0; r<3; ++r)
+			for (u8 r=0; r<3; ++r)
 			{
 				type_vertex v2_a, v2_b;
 				F2->EdgeVerts(r,v2_a,v2_b);	

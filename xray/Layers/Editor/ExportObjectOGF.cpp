@@ -7,11 +7,11 @@
 #include "ExportObjectOGF.h"
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "fmesh.h"
-#include "std_classes.h"
-#include "bone.h"
-#include "motion.h"
-#include "ui_main.h"
+#include "../../xrEngine/fmesh.h"
+//#include "std_classes.h"
+#include "../../xrEngine/bone.h"
+#include "../../xrEngine/motion.h"
+//#include "ui_main.h"
 //#include "nvMeshMender.h"
 
 CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_vertices, int apx_faces)
@@ -161,7 +161,7 @@ void CExportObjectOGF::SSplit::SavePart(IWriter& F, CObjectOGFCollectorPacked* p
     // Faces
     F.open_chunk(OGF_INDICES);
     F.w_u32(part->m_Faces.size()*3);
-    F.w(part->m_Faces.begin(),part->m_Faces.size()*3*sizeof(u16));
+    F.w(part->m_Faces.data(),part->m_Faces.size()*3*sizeof(u16));
     F.close_chunk();
 
     // PMap
@@ -361,7 +361,7 @@ bool CExportObjectOGF::PrepareMESH(CEditableMesh* MESH)
         if (0==split){
             SGameMtl* M = GMLib.GetMaterialByID(surf->_GameMtl());
             if (0==M){
-                ELog.DlgMsg		(mtError,"Surface: '%s' contains undefined game material.",surf->_Name());
+                Msg("! Surface: '%s' contains undefined game material.",surf->_Name());
                 bResult 		= FALSE; 
                 break; 
             }

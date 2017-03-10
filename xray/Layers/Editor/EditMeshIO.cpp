@@ -100,10 +100,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
     u32 version=0;
 
     R_ASSERT(F.r_chunk(EMESH_CHUNK_VERSION,&version));
-    if (version!=EMESH_CURRENT_VERSION){
-        ELog.DlgMsg( mtError, "CEditableMesh: unsuported file version. Mesh can't load.");
-        return false;
-    }
+    R_ASSERT2(version==EMESH_CURRENT_VERSION, "CEditableMesh: unsuported file version. Mesh can't load.");
 
     R_ASSERT(F.find_chunk(EMESH_CHUNK_MESHNAME));
 	F.r_stringZ		(m_Name);

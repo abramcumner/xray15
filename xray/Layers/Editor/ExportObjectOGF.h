@@ -26,7 +26,7 @@ struct SOGFVert{
 		T.set	(0,0,0);
 		B.set	(0,0,0);
 	}
-	void set(Fvector& p, Fvector& n, Fvector2& uv){
+	void set(const Fvector& p, const Fvector& n, const Fvector2& uv){
 		P.set	(p);
   		N.set	(n);
         UV.set	(uv);
@@ -88,7 +88,7 @@ public:
     }
 	IC bool			add_face	(SOGFVert& v0, SOGFVert& v1, SOGFVert& v2){
 		if (v0.P.similar(v1.P,EPS) || v0.P.similar(v2.P,EPS) || v1.P.similar(v2.P,EPS)){
-			ELog.Msg(mtError,"Degenerate face found. Removed.");
+			Msg("! Degenerate face found. Removed.");
             return true;
         }
         SOGFFace F;
@@ -99,14 +99,14 @@ public:
         
         if (check(F)) 	m_Faces.push_back(F);
         else{	
-			ELog.Msg(mtError,"Duplicate(degenerate) face found. Removed.");
+			Msg("! Duplicate(degenerate) face found. Removed.");
             return true;
         }
         return true;
     }
     IC OGFVertVec& 	getV_Verts	()	{return m_Verts;}
    	IC OGFFaceVec& 	getV_Faces	()	{return m_Faces;}
-    IC SOGFVert*	getVert		() 	{return m_Verts.begin();}
+    IC SOGFVert*	getVert		() 	{return m_Verts.data();}
     IC int			getVS		() 	{return m_Verts.size();}
     IC int			getTS		() 	{return m_Faces.size();}
 };

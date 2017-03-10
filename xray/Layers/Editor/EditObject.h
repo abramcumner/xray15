@@ -1,12 +1,12 @@
 #ifndef EditObjectH
 #define EditObjectH
 
-#include "Bone.h"
-#include "Motion.h"
+#include "../../xrEngine/bone.h"
+#include "../../xrEngine/motion.h"
+#include "../../xrEngine/GameMtlLib.h"
 #ifdef _EDITOR
 #	include "../../../xrServerEntities/PropertiesListTypes.h"
 //	#include "PropertiesListHelper.h"
-#	include "GameMtlLib.h"
 #	include "pick_defs.h"
 #endif
 //----------------------------------------------------
@@ -15,7 +15,7 @@ class 	CEditableMesh;
 class 	CFrustum;
 class 	CCustomMotion;
 class	CBone;
-class	Shader;
+struct	Shader;
 class	Mtl;
 class	CExporter;
 class	CMayaTranslator;
@@ -122,9 +122,9 @@ public:
     IC void			SetFVF			(u32 fvf){m_dwFVF=fvf;}
     IC void			SetTexture		(LPCSTR name){string512 buf; strcpy(buf,name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
     IC void			SetVMap			(LPCSTR name){m_VMap=name;}
-#ifdef _EDITOR
     IC u32			_GameMtl		()const	{return GMLib.GetMaterialID	(*m_GameMtlName);}
-    IC void			OnDeviceCreate	()
+#ifdef _EDITOR
+	IC void			OnDeviceCreate	()
     { 
         R_ASSERT(!m_RTFlags.is(rtValidShader));
     	if (m_ShaderName.size()&&m_Texture.size())	m_Shader.create(*m_ShaderName,*m_Texture); 
@@ -222,7 +222,7 @@ public:
     IC bool			IsModified				(){return bOnModified;}
     IC void 		Modified				(){bOnModified=true;}
 
-    AnsiString		m_LoadName;
+    xr_string		m_LoadName;
     int				m_RefCount;
 protected:
     int				m_ObjectVersion;
@@ -242,7 +242,7 @@ public:
     };
     Flags32			m_LoadState;
 
-	AnsiString		m_LibName;
+	xr_string		m_LibName;
 public:
     // constructor/destructor methods
 					CEditableObject			(LPCSTR name);
@@ -343,8 +343,9 @@ public:
 	void		    EvictObject				();
 
     // pick methods
-	bool 			RayPick					(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& inv_parent, SRayPickInfo* pinf=0);
 #ifdef _EDITOR
+	bool 			RayPick					(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& inv_parent, SRayPickInfo* pinf=0);
+
     void			AddBone					(CBone* parent_bone);
     void			DeleteBone				(CBone* bone);
     void			RenameBone				(CBone* bone, LPCSTR new_name);

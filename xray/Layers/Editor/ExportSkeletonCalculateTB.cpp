@@ -11,18 +11,18 @@
 //
 #include "../../xrCore/xrCore.h"
 
-#include "../../../Layers/xrRender/hwcaps.h"
-#include "../../../Layers/xrRender/hw.h"
-#include "../../../xrEngine/pure.h"
+#include "../xrRender/hwcaps.h"
+#include "../xrRender/hw.h"
+#include "../../xrEngine/pure.h"
 class CGameFont;
-#include "..\..\include\xrRender\drawutils.h"
-#include "..\..\Layers\xrRender\xrD3dDefs.h"
-#include "..\..\Layers\xrRender\shader.h"
-#include "..\..\Layers\xrRender\R_Backend.h"
+#include "../../include/xrRender/drawutils.h"
+#include "../xrRender/xrD3dDefs.h"
+#include "../xrRender/shader.h"
+#include "../xrRender/R_Backend.h"
 
-#include "..\..\xrEngine\fmesh.h"
-#include "..\..\xrEngine\_d3d_extensions.h"
-#include "..\..\xrEngine\properties.h"
+#include "../../xrEngine/fmesh.h"
+#include "../../xrEngine/_d3d_extensions.h"
+#include "../../xrEngine/properties.h"
 
 //
 
@@ -37,7 +37,7 @@ DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 
 #include "ExportSkeleton.h"
 
-#include "../engine/nvMeshMender.h"
+//#include "../engine/nvMeshMender.h"
 /*
 void CExportSkeleton::SSplit::CalculateTB()
 {
