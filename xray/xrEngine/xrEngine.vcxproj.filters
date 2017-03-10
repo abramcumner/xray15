@@ -998,6 +998,9 @@
     <ClCompile Include="xrSASH.cpp">
       <Filter>OpenAutomate</Filter>
     </ClCompile>
+    <ClCompile Include="BoneEditor.cpp">
+      <Filter>Game API\Animator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

@@ -244,7 +244,6 @@ BOOL COMotion::NormalizeKeys(float from_time, float to_time, float speed)
 //------------------------------------------------------------------------------------------
 // Skeleton Motion
 //------------------------------------------------------------------------------------------
-#ifdef _EDITOR
 
 //#include "SkeletonCustom.h"
 CSMotion::CSMotion():CCustomMotion()
@@ -510,7 +509,6 @@ void CSMotion::SortBonesBySkeleton(BoneVec& bones)
     bone_mots.clear	();
     bone_mots 		= new_bone_mots;
 }
-#endif
 
 void SAnimParams::Set(float start_frame, float end_frame, float fps)
 {

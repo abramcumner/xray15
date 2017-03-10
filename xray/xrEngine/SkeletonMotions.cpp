@@ -449,7 +449,7 @@ void ENGINE_API motion_marks::Load(IReader* R)
 		item.second			= R->r_float();
 	}
 }
-#ifdef _EDITOR
+
 void motion_marks::Save(IWriter* W)
 {
 	W->w_string			(name.c_str());
@@ -462,4 +462,3 @@ void motion_marks::Save(IWriter* W)
 		W->w_float			(item.second);
 	}
 }
-#endif

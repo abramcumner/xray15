@@ -96,10 +96,8 @@ private:
 public:
 	shared_str		name;
 	void			Load				(IReader*);
-
-#ifdef _EDITOR
 	void			Save				(IWriter*);
-#endif
+
 	bool			is_empty			() const { return intervals.empty(); }
 	const interval*	pick_mark			(float const &t) const;
 	bool			is_mark_between		(float const &t0, float const &t1) const;

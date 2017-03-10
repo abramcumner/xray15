@@ -300,12 +300,12 @@ public:
 	    GameMtlIt it=GetMaterialItByID(ID);
     	return materials.end() != it?*it:0;
     }
-	IC SGameMtl*		GetMaterial		(LPCSTR name)
-    {
-	    GameMtlIt it=GetMaterialIt(name);
-    	return materials.end() != it?*it:0;
-	}
 #else
+	IC SGameMtl*		GetMaterial(LPCSTR name)
+	{
+		GameMtlIt it = GetMaterialIt(name);
+		return materials.end() != it ? *it : 0;
+	}
 	// game
 	IC u16				GetMaterialIdx	(int ID)		{GameMtlIt it=GetMaterialItByID(ID);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}
 	IC u16				GetMaterialIdx	(LPCSTR name)	{GameMtlIt it=GetMaterialIt(name);VERIFY(materials.end() != it); return (u16)(it-materials.begin());}

@@ -241,7 +241,7 @@ struct ECORE_API SJointIKData
 class CBone;
 DEFINE_VECTOR		    (CBone*,BoneVec,BoneIt);
 
-class ECORE_API CBone
+class ENGINE_API CBone
 {
 	shared_str			name;
 	shared_str			parent_name;
@@ -338,9 +338,9 @@ public:
     bool			    Selected		(){return flags.is(flSelected);}
 
     void			    ClampByLimits	();
+#endif
 
     bool 			    ExportOGF		(IWriter& F);
-#endif
 };
 
 //*** Shared Bone Data ****************************************************************************

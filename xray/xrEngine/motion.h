@@ -8,6 +8,7 @@
 #endif
 
 #include "bone.h"
+#include "SkeletonMotions.h"
 
 // refs
 class CEnvelope;
@@ -127,9 +128,6 @@ enum ESMFlags{
 	esmUseWeaponBone	= 1<<7,
 };
 
-#if defined(_EDITOR) || defined(_MAX_EXPORT) || defined(_MAYA_EXPORT)
-	#include "SkeletonMotions.h"
-
 class ENGINE_API CSMotion: public CCustomMotion{
 	BoneMotionVec	bone_mots;
 public:
@@ -171,9 +169,8 @@ public:
 	void			ParseBoneMotion	(LWItemID bone);
 	#endif
 };
-#endif
 
-struct ECORE_API SAnimParams		{
+struct ENGINE_API SAnimParams		{
     float			t_current;
     float			tmp;
     float			min_t;
