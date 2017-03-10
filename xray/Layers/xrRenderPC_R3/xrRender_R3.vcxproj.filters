@@ -181,6 +181,12 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{c1727428-294c-4698-be8f-c1811369ba6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Models\Editor">
+      <UniqueIdentifier>{cb58d473-8f78-4e4b-b6b0-462b0c39947b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Editor\NvMender2003">
+      <UniqueIdentifier>{f1d8caa0-9607-4712-b30a-3af63ca647d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
@@ -713,6 +719,33 @@
     </ClInclude>
     <ClInclude Include="..\xrRender\Debug\dxPixEventWrapper.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditMesh.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditObject.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\itterate_adjacents_dynamic.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\ExportObjectOGF.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\ExportSkeleton.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\convert.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1301,9 +1334,51 @@
     <ClCompile Include="..\xrRender\Debug\dxPixEventWrapper.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
+    <ClCompile Include="..\Editor\EditMesh.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditMeshIO.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditMeshModify.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObject.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectIO.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectMotions.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectEditor.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportObjectOGF.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportObjectOGFCalculateTB.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportSkeleton.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportSkeletonCalculateTB.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\RAPIDMinBox.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="todo.txt" />
+    <Text Include="..\..\common\NvMender2003\ReadMe.txt">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="VTune\xrRender_R3.vpj" />

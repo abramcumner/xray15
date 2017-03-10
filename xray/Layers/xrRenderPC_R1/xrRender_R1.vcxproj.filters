@@ -151,12 +151,18 @@
     <Filter Include="Refactored\Interfaces">
       <UniqueIdentifier>{d6f8636e-4147-46be-b975-f40457801441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Models\Editor">
+      <UniqueIdentifier>{e81b2501-3f24-4177-a3c6-716020741f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{73f259ac-b906-44b3-93b1-0316a8d586ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\Editor\NvMender2003">
+      <UniqueIdentifier>{0ada7e6d-1a63-4631-a4d0-e14399bbde3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\xrRender\cl_intersect.h">
-      <Filter>Kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
       <Filter>Kernel</Filter>
     </ClInclude>
     <ClInclude Include="..\xrRender\xrD3DDefs.h">
@@ -594,11 +600,35 @@
     <ClInclude Include="..\..\Include\xrRender\RenderDetailModel.h">
       <Filter>Refactored\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="..\Editor\EditObject.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="pch\stdafx.h">
+      <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditMesh.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\ExportSkeleton.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\ExportObjectOGF.h">
+      <Filter>Models\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\convert.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\xrRender_console.cpp">
       <Filter>Kernel</Filter>
     </ClCompile>
@@ -992,8 +1022,53 @@
     <ClCompile Include="..\xrRender\xr_effgamma.cpp">
       <Filter>Refactored\Execution &amp; 3D\Gamma</Filter>
     </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectIO.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="pch\stdafx.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObject.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditMesh.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectMotions.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditMeshIO.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditMeshModify.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditObjectEditor.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportSkeleton.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportObjectOGF.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportObjectOGFCalculateTB.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\ExportSkeletonCalculateTB.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\RAPIDMinBox.cpp">
+      <Filter>Models\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Pipeline.txt" />
+    <Text Include="..\..\common\NvMender2003\ReadMe.txt">
+      <Filter>Models\Editor\NvMender2003</Filter>
+    </Text>
   </ItemGroup>
 </Project>

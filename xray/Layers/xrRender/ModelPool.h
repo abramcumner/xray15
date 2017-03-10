@@ -73,5 +73,9 @@ public:
 	void 					Render				(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, int priority, bool strictB2F, float m_fLOD);
 	void 					RenderSingle		(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, float m_fLOD);
 #endif
+
+private:
+	dxRender_Visual* TryLoadObject(const char* N);
+	dxRender_Visual* TryLoadOgf(const char* N);
 };
 #endif //ModelPoolH

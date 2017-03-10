@@ -15,6 +15,7 @@
     #include "ftreevisual.h"
     #include "ParticleGroup.h"
     #include "ParticleEffect.h"
+	#include "../Editor/EditObject.h"
 #else
     #include "fmesh.h"
     #include "fvisual.h"
@@ -92,47 +93,88 @@ dxRender_Visual*	CModelPool::Instance_Duplicate	(dxRender_Visual* V)
 	return N;
 }
 
-dxRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
+dxRender_Visual* CModelPool::TryLoadObject(const char* N)
 {
-	dxRender_Visual	*V;
+    char* ext = strext(N);
+    string_path name;
+    if (ext == nullptr)
+        strconcat(sizeof(name), name, N, ".object");
+    else if (strcmp(ext, ".object") == 0)
+        strcpy_s(name, sizeof(name), N);
+    else
+        return nullptr;
+
+	string_path fn;
+	if (!FS.exist(N) && !FS.exist(fn, "$game_meshes$", name))
+		return nullptr;
+
+#ifdef DEBUG
+    if (bLogging)
+        Msg("- Uncached model loading: %s", fn);
+#endif
+
+    CEditableObject obj(name);
+    obj.LoadObject(fn);
+
+	ext = strext(fn); *ext = '\0';
+	string_path ogfName;
+	strconcat(sizeof(ogfName), ogfName, fn, ".ogf");
+	R_ASSERT3(obj.ExportOGF(ogfName, 4), "Can`t export to OGF [%s]", fn);
+
+	dxRender_Visual* result = TryLoadOgf(ogfName);
+	return result;
+}
+
+dxRender_Visual* CModelPool::TryLoadOgf(const char* N)
+{
 	string_path		fn;
 	string_path		name;
 
 	// Add default ext if no ext at all
-	if (0==strext(N))	strconcat	(sizeof(name),name,N,".ogf");
-	else				strcpy_s	(name,sizeof(name),N);
+	if (0 == strext(N))	strconcat(sizeof(name), name, N, ".ogf");
+	else				strcpy_s(name, sizeof(name), N);
 
 	// Load data from MESHES or LEVEL
-	if (!FS.exist(N))	{
+	if (!FS.exist(N)) {
 		if (!FS.exist(fn, "$level$", name))
-			if (!FS.exist(fn, "$game_meshes$", name)){
-#ifdef _EDITOR
-				Msg("!Can't find model file '%s'.",name);
-                return 0;
-#else            
-				Debug.fatal(DEBUG_INFO,"Can't find model file '%s'.",name);
-#endif
+			if (!FS.exist(fn, "$game_meshes$", name)) {
+				return nullptr;
 			}
-	} else {
-		strcpy_s			(fn,N);
 	}
-	
+	else {
+		strcpy_s(fn, N);
+	}
+
 	// Actual loading
 #ifdef DEBUG
-	if (bLogging)		Msg		("- Uncached model loading: %s",fn);
+	if (bLogging)		Msg("- Uncached model loading: %s", fn);
 #endif // DEBUG
 
-	IReader*			data	= FS.r_open(fn);
+	IReader*			data = FS.r_open(fn);
 	ogf_header			H;
-	data->r_chunk_safe	(OGF_HEADER,&H,sizeof(H));
-	V = Instance_Create (H.type);
-	V->Load				(N,data,0);
-	FS.r_close			(data);
+	data->r_chunk_safe(OGF_HEADER, &H, sizeof(H));
+	dxRender_Visual* V = Instance_Create(H.type);
+	V->Load(N, data, 0);
+	FS.r_close(data);
+	return V;
+}
+
+dxRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
+{
+	dxRender_Visual* V = TryLoadOgf(N);
+	if (V == nullptr)
+		V = TryLoadObject(N);
+	if (V == nullptr) {
+#ifdef _EDITOR
+		Msg("!Can't find model file '%s'.", N);
+		return 0;
+#else            
+		Debug.fatal(DEBUG_INFO, "Can't find model file '%s'.", N);
+#endif
+	}
 	g_pGamePersistent->RegisterModel(V);
-
 	// Registration
-	if (allow_register) Instance_Register(N,V);
-
+	if (allow_register) Instance_Register(N, V);
 	return V;
 }
 

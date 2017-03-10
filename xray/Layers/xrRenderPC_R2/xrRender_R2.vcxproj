@@ -89,6 +89,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rd party\WildMagic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nvapi.lib;$(TargetDir)xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -176,6 +177,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\common\NvMender2003\convert.h" />
+    <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h" />
+    <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h" />
+    <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h" />
     <ClInclude Include="..\..\Include\xrRender\animation_blend.h" />
     <ClInclude Include="..\..\Include\xrRender\animation_motion.h" />
     <ClInclude Include="..\..\Include\xrRender\ApplicationRender.h" />
@@ -204,6 +209,11 @@
     <ClInclude Include="..\..\Include\xrRender\UISequenceVideoItem.h" />
     <ClInclude Include="..\..\Include\xrRender\UIShader.h" />
     <ClInclude Include="..\..\Include\xrRender\WallMarkArray.h" />
+    <ClInclude Include="..\Editor\EditMesh.h" />
+    <ClInclude Include="..\Editor\EditObject.h" />
+    <ClInclude Include="..\Editor\ExportObjectOGF.h" />
+    <ClInclude Include="..\Editor\ExportSkeleton.h" />
+    <ClInclude Include="..\Editor\itterate_adjacents_dynamic.h" />
     <ClInclude Include="..\xrRenderDX9\dx9R_Backend_Runtime.h" />
     <ClInclude Include="..\xrRenderDX9\dx9r_constants_cache.h" />
     <ClInclude Include="..\xrRender\Animation.h" />
@@ -333,8 +343,21 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp" />
+    <ClCompile Include="..\Editor\EditMesh.cpp" />
+    <ClCompile Include="..\Editor\EditMeshIO.cpp" />
+    <ClCompile Include="..\Editor\EditMeshModify.cpp" />
+    <ClCompile Include="..\Editor\EditObject.cpp" />
+    <ClCompile Include="..\Editor\EditObjectEditor.cpp" />
+    <ClCompile Include="..\Editor\EditObjectIO.cpp" />
+    <ClCompile Include="..\Editor\EditObjectMotions.cpp" />
+    <ClCompile Include="..\Editor\ExportObjectOGF.cpp" />
+    <ClCompile Include="..\Editor\ExportObjectOGFCalculateTB.cpp" />
+    <ClCompile Include="..\Editor\ExportSkeleton.cpp" />
+    <ClCompile Include="..\Editor\ExportSkeletonCalculateTB.cpp" />
+    <ClCompile Include="..\Editor\RAPIDMinBox.cpp" />
     <ClCompile Include="..\xrRenderDX9\dx9r_constants_cache.cpp" />
     <ClCompile Include="..\xrRender\Animation.cpp" />
     <ClCompile Include="..\xrRender\blenders\Blender.cpp" />
@@ -522,6 +545,7 @@
     <ClCompile Include="xrRender_R2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\..\common\NvMender2003\ReadMe.txt" />
     <Text Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -530,6 +554,12 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\3rd party\luajit\lua.JIT.1.1.4.vcxproj">
       <Project>{f6c4f74a-152c-4612-9e3b-d02346234855}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\3rd party\WildMagic\WildMagic.vcxproj">
+      <Project>{6c275c8f-0e14-4f64-bb86-55bfc649b900}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utils\ETools\ETools.vcxproj">
+      <Project>{65cbb9d0-fbc6-41a4-8316-f5e9b5d7fb33}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">
       <Project>{a19b1df2-82ec-4364-8bdf-85d13a1c89b5}</Project>
