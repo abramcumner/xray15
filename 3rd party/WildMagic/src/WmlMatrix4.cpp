@@ -8,7 +8,7 @@
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
 
-#include "WmlMatrix4.h"
+#include <WildMagic/WmlMatrix4.h>
 using namespace Wml;
 
 template<> const Matrix4<float> Matrix4<float>::ZERO(

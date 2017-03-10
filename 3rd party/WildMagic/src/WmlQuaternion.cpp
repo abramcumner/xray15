@@ -7,10 +7,7 @@
 // the license agreement http://www.magic-software.com/License/WildMagic.pdf
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
-#include "stdafx.h"
-#pragma hdrstop
-
-#include "WmlQuaternion.h"
+#include <WildMagic/WmlQuaternion.h>
 using namespace Wml;
 
 template<> const Quaternion<float>

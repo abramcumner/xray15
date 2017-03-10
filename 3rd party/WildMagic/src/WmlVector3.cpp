@@ -7,10 +7,7 @@
 // the license agreement http://www.magic-software.com/License/WildMagic.pdf
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
-#include "stdafx.h"
-#pragma hdrstop
-
-#include "WmlVector3.h"
+#include <WildMagic/WmlVector3.h>
 using namespace Wml;
 
 template<> const Vector3<float> Vector3<float>::ZERO(0.0f,0.0f,0.0f);

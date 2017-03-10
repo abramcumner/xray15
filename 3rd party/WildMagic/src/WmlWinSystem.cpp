@@ -7,10 +7,9 @@
 // the license agreement http://www.magic-software.com/License/WildMagic.pdf
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
-#include "stdafx.h"
-#pragma hdrstop
 
-#include "WmlSystem.h"
+#include <windows.h>
+#include <WildMagic/WmlSystem.h>
 using namespace Wml;
 
 //----------------------------------------------------------------------------

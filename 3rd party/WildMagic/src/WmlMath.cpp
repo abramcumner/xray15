@@ -7,15 +7,12 @@
 // the license agreement http://www.magic-software.com/License/WildMagic.pdf
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
-#include "stdafx.h"
-#pragma hdrstop
-
-#include "WmlMath.h"
+#include <WildMagic/WmlMath.h>
 using namespace Wml;
 
 template<> const float Math<float>::EPSILON = FLT_EPSILON;
 template<> const float Math<float>::ZERO_TOLERANCE = 1e-06f;
-template<> const float Math<float>::MAX_REAL = flt_max;//.FLT_MAX;
+template<> const float Math<float>::MAX_REAL = FLT_MAX;
 template<> const float Math<float>::_PI = (float)(4.0*atan(1.0));
 template<> const float Math<float>::TWO_PI = 2.0f*Math<float>::_PI;
 template<> const float Math<float>::HALF_PI = 0.5f*Math<float>::_PI;

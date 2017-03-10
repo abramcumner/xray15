@@ -8,7 +8,7 @@
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
 
-#include "WmlVector2.h"
+#include <WildMagic/WmlVector2.h>
 using namespace Wml;
 
 template<> const Vector2<float> Vector2<float>::ZERO(0.0f,0.0f);

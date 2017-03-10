@@ -11,8 +11,6 @@
 #ifndef WMLSYSTEMH
 #define WMLSYSTEMH
 
-#define WIN32
-
 // Microsoft Windows
 #if defined(WIN32)
 #include "WmlWinSystem.h"
@@ -82,8 +80,8 @@ template <class T> void Allocate3D (int iCols, int iRows, int iSlices,
 template <class T> void Deallocate3D (int iRows, int iSlices,
     T*** aaatArray);
 
-#include "WmlSystem.inl"
-#include "WmlSystem.mcr"
+#include <WildMagic/WmlSystem.inl>
+#include <WildMagic/WmlSystem.mcr>
 
 }
 

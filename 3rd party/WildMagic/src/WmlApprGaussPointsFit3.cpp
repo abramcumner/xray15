@@ -7,11 +7,8 @@
 // the license agreement http://www.magic-software.com/License/WildMagic.pdf
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
-#include "stdafx.h"
-#pragma hdrstop
-
-#include "WmlEigen.h"
-#include "WmlApprGaussPointsFit3.h"
+#include <WildMagic/WmlEigen.h>
+#include <WildMagic/WmlApprGaussPointsFit3.h>
 using namespace Wml;
 
 //----------------------------------------------------------------------------

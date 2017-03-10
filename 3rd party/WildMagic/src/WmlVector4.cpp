@@ -8,7 +8,7 @@
 // and may not be copied or disclosed except in accordance with the terms of
 // that agreement.
 
-#include "WmlVector4.h"
+#include <WildMagic/WmlVector4.h>
 using namespace Wml;
 
 template<> const Vector4<float> Vector4<float>::ZERO(0.0f,0.0f,0.0f,0.0f);
