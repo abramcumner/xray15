@@ -2578,6 +2578,9 @@
     <Filter Include="UI\Tutorial">
       <UniqueIdentifier>{ac59ff80-1508-4b25-bf8a-48b8a7c378cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Client\Objects\items &amp; weapons\Devices\Dosimeter">
+      <UniqueIdentifier>{d4cb7526-88b0-43ed-b57e-59efcee31875}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7477,7 +7480,10 @@
       <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
     </ClInclude>
     <ClInclude Include="objects\devices\Dosimeter.h">
-      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
+    </ClInclude>
+    <ClInclude Include="objects\devices\UIDosimeter.h">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -11133,7 +11139,10 @@
       <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
     </ClCompile>
     <ClCompile Include="objects\devices\Dosimeter.cpp">
-      <Filter>Core\Client\Objects\items &amp; weapons\Devices</Filter>
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
+    </ClCompile>
+    <ClCompile Include="objects\devices\UIDosimeter.cpp">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

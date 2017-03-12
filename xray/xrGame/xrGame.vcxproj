@@ -116,9 +116,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\sdk\libraries;..\..\..\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateMapFile>false</GenerateMapFile>
       <MapFileName />
-      <MapExports>false</MapExports>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>$(TargetDir)xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -1180,6 +1178,7 @@
     <ClInclude Include="ObjectDump.h" />
     <ClInclude Include="objects\devices\Compass.h" />
     <ClInclude Include="objects\devices\Dosimeter.h" />
+    <ClInclude Include="objects\devices\UIDosimeter.h" />
     <ClInclude Include="object_actions.h" />
     <ClInclude Include="object_actions_inline.h" />
     <ClInclude Include="object_handler.h" />
@@ -3692,6 +3691,7 @@
     <ClCompile Include="ObjectDump.cpp" />
     <ClCompile Include="objects\devices\Compass.cpp" />
     <ClCompile Include="objects\devices\Dosimeter.cpp" />
+    <ClCompile Include="objects\devices\UIDosimeter.cpp" />
     <ClCompile Include="object_actions.cpp" />
     <ClCompile Include="object_handler.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
