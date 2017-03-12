@@ -624,22 +624,23 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
 #endif
         Msg				("Split statistic:");
         for (int k=0; k<(int)m_Splits.size(); k++){
-    // check splits
-    	if (bRes)
-    	{
-            if (!m_Splits[k].valid())
+            // check splits
+            if (bRes)
             {
-               Msg("! Empty split found (Shader/Texture: %s/%s). Removed.",*m_Splits[k].m_Shader,*m_Splits[k].m_Texture);
-                m_Splits.erase	(m_Splits.begin()+k); k--;
-            }else
-            {
-                SSplit& split	= m_Splits[k];
-                std::sort		(split.m_UsedBones.begin(),split.m_UsedBones.end());
-                U16It ne		= std::unique(split.m_UsedBones.begin(),split.m_UsedBones.end());
-                split.m_UsedBones.erase	(ne,split.m_UsedBones.end());
-                Msg				(" - Split %d: [Bones: %d, Links: %d, Faces: %d, Verts: %d, BrPart: %d, Shader/Texture: '%s'/'%s']",k,split.m_UsedBones.size(),split.m_SkeletonLinkType,split.getTS(),split.getVS(),split.m_PartID,*m_Splits[k].m_Shader,*m_Splits[k].m_Texture);
+                if (!m_Splits[k].valid())
+                {
+                    Msg("! Empty split found (Shader/Texture: %s/%s). Removed.",*m_Splits[k].m_Shader,*m_Splits[k].m_Texture);
+                    m_Splits.erase	(m_Splits.begin()+k); k--;
+                }else
+                {
+                    SSplit& split	= m_Splits[k];
+                    std::sort		(split.m_UsedBones.begin(),split.m_UsedBones.end());
+                    U16It ne		= std::unique(split.m_UsedBones.begin(),split.m_UsedBones.end());
+                    split.m_UsedBones.erase	(ne,split.m_UsedBones.end());
+                    Msg				(" - Split %d: [Bones: %d, Links: %d, Faces: %d, Verts: %d, BrPart: %d, Shader/Texture: '%s'/'%s']",k,split.m_UsedBones.size(),split.m_SkeletonLinkType,split.getTS(),split.getVS(),split.m_PartID,*m_Splits[k].m_Shader,*m_Splits[k].m_Texture);
+                }
             }
-       }
+           }
         // calculate TB
         for (SplitIt split_it=m_Splits.begin(); split_it!=m_Splits.end(); split_it++)
         {
@@ -653,7 +654,7 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
 #endif
         // compute bounding
         ComputeBounding	();
-    }
+
 #ifdef _EDITOR
     UI->ProgressEnd(pb);
 #endif
