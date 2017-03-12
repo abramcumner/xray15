@@ -111,10 +111,10 @@ public:
     IC void			SetName			(LPCSTR name){m_Name=name;}
 	IC void			SetShader		(LPCSTR name)
 	{
-		R_ASSERT2(name&&name[0],"Empty shader name."); 
-		m_ShaderName=name; 
-#ifdef _EDITOR 
-		OnDeviceDestroy(); 
+		R_ASSERT2(name&&name[0],"Empty shader name.");
+		m_ShaderName=name;
+#ifdef _EDITOR
+		OnDeviceDestroy();
 #endif
 	}
     IC void 		SetShaderXRLC	(LPCSTR name){m_ShaderXRLCName=name;}
@@ -125,9 +125,9 @@ public:
     IC u32			_GameMtl		()const	{return GMLib.GetMaterialID	(*m_GameMtlName);}
 #ifdef _EDITOR
 	IC void			OnDeviceCreate	()
-    { 
+    {
         R_ASSERT(!m_RTFlags.is(rtValidShader));
-    	if (m_ShaderName.size()&&m_Texture.size())	m_Shader.create(*m_ShaderName,*m_Texture); 
+    	if (m_ShaderName.size()&&m_Texture.size())	m_Shader.create(*m_ShaderName,*m_Texture);
         else                                       	m_Shader.create("editor\\wire");
         m_RTFlags.set(rtValidShader,TRUE);
     }
@@ -169,10 +169,10 @@ class ECORE_API CEditableObject{
 #endif
 // desc
 	shared_str 		m_CreateName;
-    time_t			m_CreateTime;
+	__time32_t			m_CreateTime;
 	shared_str 		m_ModifName;
-    time_t			m_ModifTime;
-    
+	__time32_t			m_ModifTime;
+
 // general
 	xr_string		m_ClassScript;
 
@@ -194,13 +194,13 @@ public:
 	// options
 	Flags32			m_objectFlags;
 	enum{
-		eoDynamic 	 	= (1<<0),			
-		eoProgressive 	= (1<<1),			
-        eoUsingLOD		= (1<<2),			
-        eoHOM			= (1<<3),			
-        eoMultipleUsage	= (1<<4),			
-        eoSoundOccluder	= (1<<5),           
-		eoFORCE32		= u32(-1)           
+		eoDynamic 	 	= (1<<0),
+		eoProgressive 	= (1<<1),
+        eoUsingLOD		= (1<<2),
+        eoHOM			= (1<<3),
+        eoMultipleUsage	= (1<<4),
+        eoSoundOccluder	= (1<<5),
+		eoFORCE32		= u32(-1)
     };
     IC BOOL			IsDynamic				(){return m_objectFlags.is(eoDynamic);}
     IC BOOL			IsStatic				(){return !m_objectFlags.is(eoSoundOccluder)&&!m_objectFlags.is(eoDynamic)&&!m_objectFlags.is(eoHOM)&&!m_objectFlags.is(eoMultipleUsage);}
@@ -464,7 +464,7 @@ public:
 #define EOBJ_CHUNK_REFERENCE     	0x0902
 #define EOBJ_CHUNK_FLAGS           	0x0903
 #define EOBJ_CHUNK_SURFACES			0x0905
-#define EOBJ_CHUNK_SURFACES2		0x0906                                 
+#define EOBJ_CHUNK_SURFACES2		0x0906
 #define EOBJ_CHUNK_SURFACES3		0x0907
 #define EOBJ_CHUNK_EDITMESHES      	0x0910
 #define _EOBJ_CHUNK_LIB_VERSION_   	0x0911 // obsolette
