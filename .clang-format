@@ -1,0 +1,8 @@
+BasedOnStyle: Webkit
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass: true
+  AfterFunction: true
+IncludeCategories:
+  - Regex: 'stdafx.h'
+    Priority: -1
