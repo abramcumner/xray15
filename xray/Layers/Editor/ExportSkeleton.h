@@ -41,7 +41,7 @@ struct ECORE_API SSkelVert: public st_SVert{
     }
 	BOOL	similar_pos(SSkelVert& V)
     {
-        return offs.similar(V.offs,EPS_L);
+        return offs.similar(V.offs,EPS);
     }
 	BOOL	similar(SSkelVert& V)
     {
@@ -54,10 +54,10 @@ struct ECORE_API SSkelVert: public st_SVert{
         if (!uv.similar	(V.uv,EPS_S))
         	return FALSE;
 
-		if (!offs.similar(V.offs,EPS_L))
+		if (!offs.similar(V.offs,EPS))
         	return FALSE;
 
-		if (!norm.similar(V.norm,EPS_L))
+		if (!norm.similar(V.norm,EPS))
         	return FALSE;
 
 		return TRUE;
