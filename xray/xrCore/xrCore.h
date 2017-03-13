@@ -3,7 +3,7 @@
 #pragma once
 
 #ifndef DEBUG
-#	define MASTER_GOLD
+//#	define MASTER_GOLD
 #endif // DEBUG
 
 #pragma warning(disable:4996)
