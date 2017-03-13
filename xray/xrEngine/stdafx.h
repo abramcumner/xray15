@@ -9,11 +9,11 @@
 #include "../xrCore/xrCore.h"
 #include "../Include/xrAPI/xrAPI.h"
 
-#ifndef NDEBUG
-#	ifndef INGAME_EDITOR
+//#ifndef NDEBUG
+//#	ifndef INGAME_EDITOR
 #		define	INGAME_EDITOR
-#	endif // #ifndef INGAME_EDITOR
-#endif // #ifndef NDEBUG
+//#	endif // #ifndef INGAME_EDITOR
+//#endif // #ifndef NDEBUG
 
 #ifdef _DEBUG
 #	define D3D_DEBUG_INFO
