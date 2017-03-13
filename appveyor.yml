@@ -47,9 +47,9 @@ after_build:
 
     echo appveyor PushArtifact cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
 
-    copy cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z cs_{version}_%COR_PLAT%.7z
+    copy cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z cs_%APPVEYOR_BUILD_VERSION%_%COR_PLAT%.7z
 
-    appveyor PushArtifact cs_{version}_%COR_PLAT%.7z
+    appveyor PushArtifact cs_%APPVEYOR_BUILD_VERSION%_%COR_PLAT%.7z
 
     echo ===================== sdk files =====================
 
