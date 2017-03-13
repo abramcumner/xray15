@@ -11,7 +11,7 @@ before_build:
 
     echo %CONFIGURATION%
 
-    echo cop_%APPVEYOR_REPO_TAG_NAME%_%PLATFORM%.7z
+    echo cs_%APPVEYOR_REPO_TAG_NAME%_%PLATFORM%.7z
 build:
   project: ./engine.sln
   verbosity: minimal
@@ -47,6 +47,10 @@ after_build:
 
     echo appveyor PushArtifact cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
 
+    copy cs_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z cs_{version}_%COR_PLAT%.7z
+
+    appveyor PushArtifact cs_{version}_%COR_PLAT%.7z
+
     echo ===================== sdk files =====================
 
     md dist\sdk_%COR_PLAT%
@@ -80,6 +84,10 @@ after_build:
     7z a cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\sdk_%COR_PLAT%\*
 
     echo appveyor PushArtifact cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z release
+
+    copy cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z cs_compilers_%COR_PLAT%_latest.7z
+
+    appveyor PushArtifact cs_compilers_%COR_PLAT%_latest.7z	
 artifacts:
 - path: .\cs_$(appveyor_repo_tag_name)_$(cor_plat).7z
   name: release
