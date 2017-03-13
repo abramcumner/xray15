@@ -741,6 +741,12 @@
     <ProjectReference Include="..\..\3rd party\luajit\lua.JIT.1.1.4.vcxproj">
       <Project>{f6c4f74a-152c-4612-9e3b-d02346234855}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\editor\editor.vcxproj">
+      <Project>{492d3dfe-9068-4e7e-a008-7c2420a651c0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\editor_controls\editor_controls.vcxproj">
+      <Project>{b45374aa-c7ed-42cf-bbd3-deaa2b7acb48}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Layers\xrAPI\xrAPI.vcxproj">
       <Project>{1daec516-e52c-4a3c-a4da-ae3553e6e0f8}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
