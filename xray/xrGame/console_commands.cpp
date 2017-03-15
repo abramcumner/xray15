@@ -1002,25 +1002,27 @@ public:
 };
 #endif // DEBUG
 
-class CCC_PHFps : public IConsole_Command {
+class CCC_PHFps : public CCC_Float
+{
 public:
-	CCC_PHFps(LPCSTR N) :
-	  IConsole_Command(N)
-	  {};
-	  virtual void	Execute	(LPCSTR args)
-	  {
-		  float				step_count = (float)atof(args);
-#ifndef		DEBUG
-		  clamp				(step_count,50.f,200.f);
-#endif
-		  CPHWorld::SetStep(1.f/step_count);
-	  }
-	  virtual void	Status	(TStatus& S)
-	  {	
-		 	sprintf_s	(S,"%3.5f",1.f/fixed_step);	  
-	  }
+    CCC_PHFps(LPCSTR N)
+        : CCC_Float(N, &m_dummy, 50.f, 200.f){};
 
+    void Execute(LPCSTR args) override
+    {
+        CCC_Float::Execute(args);
+        CPHWorld::SetStep(1.f / m_dummy);
+    }
+
+    void Status(TStatus& S) override
+    {
+        m_dummy = 1.f / fixed_step;
+        CCC_Float::Status(S);
+    }
+private:
+    static float m_dummy;
 };
+float CCC_PHFps::m_dummy = 0.0f;
 
 #ifdef DEBUG
 extern void print_help(lua_State *L);
