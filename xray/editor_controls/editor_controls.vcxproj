@@ -84,9 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="Flobbster.Windows.Forms.PropertyGrid">
-      <HintPath>..\..\sdk\binaries\Flobbster.Windows.Forms.PropertyGrid.dll</HintPath>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <HintPath>..\..\SDK\binaries\Flobbster.Windows.Forms.PropertyGrid.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>

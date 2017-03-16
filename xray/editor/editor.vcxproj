@@ -26,7 +26,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
@@ -88,11 +88,6 @@
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
     </Reference>
-    <Reference Include="editor_controls">
-      <HintPath>..\..\..\binaries\editor_controls.dll</HintPath>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-    </Reference>
     <Reference Include="Flobbster.Windows.Forms.PropertyGrid">
       <HintPath>..\..\sdk\binaries\Flobbster.Windows.Forms.PropertyGrid.dll</HintPath>
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
@@ -135,8 +130,6 @@
   <ItemGroup>
     <ProjectReference Include="..\editor_controls\editor_controls.vcxproj">
       <Project>{b45374aa-c7ed-42cf-bbd3-deaa2b7acb48}</Project>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\xrCore\xrCore.vcxproj">
       <Project>{a0f7d1fb-59a7-4717-a7e4-96f37e91998e}</Project>
