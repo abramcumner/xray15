@@ -12,24 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="colorconvert.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
-    <ClInclude Include="ddsTypes.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
-    <ClInclude Include="dxtlib.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
-    <ClInclude Include="nvdxt_options.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
-    <ClInclude Include="tPixel.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
-    <ClInclude Include="tVector.h">
-      <Filter>Convert</Filter>
-    </ClInclude>
     <ClInclude Include="ETextureParams.h">
       <Filter>Shared</Filter>
     </ClInclude>
@@ -50,12 +32,12 @@
     </ClInclude>
     <ClInclude Include="dds.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="dds\tPixel.h">
+      <Filter>Convert</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXT.cpp">
-      <Filter>Convert</Filter>
-    </ClCompile>
-    <ClCompile Include="nvdxt.cpp">
       <Filter>Convert</Filter>
     </ClCompile>
     <ClCompile Include="ETextureParams.cpp">

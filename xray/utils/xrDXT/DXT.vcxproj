@@ -206,20 +206,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="colorconvert.h" />
     <ClInclude Include="dds.h" />
-    <ClInclude Include="ddsTypes.h" />
-    <ClInclude Include="dxtlib.h" />
+    <ClInclude Include="dds\tPixel.h" />
     <ClInclude Include="ETextureParams.h" />
     <ClInclude Include="Image_DXTC.h" />
-    <ClInclude Include="nvdxt_options.h" />
     <ClInclude Include="NVI_Convolution.h" />
     <ClInclude Include="NVI_Image.h" />
     <ClInclude Include="NV_Common.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tga.h" />
-    <ClInclude Include="tPixel.h" />
-    <ClInclude Include="tVector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXT.cpp">
@@ -229,11 +224,6 @@
     <ClCompile Include="ETextureParams.cpp" />
     <ClCompile Include="Image_DXTC.cpp" />
     <ClCompile Include="NormalMapGen.cpp" />
-    <ClCompile Include="nvdxt.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="NVI_Convolution.cpp" />
     <ClCompile Include="NVI_Image.cpp" />
     <ClCompile Include="StdAfx.cpp">
