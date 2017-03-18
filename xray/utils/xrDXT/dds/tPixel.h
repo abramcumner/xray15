@@ -71,9 +71,6 @@ inline size_t calcMaxMipmap(size_t w, size_t h)
     size_t n = 0;
     size_t count = 0;
 
-    assert(w >= 0);
-    assert(h >= 0);
-
     if (w < h)
         count = h;
     else
@@ -92,10 +89,6 @@ inline size_t calcMaxMipmap(size_t w, size_t h, size_t d)
 {
     size_t n = 0;
     size_t count = 0;
-
-    assert(w >= 0);
-    assert(h >= 0);
-    assert(d >= 0);
 
     if (w < h)
         count = h;
@@ -1340,7 +1333,7 @@ public:
          
     size_t width() const
     {
-        return cubeFaces[0].height();
+        return cubeFaces[0].width();
     }
 
     void clear()
@@ -1649,7 +1642,7 @@ public:
          
     size_t width() const
     {
-        return cubeFaces[0].height();
+        return cubeFaces[0].width();
     }
          
     void clear()

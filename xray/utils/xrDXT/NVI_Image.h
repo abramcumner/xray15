@@ -68,7 +68,7 @@ public:
 public:
 
 	NVI_Image();
-	~NVI_Image();
+	virtual ~NVI_Image();
 
 	//////////////////////////////////////
 
