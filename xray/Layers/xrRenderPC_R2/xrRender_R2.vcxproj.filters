@@ -163,12 +163,12 @@
     <Filter Include="Models\Editor\NvMender2003">
       <UniqueIdentifier>{71bbad4e-69cb-41c5-8cd7-00bf14659b7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{612cb47e-22e7-4d3c-866d-f97856d0ddae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
-      <Filter>Kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
       <Filter>Kernel</Filter>
     </ClInclude>
     <ClInclude Include="..\xrRender\xrD3DDefs.h">
@@ -657,11 +657,11 @@
     <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
+    <ClInclude Include="pch\stdafx.h">
+      <Filter>pch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\xrRender_console.cpp">
       <Filter>Kernel</Filter>
     </ClCompile>
@@ -1189,6 +1189,9 @@
     </ClCompile>
     <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
       <Filter>Models\Editor\NvMender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="pch\stdafx.cpp">
+      <Filter>pch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
