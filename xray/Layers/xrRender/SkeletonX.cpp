@@ -489,7 +489,11 @@ void CSkeletonX::_FillVerticesSoft1W(const Fmatrix& view, CSkeletonWallmark& wm,
 			vertBoned1W& vert		= Vertices1W[indices[idx+k]];
 			F.bone_id[k][0]			= (u16)vert.matrix;
 			F.bone_id[k][1]			= F.bone_id[k][0];
-			F.weight[k]				= 0.f;
+			F.bone_id[k][2]			= F.bone_id[k][0];
+			F.bone_id[k][3]			= F.bone_id[k][0];
+			F.weight[k][0]			= 0.f;
+			F.weight[k][1]			= 0.f;
+			F.weight[k][2]			= 0.f;
 			const Fmatrix& xform	= Parent->LL_GetBoneInstance(F.bone_id[k][0]).mRenderTransform; 
 			F.vert[k].set			(vert.P);
 			xform.transform_tiny	(p[k],F.vert[k]);
@@ -523,13 +527,17 @@ void CSkeletonX::_FillVerticesSoft2W(const Fmatrix& view, CSkeletonWallmark& wm,
 			vertBoned2W& vert		= Vertices2W[indices[idx+k]];
 			F.bone_id[k][0]			= vert.matrix0;
 			F.bone_id[k][1]			= vert.matrix1;
-			F.weight[k]				= vert.w;
+			F.bone_id[k][2]			= F.bone_id[k][1];
+			F.bone_id[k][3]			= F.bone_id[k][1];
+			F.weight[k][0]			= vert.w;
+			F.weight[k][1]			= 0.f;
+			F.weight[k][2]			= 0.f;
 			Fmatrix& xform0			= Parent->LL_GetBoneInstance(F.bone_id[k][0]).mRenderTransform; 
 			Fmatrix& xform1			= Parent->LL_GetBoneInstance(F.bone_id[k][1]).mRenderTransform; 
 			F.vert[k].set			(vert.P);		
 			xform0.transform_tiny	(P0,F.vert[k]);
 			xform1.transform_tiny	(P1,F.vert[k]);
-			p[k].lerp				(P0,P1,F.weight[k]);
+			p[k].lerp				(P0,P1,F.weight[k][0]);
 		}
 		Fvector test_normal;
 		test_normal.mknormal	(p[0],p[1],p[2]);
@@ -546,6 +554,16 @@ void CSkeletonX::_FillVerticesSoft2W(const Fmatrix& view, CSkeletonWallmark& wm,
 			wm.m_Faces.push_back(F);
 		}
 	}
+}
+void CSkeletonX::_FillVerticesSoft3W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, u16* indices, CBoneData::FacesVec& faces)
+{
+    VERIFY(*Vertices3W);
+    R_ASSERT2(0, "CSkeletonX::_FillVerticesSoft3W not implemented");
+}
+void CSkeletonX::_FillVerticesSoft4W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, u16* indices, CBoneData::FacesVec& faces)
+{
+    VERIFY(*Vertices4W);
+    R_ASSERT2(0, "CSkeletonX::_FillVerticesSoft4W not implemented");
 }
 
 #ifdef	USE_DX10

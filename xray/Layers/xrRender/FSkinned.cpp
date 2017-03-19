@@ -1006,7 +1006,7 @@ case RM_SKINNING_4B:	result = _PickBoneHW4W	(r,dist,start,dir,V,indices+iBase,*f
 default: NODEFAULT;
 	}
 	CHK_DX				(V->p_rm_Indices->Unlock());
-#endif	USE_DX10
+#endif	//USE_DX10
 
 	return result;
 }
@@ -1067,7 +1067,11 @@ void CSkeletonX_ext::_FillVerticesHW1W(const Fmatrix& view, CSkeletonWallmark& w
 			vertHW_1W& vert			= vertices[indices[idx+k]];
 			F.bone_id[k][0]			= vert.get_bone();
 			F.bone_id[k][1]			= F.bone_id[k][0];
-			F.weight[k]				= 0.f;
+			F.bone_id[k][2]			= F.bone_id[k][0];
+			F.bone_id[k][3]			= F.bone_id[k][0];
+			F.weight[k][0]			= 0.f;
+			F.weight[k][1]			= 0.f;
+			F.weight[k][2]			= 0.f;
 			const Fmatrix& xform	= Parent->LL_GetBoneInstance(F.bone_id[k][0]).mRenderTransform; 
 			vert.get_pos			(F.vert[k]);
 			xform.transform_tiny	(p[k],F.vert[k]);
@@ -1107,13 +1111,17 @@ void CSkeletonX_ext::_FillVerticesHW2W(const Fmatrix& view, CSkeletonWallmark& w
 			vertHW_2W& vert			= vertices[indices[idx+k]];
 			F.bone_id[k][0]			= vert.get_bone(0);
 			F.bone_id[k][1]			= vert.get_bone(1);
-			F.weight[k]				= vert.get_weight();
+			F.bone_id[k][2]			= F.bone_id[k][1];
+			F.bone_id[k][3]			= F.bone_id[k][1];
+			F.weight[k][0]			= vert.get_weight();
+			F.weight[k][1]			= 0.f;
+			F.weight[k][2]			= 0.f;
 			Fmatrix& xform0			= Parent->LL_GetBoneInstance(F.bone_id[k][0]).mRenderTransform; 
 			Fmatrix& xform1			= Parent->LL_GetBoneInstance(F.bone_id[k][1]).mRenderTransform; 
 			vert.get_pos			(F.vert[k]);		
 			xform0.transform_tiny	(P0,F.vert[k]);
 			xform1.transform_tiny	(P1,F.vert[k]);
-			p[k].lerp				(P0,P1,F.weight[k]);
+			p[k].lerp				(P0,P1,F.weight[k][0]);
 		}
 		Fvector test_normal;
 		test_normal.mknormal	(p[0],p[1],p[2]);
@@ -1137,45 +1145,127 @@ void CSkeletonX_ext::_FillVerticesHW2W(const Fmatrix& view, CSkeletonWallmark& w
 
 void CSkeletonX_ext::_FillVerticesHW3W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0,"CSkeletonX_ext::_FillVerticesHW3W not implemented");
+	vertHW_3W*			vertices;
+	CHK_DX(V->p_rm_Vertices->Lock(V->vBase, V->vCount, (void**)&vertices, D3DLOCK_READONLY));
+
+	for (CBoneData::FacesVecIt it = faces.begin(); it != faces.end(); ++it)
+	{
+		Fvector						p[3];
+		u32 idx = (*it) * 3;
+		CSkeletonWallmark::WMFace	F;
+
+		for (u32 k = 0; k<3; k++)
+		{
+			vertHW_3W& vert = vertices[indices[idx + k]];
+			F.bone_id[k][0] = vert.get_bone(0);
+			F.bone_id[k][1] = vert.get_bone(1);
+			F.bone_id[k][2] = vert.get_bone(2);
+			F.bone_id[k][3] = F.bone_id[k][2];
+			F.weight[k][0] = vert.get_weight0();
+			F.weight[k][1] = vert.get_weight1();
+			F.weight[k][2] = 0.f;
+			vert.get_pos(F.vert[k]);
+			vert.get_pos_bones(p[k], Parent);
+		}
+		Fvector test_normal;
+		test_normal.mknormal(p[0], p[1], p[2]);
+		float cosa = test_normal.dotproduct(normal);
+		if (cosa<EPS)			continue;
+
+		if (CDB::TestSphereTri(wm.ContactPoint(), size, p))
+		{
+			Fvector				UV;
+			for (u32 k = 0; k<3; k++) {
+				Fvector2& uv = F.uv[k];
+				view.transform_tiny(UV, p[k]);
+				uv.x = (1 + UV.x)*.5f;
+				uv.y = (1 - UV.y)*.5f;
+			}
+			wm.m_Faces.push_back(F);
+		}
+	}
+	CHK_DX(V->p_rm_Vertices->Unlock());
 }
 
 void CSkeletonX_ext::_FillVerticesHW4W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0,"CSkeletonX_ext::_FillVerticesHW4W not implemented");
+	vertHW_4W*			vertices;
+	CHK_DX(V->p_rm_Vertices->Lock(V->vBase, V->vCount, (void**)&vertices, D3DLOCK_READONLY));
+
+	for (CBoneData::FacesVecIt it = faces.begin(); it != faces.end(); ++it)
+	{
+		Fvector						p[3];
+		u32 idx = (*it) * 3;
+		CSkeletonWallmark::WMFace	F;
+
+		for (u32 k = 0; k<3; k++)
+		{
+			vertHW_4W& vert = vertices[indices[idx + k]];
+			F.bone_id[k][0] = vert.get_bone(0);
+			F.bone_id[k][1] = vert.get_bone(1);
+			F.bone_id[k][2] = vert.get_bone(2);
+			F.bone_id[k][3] = vert.get_bone(3);
+			F.weight[k][0] = vert.get_weight0();
+			F.weight[k][1] = vert.get_weight1();
+			F.weight[k][2] = vert.get_weight2();
+			vert.get_pos(F.vert[k]);
+			vert.get_pos_bones(p[k], Parent);
+		}
+		Fvector test_normal;
+		test_normal.mknormal(p[0], p[1], p[2]);
+		float cosa = test_normal.dotproduct(normal);
+		if (cosa<EPS)			continue;
+
+		if (CDB::TestSphereTri(wm.ContactPoint(), size, p))
+		{
+			Fvector				UV;
+			for (u32 k = 0; k<3; k++) {
+				Fvector2& uv = F.uv[k];
+				view.transform_tiny(UV, p[k]);
+				uv.x = (1 + UV.x)*.5f;
+				uv.y = (1 - UV.y)*.5f;
+			}
+			wm.m_Faces.push_back(F);
+		}
+	}
+	CHK_DX(V->p_rm_Vertices->Unlock());
 }
 #endif	//	USE_DX10
 
 
 void CSkeletonX_ext::_FillVertices(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16 bone_id, u32 iBase, u32 iCount)
 {
-	R_ASSERT2(0,"CSkeletonX_ext::_FillVertices not implemented");
+    VERIFY(Parent && (ChildIDX != u16(-1)));
+    CBoneData& BD = Parent->LL_GetData(bone_id);
+    CBoneData::FacesVec*	faces = &BD.child_faces[ChildIDX];
+    u16* indices = 0;
+#ifdef	USE_DX10
+    indices = *m_Indices;
+#else	//	USE_DX10
+    CHK_DX(V->p_rm_Indices->Lock(0, V->dwPrimitives * 3, (void**)&indices, D3DLOCK_READONLY));
+    // fill vertices
+    switch (RenderMode)
+    {
+    case RM_SKINNING_SOFT:
+#endif	//	USE_DX10
+        if (*Vertices1W)			_FillVerticesSoft1W(view, wm, normal, size, indices + iBase, *faces);
+        else if (*Vertices2W)		_FillVerticesSoft2W(view, wm, normal, size, indices + iBase, *faces);
+        else if (*Vertices3W)		_FillVerticesSoft3W(view, wm, normal, size, indices + iBase, *faces);
+        else {
+            VERIFY(!!(*Vertices4W));
+            _FillVerticesSoft4W(view, wm, normal, size, indices + iBase, *faces);
+        }
+#ifndef	USE_DX10
+        break;
+    case RM_SINGLE:
+    case RM_SKINNING_1B:			_FillVerticesHW1W(view, wm, normal, size, V, indices + iBase, *faces);		break;
+    case RM_SKINNING_2B:			_FillVerticesHW2W(view, wm, normal, size, V, indices + iBase, *faces);		break;
+    case RM_SKINNING_3B:			_FillVerticesHW3W(view, wm, normal, size, V, indices + iBase, *faces);		break;
+    case RM_SKINNING_4B:			_FillVerticesHW4W(view, wm, normal, size, V, indices + iBase, *faces);		break;
+    }
+    CHK_DX(V->p_rm_Indices->Unlock());
+#endif	//	USE_DX10
 }
-/*
-void CSkeletonX_ext::_FillVertices(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16 bone_id, u32 iBase, u32 iCount)
-{
-	VERIFY				(Parent&&(ChildIDX!=u16(-1)));
-	CBoneData& BD					= Parent->LL_GetData(bone_id);
-	CBoneData::FacesVec*	faces	= &BD.child_faces[ChildIDX];
-	u16* indices		= 0;
-	//.	R_CHK				(V->pIndices->Lock(iBase,iCount,		(void**)&indices,	D3DLOCK_READONLY));
-	CHK_DX				(V->p_rm_Indices->Lock(0,V->dwPrimitives*3,(void**)&indices,D3DLOCK_READONLY));
-	// fill vertices
-	switch	(RenderMode)
-	{
-	case RM_SKINNING_SOFT:
-		if (*Vertices1W)			_FillVerticesSoft1W		(view,wm,normal,size,indices+iBase,*faces);
-		else						_FillVerticesSoft2W		(view,wm,normal,size,indices+iBase,*faces);
-		break;
-	case RM_SINGLE:
-	case RM_SKINNING_1B:			_FillVerticesHW1W		(view,wm,normal,size,V,indices+iBase,*faces);		break;
-	case RM_SKINNING_2B:			_FillVerticesHW2W		(view,wm,normal,size,V,indices+iBase,*faces);		break;
-	case RM_SKINNING_3B:			_FillVerticesHW3W		(view,wm,normal,size,V,indices+iBase,*faces);		break;
-	case RM_SKINNING_4B:			_FillVerticesHW4W		(view,wm,normal,size,V,indices+iBase,*faces);		break;
-	}
-	CHK_DX				(V->p_rm_Indices->Unlock());
-}
-*/
 
 void CSkeletonX_ST::FillVertices	(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, u16 bone_id)
 {
