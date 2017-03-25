@@ -1,9 +1,10 @@
 BasedOnStyle: Webkit
+AllowShortFunctionsOnASingleLine: false
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterClass: true
   AfterFunction: true
-ColumnLimit: 100
+ColumnLimit: 120
 IncludeCategories:
   - Regex: 'stdafx.h'
     Priority: -1
