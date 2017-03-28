@@ -17,9 +17,9 @@ before_build:
 
     IF "%COR_PLAT%" == "Win32" set COR_PLAT=x86
 
-    set CI_VERSION=%APPVEYOR_BUILD_VERSION%_%COR_PLAT%
+    set APPVEYOR_VERSION=%APPVEYOR_BUILD_VERSION%_%COR_PLAT%
 
-    echo %CI_VERSION%
+    echo %APPVEYOR_VERSION%
 build:
   project: ./engine.sln
   verbosity: minimal
