@@ -12,15 +12,19 @@ before_build:
     echo %CONFIGURATION%
 
     echo cs_%APPVEYOR_REPO_TAG_NAME%_%PLATFORM%.7z
+
+    set COR_PLAT=%PLATFORM%
+
+    IF "%COR_PLAT%" == "Win32" set COR_PLAT=x86
+
+    set CI_VERSION=%VERSION%_%COR_PLAT%
+
+    echo %CI_VERSION%
 build:
   project: ./engine.sln
   verbosity: minimal
 after_build:
 - cmd: >-
-    set COR_PLAT=%PLATFORM%
-
-    IF "%COR_PLAT%" == "Win32" set COR_PLAT=x86
-
     md dist
 
     echo ===================== engine files =====================
