@@ -87,14 +87,17 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 		IReader*	chunk	= NULL;
 		int			chunk_id= 0;
 
-		while ((chunk=fs->open_chunk(chunk_id))!=NULL){
+		while ((chunk = fs->open_chunk(chunk_id)) != NULL) {
 			CBlender_DESC	desc;
-			chunk->r		(&desc,sizeof(desc));
+			chunk->r(&desc, sizeof(desc));
 #if RENDER == R_R2 || RENDER == R_R3
 			// в рендере р2/р3 этот шейдер не создается и не используется
 			// чтобы не выводить бесполезных сообщений об ошибках, пропускаю его
-			if (desc.CLS == B_SHADOW_WORLD)
+			if (desc.CLS == B_SHADOW_WORLD) {
+				chunk->close();
+				chunk_id += 1;
 				continue;
+			}
 #endif
 			IBlender*		B = IBlender::Create(desc.CLS);
 			if	(0==B)
