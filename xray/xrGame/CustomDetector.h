@@ -1,16 +1,10 @@
 #pragma once
-#include "inventory_item_object.h"
-#include "../xrEngine/feel_touch.h"
-#include "hudsound.h"
-#include "customzone.h"
-#include "artefact.h"
-#include "ai_sounds.h"
-#include "ui/ArtefactDetectorUI.h"
-#include "DetectList.h"
-#include "Artefact.h"
 
-class CCustomZone;
-class CInventoryOwner;
+#include "Artefact.h"
+#include "DetectList.h"
+#include "hud_item_object.h"
+
+class CUIArtefactDetectorBase;
 
 class CAfList  :public CDetectList<CArtefact>
 {

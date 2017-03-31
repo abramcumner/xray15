@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../ui/ArtefactDetectorUI.h"
 #include "Dosimeter.h"
 
 class CUIDosimeter : public CUIArtefactDetectorBase, public CUIWindow

@@ -1,5 +1,6 @@
 #pragma once
-#include "customdetector.h"
+#include "CustomDetector.h"
+#include "ui/ArtefactDetectorUI.h"
 
 class CUIArtefactDetectorSimple;
 

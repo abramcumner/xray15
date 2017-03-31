@@ -1,15 +1,11 @@
 #include "stdafx.h"
-#include "customdetector.h"
-#include "ui/ArtefactDetectorUI.h"
-#include "hudmanager.h"
-#include "inventory.h"
-#include "level.h"
-#include "map_manager.h"
-#include "ActorEffector.h"
-#include "actor.h"
-#include "ui/UIWindow.h"
+#include "CustomDetector.h"
+#include "Actor.h"
+#include "Inventory.h"
+#include "Level.h"
+#include "Weapon.h"
 #include "player_hud.h"
-#include "weapon.h"
+#include "ui/ArtefactDetectorUI.h"
 
 bool  CCustomDetector::CheckCompatibilityInt(CHudItem* itm)
 {
