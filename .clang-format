@@ -8,3 +8,5 @@ ColumnLimit: 120
 IncludeCategories:
   - Regex: 'stdafx.h'
     Priority: -1
+  - Regex: 'pch_script.h'
+    Priority: -1
