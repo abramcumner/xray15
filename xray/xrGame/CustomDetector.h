@@ -169,4 +169,7 @@ protected:
 	float			m_fAfVisRadius;
 
 	CAfList			m_artefacts;
+
+private:
+	u32 m_lastParentSlot = NO_ACTIVE_SLOT;// Слот, с которым последний раз использовался детектор
 };
