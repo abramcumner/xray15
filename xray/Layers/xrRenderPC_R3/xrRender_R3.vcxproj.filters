@@ -192,9 +192,6 @@
     <ClInclude Include="cl_intersect.h">
       <Filter>Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Kernel</Filter>
-    </ClInclude>
     <ClInclude Include="..\xrRender\xrD3DDefs.h">
       <Filter>Kernel</Filter>
     </ClInclude>
@@ -747,11 +744,11 @@
     <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
+    <ClInclude Include="pch\stdafx.h">
+      <Filter>Kernel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Kernel</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\xrRender_console.cpp">
       <Filter>Kernel</Filter>
     </ClCompile>
@@ -1372,6 +1369,9 @@
     </ClCompile>
     <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp">
       <Filter>Models\Editor\NvMender2003</Filter>
+    </ClCompile>
+    <ClCompile Include="pch\stdafx.cpp">
+      <Filter>Kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
