@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "xrServer_svclient_validation.h"
 #include "Level.h"
+#include "GameObject.h"
 
 bool is_object_valid_on_svclient(u16 id_entity)
 {

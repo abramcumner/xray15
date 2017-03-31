@@ -1,11 +1,9 @@
 #include "stdafx.h"
-
 #include "actor.h"
 #include "inventory.h"
 #include "weapon.h"
 #include "../xrEngine/CameraBase.h"
 #include "xrMessages.h"
-
 #include "level.h"
 #include "HUDManager.h"
 #include "UI.h"
@@ -16,10 +14,11 @@
 #include "CharacterPhysicsSupport.h"
 #include "actoreffector.h"
 #include "static_cast_checked.hpp"
-
+#include "Artefact.h"
 #ifdef DEBUG
 #include "phdebug.h"
 #endif
+
 static const float	s_fLandingTime1		= 0.1f;// через сколько снять флаг Landing1 (т.е. включить следующую анимацию)
 static const float	s_fLandingTime2		= 0.3f;// через сколько снять флаг Landing2 (т.е. включить следующую анимацию)
 static const float	s_fJumpTime			= 0.3f;

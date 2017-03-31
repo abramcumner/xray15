@@ -11,18 +11,6 @@
 #include "player_hud.h"
 #include "weapon.h"
 
-ITEM_INFO::ITEM_INFO()
-{
-	pParticle	= NULL;
-	curr_ref	= NULL;
-}
-
-ITEM_INFO::~ITEM_INFO()
-{
-	if(pParticle)
-		CParticlesObject::Destroy(pParticle);
-}
-
 bool  CCustomDetector::CheckCompatibilityInt(CHudItem* itm)
 {
 	if(itm==NULL)

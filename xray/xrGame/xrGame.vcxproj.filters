@@ -11144,6 +11144,9 @@
     <ClCompile Include="objects\devices\UIDosimeter.cpp">
       <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
     </ClCompile>
+    <ClCompile Include="DetectList.cpp">
+      <Filter>Core\Client\Objects\items &amp; weapons\Devices\Detectors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="graph_abstract.h">

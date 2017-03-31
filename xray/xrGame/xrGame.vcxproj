@@ -3041,6 +3041,7 @@
     </ClCompile>
     <ClCompile Include="detail_path_manager.cpp" />
     <ClCompile Include="detail_path_manager_smooth.cpp" />
+    <ClCompile Include="DetectList.cpp" />
     <ClCompile Include="DisablingParams.cpp" />
     <ClCompile Include="dRayMotions.cpp" />
     <ClCompile Include="DummyArtifact.cpp" />

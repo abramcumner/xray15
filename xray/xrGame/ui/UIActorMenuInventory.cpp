@@ -13,7 +13,6 @@
 #include "UIPropertiesBox.h"
 #include "UIListBoxItem.h"
 #include "UIMainIngameWnd.h"
-
 #include "../silencer.h"
 #include "../scope.h"
 #include "../grenadelauncher.h"
@@ -28,7 +27,7 @@
 #include "../MPPlayersBag.h"
 #include "../HUDManager.h"
 #include "../player_hud.h"
-
+#include "CustomDetector.h"
 
 void move_item_from_to(u16 from_id, u16 to_id, u16 what_id);
 

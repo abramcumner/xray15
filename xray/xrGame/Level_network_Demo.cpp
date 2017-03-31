@@ -197,6 +197,11 @@ void CLevel::SetDemoSpectator(CObject* spectator)
 	m_current_spectator = spectator;
 }
 
+CObject*CLevel::GetDemoSpectator() const
+{
+	return m_current_spectator ? smart_cast<CGameObject*>(m_current_spectator) : NULL;
+}
+
 float CLevel::GetDemoPlayPos() const
 {
 	if (!m_reader)
