@@ -866,26 +866,22 @@ void	CSkeletonX_PM::		EnumBoneVertices( SEnumVerticesCallback &C, u16 bone_id )
 }
 
 #ifdef	USE_DX10
-
 void CSkeletonX_ext::_FillVerticesHW1W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0,"CSkeletonX_ext::_FillVerticesHW1W not implemented");
+	R_ASSERT2(false, "Should use _FillVerticesSoft1W on R3!");
 }
 void CSkeletonX_ext::_FillVerticesHW2W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0,"CSkeletonX_ext::_FillVerticesHW2W not implemented");
+	R_ASSERT2(false, "Should use _FillVerticesSoft2W on R3!");
 }
-
 void CSkeletonX_ext::_FillVerticesHW3W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0, "CSkeletonX_ext::_FillVerticesHW3W not implemented");
+	R_ASSERT2(false, "Should use _FillVerticesSoft3W on R3!");
 }
-
 void CSkeletonX_ext::_FillVerticesHW4W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)
 {
-	R_ASSERT2(0, "CSkeletonX_ext::_FillVerticesHW4W not implemented");
+	R_ASSERT2(false, "Should use _FillVerticesSoft4W on R3!");
 }
-
 #else	//	USE_DX10
 
 void CSkeletonX_ext::_FillVerticesHW1W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, Fvisual* V, u16* indices, CBoneData::FacesVec& faces)

@@ -558,12 +558,82 @@ void CSkeletonX::_FillVerticesSoft2W(const Fmatrix& view, CSkeletonWallmark& wm,
 void CSkeletonX::_FillVerticesSoft3W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, u16* indices, CBoneData::FacesVec& faces)
 {
     VERIFY(*Vertices3W);
-    R_ASSERT2(0, "CSkeletonX::_FillVerticesSoft3W not implemented");
+	for (CBoneData::FacesVecIt it = faces.begin(); it != faces.end(); ++it)
+	{
+		Fvector						p[3];
+		u32 idx = (*it) * 3;
+		CSkeletonWallmark::WMFace	F;
+
+		for (u32 k = 0; k<3; k++)
+		{
+			const vertBoned3W& vert = Vertices3W[indices[idx + k]];
+			F.bone_id[k][0] = vert.m[0];
+			F.bone_id[k][1] = vert.m[1];
+			F.bone_id[k][2] = vert.m[2];
+			F.bone_id[k][3] = F.bone_id[k][2];
+			F.weight[k][0] = vert.w[0];
+			F.weight[k][1] = vert.w[1];
+			F.weight[k][2] = 0.f;
+			vert.get_pos(F.vert[k]);
+			get_pos_bones(vert, p[k], Parent);
+		}
+		Fvector test_normal;
+		test_normal.mknormal(p[0], p[1], p[2]);
+		float cosa = test_normal.dotproduct(normal);
+		if (cosa<EPS)			continue;
+
+		if (CDB::TestSphereTri(wm.ContactPoint(), size, p))
+		{
+			Fvector				UV;
+			for (u32 k = 0; k<3; k++) {
+				Fvector2& uv = F.uv[k];
+				view.transform_tiny(UV, p[k]);
+				uv.x = (1 + UV.x)*.5f;
+				uv.y = (1 - UV.y)*.5f;
+			}
+			wm.m_Faces.push_back(F);
+		}
+	}
 }
 void CSkeletonX::_FillVerticesSoft4W(const Fmatrix& view, CSkeletonWallmark& wm, const Fvector& normal, float size, u16* indices, CBoneData::FacesVec& faces)
 {
     VERIFY(*Vertices4W);
-    R_ASSERT2(0, "CSkeletonX::_FillVerticesSoft4W not implemented");
+	for (CBoneData::FacesVecIt it = faces.begin(); it != faces.end(); ++it)
+	{
+		Fvector						p[3];
+		u32 idx = (*it) * 3;
+		CSkeletonWallmark::WMFace	F;
+
+		for (u32 k = 0; k<3; k++)
+		{
+			const vertBoned4W& vert = Vertices4W[indices[idx + k]];
+			F.bone_id[k][0] = vert.m[0];
+			F.bone_id[k][1] = vert.m[1];
+			F.bone_id[k][2] = vert.m[2];
+			F.bone_id[k][3] = vert.m[3];
+			F.weight[k][0] = vert.w[0];
+			F.weight[k][1] = vert.w[1];
+			F.weight[k][2] = vert.w[2];
+			vert.get_pos(F.vert[k]);
+			get_pos_bones(vert, p[k], Parent);
+		}
+		Fvector test_normal;
+		test_normal.mknormal(p[0], p[1], p[2]);
+		float cosa = test_normal.dotproduct(normal);
+		if (cosa<EPS)			continue;
+
+		if (CDB::TestSphereTri(wm.ContactPoint(), size, p))
+		{
+			Fvector				UV;
+			for (u32 k = 0; k<3; k++) {
+				Fvector2& uv = F.uv[k];
+				view.transform_tiny(UV, p[k]);
+				uv.x = (1 + UV.x)*.5f;
+				uv.y = (1 - UV.y)*.5f;
+			}
+			wm.m_Faces.push_back(F);
+		}
+	}
 }
 
 #ifdef	USE_DX10
