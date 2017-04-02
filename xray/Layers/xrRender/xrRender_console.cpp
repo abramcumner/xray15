@@ -217,6 +217,9 @@ int			ps_r3_dyn_wet_surf_sm_res	= 256;				// 256
 //- Mad Max
 float		ps_r2_gloss_factor			= 3.0f;
 //- Mad Max
+
+Flags32		ps_common_flags = { 0 };
+
 #ifndef _EDITOR
 #include	"../../xrEngine/xr_ioconsole.h"
 #include	"../../xrEngine/xr_ioc_cmd.h"
@@ -785,8 +788,8 @@ void		xrRender_initconsole	()
 
 //	CMD3(CCC_Mask,		"r2_sun_ignore_portals",		&ps_r2_ls_flags,			R2FLAG_SUN_IGNORE_PORTALS);
 
-	// KD
-	CMD4(CCC_detail_radius, "r__detail_radius", &ps_r__detail_radius, 49, 250);
+	CMD4(CCC_detail_radius, "r__detail_radius",			&ps_r__detail_radius,		49, 250);
+	CMD3(CCC_Mask,		 "r__actor_shadow",				&ps_common_flags,			RFLAG_ACTOR_SHADOW);
 }
 
 void	xrRender_apply_tf		()

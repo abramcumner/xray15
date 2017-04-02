@@ -54,6 +54,7 @@ public:
 	
 	virtual		void		Render_First		();
 	virtual		void		Render_Last			();	   
+				void		Render_Actor_Shadow	() override;
 	virtual		void		OnFrame				();
 
 	virtual		void		RenderUI			();
