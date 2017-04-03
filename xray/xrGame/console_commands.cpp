@@ -1298,7 +1298,8 @@ struct CCC_DbgBullets : public CCC_Integer {
 		CCC_Integer::Execute	(args);
 	}
 };
-
+#endif
+#ifndef MASTER_GOLD
 #include "attachable_item.h"
 #include "attachment_owner.h"
 class CCC_TuneAttachableItem : public IConsole_Command
@@ -1329,7 +1330,8 @@ public		:
 		sprintf_s(I,"allows to change bind rotation and position offsets for attached item, <section_name> given as arguments");
 	}
 };
-
+#endif
+#ifdef DEBUG
 class CCC_Crash : public IConsole_Command {
 public:
 	CCC_Crash(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
@@ -1712,8 +1714,11 @@ CMD4(CCC_Integer,			"hit_anims_tune",						&tune_hit_anims,		0, 1);
 	
 	CMD1(CCC_ShowMonsterInfo,	"ai_monster_info");
 	CMD1(CCC_DebugFonts,		"debug_fonts");
+#endif
+#ifndef MASTER_GOLD
 	CMD1(CCC_TuneAttachableItem,"dbg_adjust_attachable_item");
-
+#endif
+#ifdef DEBUG
 
 	CMD1(CCC_ShowAnimationStats,"ai_show_animation_stats");
 #endif // DEBUG

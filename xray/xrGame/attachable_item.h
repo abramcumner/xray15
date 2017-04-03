@@ -46,7 +46,7 @@ public:
 	virtual	void				enable					(bool value);
 
 public:
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	static CAttachableItem		*m_dbgItem;
 	static Fvector				get_angle_offset		()	{VERIFY(m_dbgItem);Fvector v; m_dbgItem->m_offset.getHPB(v); return v;};
 	static Fvector				get_pos_offset			()	{VERIFY(m_dbgItem);return m_dbgItem->m_offset.c;};

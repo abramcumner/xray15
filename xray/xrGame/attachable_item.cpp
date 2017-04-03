@@ -14,7 +14,7 @@
 #include "../xrEngine/xr_input.h"
 #include "HudManager.h"
 
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	CAttachableItem*	CAttachableItem::m_dbgItem = NULL;
 #endif
 
@@ -132,7 +132,7 @@ void CAttachableItem::afterDetach		()
 	object().processing_deactivate	();
 }
 
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 float ATT_ITEM_MOVE_CURR = 0.01f;
 float ATT_ITEM_ROT_CURR = 0.1f;
 
@@ -219,4 +219,4 @@ void attach_draw_adjust_mode()
 	sprintf_s(_text, "attach_angle_offset IS [%3.3f][%3.3f][%3.3f]", _ang.x, _ang.y, _ang.z);
 	F->OutNext			(_text);
 }
-#endif // #ifdef DEBUG
+#endif // #ifndef MASTER_GOLD

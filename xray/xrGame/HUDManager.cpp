@@ -226,7 +226,8 @@ void CHUDManager::Render_Actor_Shadow()
 	if (A->activeCam() != eacFirstEye) return;		
 	::Render->set_Object(O->H_Root());
 	//O->renderable_Render();
-	//хак, чтобы были тени от приаттаченных предметов
+	// HACK
+	// Скопировано содержимое CActor::renderable_Render(), чтобы были тени от приаттаченных предметов
 	A->CEntityAlive::renderable_Render();
 	A->CInventoryOwner::renderable_Render();
 }
