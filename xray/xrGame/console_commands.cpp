@@ -1908,9 +1908,9 @@ CMD4(CCC_FloatBlock,		"dbg_text_height_scale",	&dbg_text_height_scale	,			0.2f	,
 
 	CMD3(CCC_Mask,		"ai_use_torch_dynamic_lights",	&g_uCommonFlags, flAiUseTorchDynamicLights);
 
-//#ifndef MASTER_GOLD
+#ifndef MASTER_GOLD
 	CMD4(CCC_Vector3,		"psp_cam_offset",				&CCameraLook2::m_cam_offset, Fvector().set(-1000,-1000,-1000),Fvector().set(1000,1000,1000));
-//#endif // MASTER_GOLD
+#endif // MASTER_GOLD
 
 	CMD1(CCC_GSCheckForUpdates, "check_for_updates");
 #ifdef DEBUG
@@ -1925,7 +1925,6 @@ CMD4(CCC_FloatBlock,		"dbg_text_height_scale",	&dbg_text_height_scale	,			0.2f	,
 	CMD4(CCC_Integer,   "dbg_imotion_draw_skeleton",		&dbg_imotion_draw_skeleton, FALSE,	TRUE );
 	CMD4(CCC_Float,		"dbg_imotion_draw_velocity_scale",	&dbg_imotion_draw_velocity_scale, 0.0001f, 100.0f );
 
-	CMD4(CCC_Integer,	"show_wnd_rect_all",		&g_show_wnd_rect2, 0, 1);
 	CMD4(CCC_Integer,	"dbg_show_ani_info",		&g_ShowAnimationInfo,	0, 1)	;
 	CMD4(CCC_Integer,	"dbg_dump_physics_step",	&g_bDebugDumpPhysicsStep, 0, 1);
 	CMD1(CCC_InvUpgradesHierarchy,	"inv_upgrades_hierarchy");
@@ -1934,6 +1933,11 @@ CMD4(CCC_FloatBlock,		"dbg_text_height_scale",	&dbg_text_height_scale	,			0.2f	,
 extern BOOL dbg_moving_bones_snd_player;
 	CMD4(CCC_Integer,   "dbg_bones_snd_player",		&dbg_moving_bones_snd_player, FALSE, TRUE );
 #endif
+
+#ifndef MASTER_GOLD
+	CMD4(CCC_Integer, "show_wnd_rect_all", &g_show_wnd_rect2, 0, 1);
+#endif // MASTER_GOLD
+
 	CMD1(CCC_InvDropAllItems, "inv_drop_all_items");
 
 	CMD4(CCC_Float,		"con_sensitive",			&g_console_sensitive,	0.01f, 1.0f );
