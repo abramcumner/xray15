@@ -1,12 +1,13 @@
 BasedOnStyle: Webkit
-AllowShortFunctionsOnASingleLine: false
+Standard: Cpp11
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterClass: true
   AfterFunction: true
 ColumnLimit: 120
+SortIncludes: true
 IncludeCategories:
-  - Regex: 'stdafx.h'
+  - Regex: '\"stdafx\.h'
     Priority: -1
-  - Regex: 'pch_script.h'
+  - Regex: '\"pch_script\.h'
     Priority: -1
