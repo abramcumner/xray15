@@ -242,6 +242,8 @@ class_<CScriptGameObject> &script_register_game_object1(class_<CScriptGameObject
 
 		.def("set_actor_position",			&CScriptGameObject::SetActorPosition)
 		.def("set_actor_direction",			&CScriptGameObject::SetActorDirection)
+		.def("block_action",				&CScriptGameObject::blockAction)
+		.def("unblock_action",				&CScriptGameObject::unblockAction)
 
 		.def("vertex_in_direction",			&CScriptGameObject::vertex_in_direction)
 

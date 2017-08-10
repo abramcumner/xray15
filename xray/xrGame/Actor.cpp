@@ -2010,3 +2010,13 @@ void CActor::On_LostEntity()
 {
 	psCamInert = prev_cam_inert_value;
 }
+
+void CActor::blockAction(EGameActions cmd)
+{
+	m_blockedActions.set(cmd);
+}
+
+void CActor::unblockAction(EGameActions cmd)
+{
+	m_blockedActions.reset(cmd);
+}

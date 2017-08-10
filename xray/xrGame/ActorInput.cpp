@@ -4,11 +4,9 @@
 #include "Torch.h"
 #include "trade.h"
 #include "../xrEngine/CameraBase.h"
-
 #ifdef DEBUG
 #	include "PHDebug.h"
 #endif
-
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
@@ -37,9 +35,8 @@ extern u32 hud_adj_mode;
 void CActor::IR_OnKeyboardPress(int cmd)
 {
 	if(hud_adj_mode && pInput->iGetAsyncKeyState(DIK_LSHIFT))	return;
-
+	if (m_blockedActions.test(cmd)) return;
 	if (Remote())		return;
-
 	if (IsTalking())	return;
 	if (m_input_external_handler && !m_input_external_handler->authorized(cmd))	return;
 	
@@ -195,9 +192,8 @@ void CActor::IR_OnMouseWheel(int direction)
 void CActor::IR_OnKeyboardRelease(int cmd)
 {
 	if(hud_adj_mode && pInput->iGetAsyncKeyState(DIK_LSHIFT))	return;
-
+	if (m_blockedActions.test(cmd)) return;
 	if (Remote())	return;
-
 	if (m_input_external_handler && !m_input_external_handler->authorized(cmd))	return;
 
 	if (g_Alive())	
@@ -228,7 +224,7 @@ void CActor::IR_OnKeyboardRelease(int cmd)
 void CActor::IR_OnKeyboardHold(int cmd)
 {
 	if(hud_adj_mode && pInput->iGetAsyncKeyState(DIK_LSHIFT))	return;
-
+	if (m_blockedActions.test(cmd)) return;
 	if (Remote() || !g_Alive())					return;
 	if (m_input_external_handler && !m_input_external_handler->authorized(cmd))	return;
 	if (IsTalking())							return;
@@ -267,7 +263,6 @@ void CActor::IR_OnKeyboardHold(int cmd)
 
 void CActor::IR_OnMouseMove(int dx, int dy)
 {
-
 	if(hud_adj_mode)
 	{
 		g_player_hud->tune	(Ivector().set(dx,dy,0));

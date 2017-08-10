@@ -338,6 +338,34 @@ void CScriptGameObject::SetActorDirection		(float dir)
 		ai().script_engine().script_log		(ScriptStorage::eLuaMessageTypeError,"ScriptGameObject : attempt to call SetActorDirection method for non-actor object");
 }
 
+void CScriptGameObject::blockAction(int cmd)
+{
+	if (cmd < 0 || cmd >= kLASTACTION) {
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "ScriptGameObject : attempt to call blockAction method with out of range cmd(%d)[0-%d]", cmd, kLASTACTION - 1);
+		return;
+	}
+	CActor* actor = smart_cast<CActor*>(&object());
+	if (actor) {
+		actor->blockAction(static_cast<EGameActions>(cmd));
+	}
+	else
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "ScriptGameObject : attempt to call blockAction method for non-actor object");
+}
+
+void CScriptGameObject::unblockAction(int cmd)
+{
+	if (cmd < 0 || cmd >= kLASTACTION) {
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "ScriptGameObject : attempt to call blockAction method with out of range cmd(%d)[0-%d]", cmd, kLASTACTION - 1);
+		return;
+	}
+	CActor* actor = smart_cast<CActor*>(&object());
+	if (actor) {
+		actor->unblockAction(static_cast<EGameActions>(cmd));
+	}
+	else
+		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "ScriptGameObject : attempt to call unblockAction method for non-actor object");
+}
+
 CHolderCustom* CScriptGameObject::get_current_holder()
 {
 	CActor* actor = smart_cast<CActor*>(&object());

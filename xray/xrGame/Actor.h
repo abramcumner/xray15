@@ -14,9 +14,10 @@
 #include "../xrEngine/StatGraph.h"
 #include "PhraseDialogManager.h"
 #include "ui_defs.h"
-
 #include "step_manager.h"
 #include "script_export_space.h"
+#include "xr_level_controller.h"
+#include <bitset>
 
 using namespace ACTOR_DEFS;
 
@@ -748,6 +749,13 @@ public:
 	virtual void			On_LostEntity();
 
 static CPhysicsShell		*actor_camera_shell;
+
+private:
+	std::bitset<kLASTACTION> m_blockedActions;// Заблокированные действия
+
+public:
+	void blockAction(EGameActions cmd);// Заблокировать действие
+	void unblockAction(EGameActions cmd);// Разблокировать действие
 
 DECLARE_SCRIPT_REGISTER_FUNCTION
 };
