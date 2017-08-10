@@ -7485,6 +7485,9 @@
     <ClInclude Include="objects\devices\UIDosimeter.h">
       <Filter>Core\Client\Objects\items &amp; weapons\Devices\Dosimeter</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectEvents.h">
+      <Filter>Core\Client\Objects\base\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11146,6 +11149,9 @@
     </ClCompile>
     <ClCompile Include="DetectList.cpp">
       <Filter>Core\Client\Objects\items &amp; weapons\Devices\Detectors</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectEvents.cpp">
+      <Filter>Core\Client\Objects\base\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

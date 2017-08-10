@@ -52,6 +52,12 @@ namespace GameObject {
 		eInvBoxItemTake,
 		eWeaponNoAmmoAvailable,
 
+		eOnKeyPress,
+		eOnKeyRelease,
+		eOnKeyHold,
+		eOnMouseMove,
+		eOnMouseWheel,
+
 		eDummy = u32(-1),
 	};
 };
