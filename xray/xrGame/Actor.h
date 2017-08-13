@@ -751,7 +751,7 @@ public:
 static CPhysicsShell		*actor_camera_shell;
 
 private:
-	std::bitset<kLASTACTION> m_blockedActions;// Заблокированные действия
+	std::bitset<kNOTBINDED + 1> m_blockedActions;// Заблокированные действия
 
 public:
 	void blockAction(EGameActions cmd);// Заблокировать действие
