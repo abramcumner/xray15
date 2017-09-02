@@ -133,6 +133,7 @@ Flags32		ps_r2_ls_flags				= { R2FLAG_SUN
 	//| R3FLAG_MSAA 
 	//| R3FLAG_MSAA_OPT
 	| R3FLAG_GBUFFER_OPT
+	| R2FLAG_TONEMAP
 	};	// r2-only
 
 Flags32		ps_r2_ls_flags_ext			= {
@@ -141,7 +142,7 @@ Flags32		ps_r2_ls_flags_ext			= {
 
 float		ps_r2_df_parallax_h			= 0.02f;
 float		ps_r2_df_parallax_range		= 75.f;
-float		ps_r2_tonemap_middlegray	= 0.25f;			// r2-only
+float		ps_r2_tonemap_middlegray	= 1.0f;			// r2-only
 float		ps_r2_tonemap_adaptation	= 5.f;				// r2-only
 float		ps_r2_tonemap_low_lum		= 0.001f;			// r2-only
 float		ps_r2_tonemap_amount		= 0.5f;				// r2-only
@@ -173,8 +174,8 @@ extern float OLES_SUN_LIMIT_27_01_07;	//	actually sun_far
 float		ps_r2_sun_near_border		= 0.75f;			// 1.0f
 float		ps_r2_sun_depth_far_scale	= 1.00000f;			// 1.00001f
 float		ps_r2_sun_depth_far_bias	= 0.00000f;			// -0.0000f
-float		ps_r2_sun_depth_near_scale	= 1.00001f;			// 1.00001f
-float		ps_r2_sun_depth_near_bias	= -0.00004f;		// -0.00005f
+float		ps_r2_sun_depth_near_scale	= 1.0f;
+float		ps_r2_sun_depth_near_bias	= 0.0f;
 float		ps_r2_sun_lumscale			= 1.0f;				// 1.0f
 float		ps_r2_sun_lumscale_hemi		= 1.0f;				// 1.0f
 float		ps_r2_sun_lumscale_amb		= 1.0f;
