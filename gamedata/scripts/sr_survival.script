@@ -99,7 +99,7 @@ function survival_zone:check_for_release_corpses()
 	local spawned_objects = {}
 	utils.copy_table(spawned_objects, self.spawned_obj_table)
 	for k,v in pairs(spawned_objects) do
-		if v:health() <= 0 then
+		if v.health <= 0 then
 			table.insert(self.dead_obj_table,1, v)
 			self.spawned_obj_table[v.id] = nil
 			self.killed_count = self.killed_count + 1	
