@@ -74,7 +74,7 @@ void CSE_ALifeCreatureAbstract::script_register(lua_State *L)
 			"cse_alife_creature_abstract",
 			CSE_ALifeDynamicObjectVisual
 		)
-		.def("health",&CSE_ALifeCreatureAbstract::get_health)
+		.property("health", &CSE_ALifeCreatureAbstract::get_health, &CSE_ALifeCreatureAbstract::set_health)
 		.def("alive",&CSE_ALifeCreatureAbstract::g_Alive)
 		.def_readwrite("team",&CSE_ALifeCreatureAbstract::s_team)
 		.def_readwrite("squad",&CSE_ALifeCreatureAbstract::s_squad)
