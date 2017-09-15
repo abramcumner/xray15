@@ -17,8 +17,8 @@
 #include <dinput.h>
 
 // Data
-static INT64                    g_Time = 0;
-static INT64                    g_TicksPerSecond = 0;
+//static INT64                    g_Time = 0;
+//static INT64                    g_TicksPerSecond = 0;
 
 static HWND                     g_hWnd = 0;
 static ID3D10Device*            g_pd3dDevice = NULL;
@@ -225,52 +225,52 @@ void ImGui_ImplDX10_RenderDrawLists(ImDrawData* draw_data)
     ctx->IASetInputLayout(old.InputLayout); if (old.InputLayout) old.InputLayout->Release();
 }
 
-IMGUI_API LRESULT ImGui_ImplDX10_WndProcHandler(HWND, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    ImGuiIO& io = ImGui::GetIO();
-    switch (msg)
-    {
-    case WM_LBUTTONDOWN:
-        io.MouseDown[0] = true;
-        return true;
-    case WM_LBUTTONUP:
-        io.MouseDown[0] = false;
-        return true;
-    case WM_RBUTTONDOWN:
-        io.MouseDown[1] = true;
-        return true;
-    case WM_RBUTTONUP:
-        io.MouseDown[1] = false;
-        return true;
-    case WM_MBUTTONDOWN:
-        io.MouseDown[2] = true;
-        return true;
-    case WM_MBUTTONUP:
-        io.MouseDown[2] = false;
-        return true;
-    case WM_MOUSEWHEEL:
-        io.MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
-        return true;
-    case WM_MOUSEMOVE:
-        io.MousePos.x = (signed short)(lParam);
-        io.MousePos.y = (signed short)(lParam >> 16);
-        return true;
-    case WM_KEYDOWN:
-        if (wParam < 256)
-            io.KeysDown[wParam] = 1;
-        return true;
-    case WM_KEYUP:
-        if (wParam < 256)
-            io.KeysDown[wParam] = 0;
-        return true;
-    case WM_CHAR:
-        // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
-        if (wParam > 0 && wParam < 0x10000)
-            io.AddInputCharacter((unsigned short)wParam);
-        return true;
-    }
-    return 0;
-}
+//LRESULT ImGui_ImplDX10_WndProcHandler(HWND, UINT msg, WPARAM wParam, LPARAM lParam)
+//{
+//    ImGuiIO& io = ImGui::GetIO();
+//    switch (msg)
+//    {
+//    case WM_LBUTTONDOWN:
+//        io.MouseDown[0] = true;
+//        return true;
+//    case WM_LBUTTONUP:
+//        io.MouseDown[0] = false;
+//        return true;
+//    case WM_RBUTTONDOWN:
+//        io.MouseDown[1] = true;
+//        return true;
+//    case WM_RBUTTONUP:
+//        io.MouseDown[1] = false;
+//        return true;
+//    case WM_MBUTTONDOWN:
+//        io.MouseDown[2] = true;
+//        return true;
+//    case WM_MBUTTONUP:
+//        io.MouseDown[2] = false;
+//        return true;
+//    case WM_MOUSEWHEEL:
+//        io.MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
+//        return true;
+//    case WM_MOUSEMOVE:
+//        io.MousePos.x = (signed short)(lParam);
+//        io.MousePos.y = (signed short)(lParam >> 16);
+//        return true;
+//    case WM_KEYDOWN:
+//        if (wParam < 256)
+//            io.KeysDown[wParam] = 1;
+//        return true;
+//    case WM_KEYUP:
+//        if (wParam < 256)
+//            io.KeysDown[wParam] = 0;
+//        return true;
+//    case WM_CHAR:
+//        // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
+//        if (wParam > 0 && wParam < 0x10000)
+//            io.AddInputCharacter((unsigned short)wParam);
+//        return true;
+//    }
+//    return 0;
+//}
 
 static void ImGui_ImplDX10_CreateFontsTexture()
 {
@@ -503,11 +503,12 @@ bool    ImGui_ImplDX10_Init(void* hwnd, ID3D10Device* device)
 {
     g_hWnd = (HWND)hwnd;
     g_pd3dDevice = device;
+	ImGui_ImplDX10_CreateDeviceObjects();
 
-    if (!QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
-        return false;
-    if (!QueryPerformanceCounter((LARGE_INTEGER *)&g_Time))
-        return false;
+    //if (!QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
+    //    return false;
+    //if (!QueryPerformanceCounter((LARGE_INTEGER *)&g_Time))
+    //    return false;
 
     ImGuiIO& io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = VK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
@@ -544,38 +545,38 @@ void ImGui_ImplDX10_Shutdown()
     g_hWnd = (HWND)0;
 }
 
-void ImGui_ImplDX10_NewFrame()
-{
-    if (!g_pFontSampler)
-        ImGui_ImplDX10_CreateDeviceObjects();
-
-    ImGuiIO& io = ImGui::GetIO();
-
-    // Setup display size (every frame to accommodate for window resizing)
-    RECT rect;
-    GetClientRect(g_hWnd, &rect);
-    io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
-
-    // Setup time step
-    INT64 current_time;
-    QueryPerformanceCounter((LARGE_INTEGER *)&current_time);
-    io.DeltaTime = (float)(current_time - g_Time) / g_TicksPerSecond;
-    g_Time = current_time;
-
-    // Read keyboard modifiers inputs
-    io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-    io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
-    io.KeyAlt = (GetKeyState(VK_MENU) & 0x8000) != 0;
-    io.KeySuper = false;
-    // io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
-    // io.MousePos : filled by WM_MOUSEMOVE events
-    // io.MouseDown : filled by WM_*BUTTON* events
-    // io.MouseWheel : filled by WM_MOUSEWHEEL events
-
-    // Hide OS mouse cursor if ImGui is drawing it
-    if (io.MouseDrawCursor)
-        SetCursor(NULL);
-
-    // Start the frame
-    ImGui::NewFrame();
-}
+//void ImGui_ImplDX10_NewFrame()
+//{
+//    if (!g_pFontSampler)
+//        ImGui_ImplDX10_CreateDeviceObjects();
+//
+//    ImGuiIO& io = ImGui::GetIO();
+//
+//    // Setup display size (every frame to accommodate for window resizing)
+//    RECT rect;
+//    GetClientRect(g_hWnd, &rect);
+//    io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
+//
+//    // Setup time step
+//    INT64 current_time;
+//    QueryPerformanceCounter((LARGE_INTEGER *)&current_time);
+//    io.DeltaTime = (float)(current_time - g_Time) / g_TicksPerSecond;
+//    g_Time = current_time;
+//
+//    // Read keyboard modifiers inputs
+//    io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+//    io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+//    io.KeyAlt = (GetKeyState(VK_MENU) & 0x8000) != 0;
+//    io.KeySuper = false;
+//    // io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
+//    // io.MousePos : filled by WM_MOUSEMOVE events
+//    // io.MouseDown : filled by WM_*BUTTON* events
+//    // io.MouseWheel : filled by WM_MOUSEWHEEL events
+//
+//    // Hide OS mouse cursor if ImGui is drawing it
+//    if (io.MouseDrawCursor)
+//        SetCursor(NULL);
+//
+//    // Start the frame
+//    ImGui::NewFrame();
+//}

@@ -8,13 +8,13 @@
 
 struct ID3D10Device;
 
-IMGUI_API bool        ImGui_ImplDX10_Init(void* hwnd, ID3D10Device* device);
-IMGUI_API void        ImGui_ImplDX10_Shutdown();
-IMGUI_API void        ImGui_ImplDX10_NewFrame();
+bool        ImGui_ImplDX10_Init(void* hwnd, ID3D10Device* device);
+void        ImGui_ImplDX10_Shutdown();
+void        ImGui_ImplDX10_NewFrame();
 
 // Use if you want to reset your rendering device without losing ImGui state.
-IMGUI_API void        ImGui_ImplDX10_InvalidateDeviceObjects();
-IMGUI_API bool        ImGui_ImplDX10_CreateDeviceObjects();
+void        ImGui_ImplDX10_InvalidateDeviceObjects();
+bool        ImGui_ImplDX10_CreateDeviceObjects();
 
 // Handler for Win32 messages, update mouse/keyboard data.
 // You may or not need this for your implementation, but it can serve as reference for handling inputs.

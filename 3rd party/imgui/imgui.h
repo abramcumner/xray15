@@ -19,6 +19,11 @@
 #define IMGUI_VERSION       "1.52 WIP"
 
 // Define attributes of all API symbols declarations, e.g. for DLL under Windows.
+#ifdef IMGUI_EXPORTS
+#define IMGUI_API __declspec(dllexport)
+#else
+#define IMGUI_API __declspec(dllimport)
+#endif
 #ifndef IMGUI_API
 #define IMGUI_API
 #endif
