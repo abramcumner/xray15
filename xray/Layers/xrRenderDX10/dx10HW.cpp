@@ -15,6 +15,8 @@
 #include "StateManager\dx10StateCache.h"
 
 #include "d3dx10core.h"
+#include <imgui.h>
+#include <examples/directx10_example/imgui_impl_dx10.h>
 
 #ifndef _EDITOR
 void	fill_vid_mode_list			(CHW* _hw);
@@ -399,10 +401,14 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	updateWindowProps							(m_hWnd);
 	fill_vid_mode_list							(this);
 #endif
+
+	ImGui_ImplDX10_Init(m_hWnd, pDevice);
 }
 
 void CHW::DestroyDevice()
 {
+	ImGui_ImplDX10_Shutdown();
+
 	//	Destroy state managers
 	StateManager.Reset();
 	RSManager.ClearStateArray();
@@ -443,6 +449,8 @@ void CHW::DestroyDevice()
 //////////////////////////////////////////////////////////////////////
 void CHW::Reset (HWND hwnd)
 {
+	ImGui_ImplDX10_InvalidateDeviceObjects();
+
 	DXGI_SWAP_CHAIN_DESC &cd = m_ChainDesc;
 
 	BOOL	bWindowed		= !psDeviceFlags.is	(rsFullscreen);
@@ -547,6 +555,9 @@ void CHW::Reset (HWND hwnd)
 	updateWindowProps	(hwnd);
 #endif
 	*/
+
+	ImGui_ImplDX10_CreateDeviceObjects();
+	ImGui::NewFrame();
 }
 
 D3DFORMAT CHW::selectDepthStencil	(D3DFORMAT fTarget)

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "frustum.h"
-
 #pragma warning(disable:4995)
 // mmsystem.h
 #define MMNOSOUND
@@ -12,23 +11,18 @@
 // d3dx9.h
 #include <d3dx9.h>
 #pragma warning(default:4995)
-
 #include "x_ray.h"
 #include "render.h"
-
 // must be defined before include of FS_impl.h
 #define INCLUDE_FROM_ENGINE
 #include "../xrCore/FS_impl.h"
-
 #ifdef INGAME_EDITOR
 #	include "../include/editor/ide.hpp"
 #	include "engine_impl.hpp"
 #endif // #ifdef INGAME_EDITOR
-
 #include "xrSash.h"
 #include "igame_persistent.h"
-
-#pragma comment( lib, "d3dx9.lib"		)
+#include <imgui.h>
 
 ENGINE_API CRenderDevice Device;
 ENGINE_API BOOL g_bRendering = FALSE; 
@@ -111,6 +105,13 @@ void CRenderDevice::Clear	()
 extern void CheckPrivilegySlowdown();
 //#include "resourcemanager.h"
 
+bool bShowWindow = true;
+bool show_test_window = true;
+bool show_weather_window = false;
+ImVec4 clear_col = ImColor(114, 144, 154);
+static INT64                    g_Time = 0;
+static INT64                    g_TicksPerSecond = 0;
+
 void CRenderDevice::End		(void)
 {
 #ifndef DEDICATED_SERVER
@@ -169,6 +170,26 @@ void CRenderDevice::End		(void)
 	//	Present goes here, so call OA Frame end.
 	if (g_SASH.IsBenchmarkRunning())
 		g_SASH.DisplayFrame(Device.fTimeGlobal);
+
+	extern ENGINE_API BOOL g_appLoaded;
+	if (g_appLoaded) {
+		{
+			static float f = 0.0f;
+			ImGui::Text("Hello, world!");
+			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+			ImGui::ColorEdit3("clear color", (float*)&clear_col);
+			if (ImGui::Button("Test Window")) show_test_window ^= 1;
+			if (ImGui::Button("Weather")) show_weather_window ^= 1;
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		}
+		if (show_test_window)
+		{
+			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);     // Normally user code doesn't need/want to call it because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
+			ImGui::ShowTestWindow(&show_test_window);
+		}
+	}
+	ImGui::Render();
+
 	m_pRender->End();
 	//RCache.OnFrameEnd	();
 	//Memory.dbg_check		();
@@ -238,6 +259,43 @@ int g_svDedicateServerUpdateReate = 100;
 
 ENGINE_API xr_list<LOADING_EVENT>			g_loading_events;
 
+void ImGui_NewFrame(HWND hwnd)
+{
+	ImGuiIO& io = ImGui::GetIO();
+
+	// Setup display size (every frame to accommodate for window resizing)
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+	io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
+
+	if (g_TicksPerSecond == 0) {
+		QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond);
+		QueryPerformanceCounter((LARGE_INTEGER *)&g_Time);
+	}
+	// Setup time step
+	INT64 current_time;
+	QueryPerformanceCounter((LARGE_INTEGER *)&current_time);
+	io.DeltaTime = (float)(current_time - g_Time) / g_TicksPerSecond;
+	g_Time = current_time;
+
+	// Read keyboard modifiers inputs
+	io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+	io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+	io.KeyAlt = false;// (GetKeyState(VK_MENU) & 0x8000) != 0;
+	io.KeySuper = false;
+	// io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
+	// io.MousePos : filled by WM_MOUSEMOVE events
+	// io.MouseDown : filled by WM_*BUTTON* events
+	// io.MouseWheel : filled by WM_MOUSEWHEEL events
+
+	// Hide OS mouse cursor if ImGui is drawing it
+	//if (io.MouseDrawCursor)
+	//	SetCursor(NULL);
+
+	// Start the frame
+	ImGui::NewFrame();
+}
+
 void CRenderDevice::on_idle		()
 {
 	if (!b_is_Ready) {
@@ -250,6 +308,9 @@ void CRenderDevice::on_idle		()
 #endif
 	if (psDeviceFlags.test(rsStatistic))	g_bEnableStatGather	= TRUE;
 	else									g_bEnableStatGather	= FALSE;
+
+	ImGui_NewFrame(m_hWnd);
+
 	if(g_loading_events.size())
 	{
 		if( g_loading_events.front()() )

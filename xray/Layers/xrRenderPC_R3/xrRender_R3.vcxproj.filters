@@ -187,6 +187,9 @@
     <Filter Include="Models\Editor\NvMender2003">
       <UniqueIdentifier>{f1d8caa0-9607-4712-b30a-3af63ca647d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui_render">
+      <UniqueIdentifier>{56975efc-9037-4632-aa7f-db7276919b05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
@@ -746,6 +749,9 @@
     </ClInclude>
     <ClInclude Include="pch\stdafx.h">
       <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.h">
+      <Filter>imgui_render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1372,6 +1378,9 @@
     </ClCompile>
     <ClCompile Include="pch\stdafx.cpp">
       <Filter>Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.cpp">
+      <Filter>imgui_render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
