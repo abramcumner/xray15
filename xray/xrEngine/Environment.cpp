@@ -1,32 +1,23 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #ifndef _EDITOR
     #include "render.h"
 #endif
-
 #include "Environment.h"
 #include "xr_efflensflare.h"
 #include "rain.h"
 #include "thunderbolt.h"
 #include "xrHemisphere.h"
 #include "perlin.h"
-
 #include "xr_input.h"
-
-//#include "resourcemanager.h"
-
 #ifndef _EDITOR
 	#include "IGame_Level.h"
 #endif
-
-//#include "D3DUtils.h"
 #include "../xrcore/xrCore.h"
-
 #include "../Include/xrRender/EnvironmentRender.h"
 #include "../Include/xrRender/LensFlareRender.h"
 #include "../Include/xrRender/RainRender.h"
 #include "../Include/xrRender/ThunderboltRender.h"
+#include <imgui.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -456,6 +447,20 @@ void CEnvironment::lerp		(float& current_weight)
 	CurrentEnv->lerp		(this,*Current[0],*Current[1],current_weight,EM,mpower);
 }
 
+Fvector convert(const Fvector& v)
+{
+	Fvector result;
+	result.set(v.z, v.y, v.x);
+	return result;
+}
+
+Fvector4 convert(const Fvector4& v)
+{
+	Fvector4 result;
+	result.set(v.z, v.y, v.x, v.w);
+	return result;
+}
+
 void CEnvironment::OnFrame()
 {
 #ifdef _EDITOR
@@ -510,6 +515,33 @@ void CEnvironment::OnFrame()
 
 	// ******************** Environment params (setting)
 	m_pRender->OnFrame(*this);
+
+	extern bool show_weather_window;
+	if (show_weather_window) {
+		ImGui::Begin("Weather", &show_weather_window);
+		ImGui::Text("%s %s", CurrentWeatherName.c_str(), Current[0]->m_identifier.c_str());
+		ImGui::SliderFloat("rain_density", &Current[0]->rain_density, 0.0f, 10.0f);
+		ImGui::ColorEdit3("rain_color", (float*)&Current[0]->rain_color);
+		ImGui::SliderFloat("sky_rotation", &Current[0]->sky_rotation, 0.0f, 6.28318f);	
+		Fvector temp;
+		temp = convert(Current[0]->sky_color);
+		ImGui::ColorEdit3("sky_color", (float*)&temp);
+		Current[0]->sky_color = convert(temp);
+		ImGui::ColorEdit3("ambient", (float*)&Current[0]->ambient);
+		ImGui::ColorEdit3("hemi_color", (float*)&Current[0]->hemi_color, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+		ImGui::ColorEdit3("sun_color", (float*)&Current[0]->sun_color);
+		ImGui::SliderFloat("far_plane", &Current[0]->far_plane, 0.0f, 10000.0f);
+		ImGui::SliderFloat("fog_distance", &Current[0]->fog_distance, 0.0f, 10000.0f);
+		ImGui::SliderFloat("fog_density", &Current[0]->fog_density, 0.0f, 10.0f);
+		ImGui::ColorEdit3("fog_color", (float*)&Current[0]->fog_color);
+		Fvector4 temp1;
+		temp1 = convert(Current[0]->clouds_color);
+		ImGui::ColorEdit3("clouds_color", (float*)&temp1, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+		Current[0]->clouds_color = convert(temp1);
+		ImGui::SliderFloat("wind_velocity", &Current[0]->wind_velocity, 0.0f, 100.0f);
+		ImGui::SliderFloat("wind_direction", &Current[0]->wind_direction, 0.0f, 360.0f);
+		ImGui::End();
+	}
 }
 
 void CEnvironment::calculate_dynamic_sun_dir()
