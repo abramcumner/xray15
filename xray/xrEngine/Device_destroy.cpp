@@ -1,9 +1,9 @@
 #include "stdafx.h"
-
 #include "../Include/xrRender/DrawUtils.h"
 #include "render.h"
 #include "IGame_Persistent.h"
 #include "xr_IOConsole.h"
+#include "Environment.h"
 
 void CRenderDevice::_Destroy	(BOOL bKeepTextures)
 {

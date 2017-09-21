@@ -18,6 +18,7 @@
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "string_table.h"
 #include "../xrGameSpy/xrGameSpy_MainDefs.h"
+#include "../xrEngine/Environment.h"
 
 EGameIDs ParseStringToGameType(LPCSTR str);
 

@@ -4,13 +4,13 @@
 
 #include "..\xrServerEntities\gametype_chooser.h"
 #ifndef _EDITOR
-#include "Environment.h"
 #include "IGame_ObjectPool.h"
 #endif
 
 class IRenderVisual;
 class IMainMenu;
 class ENGINE_API CPS_Instance;
+class ENGINE_API CEnvironment;
 //-----------------------------------------------------------------------------------------------------------
 class ENGINE_API IGame_Persistent	: 
 #ifndef _EDITOR

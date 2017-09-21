@@ -12,12 +12,9 @@
 #include "blender_ssao.h"
 #include "dx10MinMaxSMBlender.h"
 #include "../xrRenderDX10/msaa/dx10MSAABlender.h"
-
 #include "../xrRenderDX10/DX10 Rain/dx10RainBlender.h"
-
-
 #include "../xrRender/dxRenderDeviceRender.h"
-
+#include "../../xrEngine/Environment.h"
 #include <D3DX10Tex.h>
 
 void	CRenderTarget::u_setrt			(const ref_rt& _1, const ref_rt& _2, const ref_rt& _3, ID3DDepthStencilView* zb)

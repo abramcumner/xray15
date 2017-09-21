@@ -1,13 +1,10 @@
 #include "stdafx.h"
-#pragma once
-
 #ifndef _EDITOR
     #include "render.h"
 #endif    
 #include "Thunderbolt.h"
 #include "igame_persistent.h"
 #include "LightAnimLibrary.h"
-
 #ifdef _EDITOR
     #include "ui_toolscustom.h"
 #else
@@ -15,6 +12,7 @@
 	#include "xr_area.h"
 	#include "xr_object.h"
 #endif
+#include "Environment.h"
 
 SThunderboltDesc::SThunderboltDesc	() :
 	m_GradientTop				(0),

@@ -30,6 +30,7 @@
 #include "phworld.h"
 #include "alife_simulator.h"
 #include "alife_time_manager.h"
+#include "../xrEngine/Environment.h"
 
 using namespace luabind;
 

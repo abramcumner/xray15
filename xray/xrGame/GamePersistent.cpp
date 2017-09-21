@@ -14,20 +14,17 @@
 #include "game_base_space.h"
 #include "stalker_animation_data_storage.h"
 #include "stalker_velocity_holder.h"
-
 #include "ActorEffector.h"
 #include "actor.h"
 #include "spectator.h"
-
 #include "../xrEngine/xrSASH.h"
-
 #ifndef MASTER_GOLD
 #	include "custommonster.h"
 #endif // MASTER_GOLD
-
 #ifndef _EDITOR
 #	include "ai_debug.h"
 #endif // _EDITOR
+#include "../xrEngine/Environment.h"
 
 #ifdef DEBUG_MEMORY_MANAGER
 	static	void *	ode_alloc	(size_t size)								{ return Memory.mem_alloc(size,"ODE");			}

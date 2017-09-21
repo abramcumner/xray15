@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../../xrEngine/Environment.h"
 
 void CRenderTarget::draw_rain( light &RainSetup )
 {

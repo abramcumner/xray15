@@ -3,8 +3,8 @@
 #include "../xrRender/FBasicVisual.h"
 #include "../../xrEngine/customhud.h"
 #include "../../xrEngine/xr_object.h"
-
 #include "../xrRender/QueryHelper.h"
+#include "../../xrEngine/Environment.h"
 
 IC	bool	pred_sp_sort	(ISpatial*	_1, ISpatial* _2)
 {

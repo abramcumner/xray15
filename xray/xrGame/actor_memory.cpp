@@ -11,6 +11,7 @@
 #include "actor.h"
 #include "../xrEngine/camerabase.h"
 #include "gamepersistent.h"
+#include "../xrEngine/Environment.h"
 
 CActorMemory::CActorMemory					(CActor *actor) :
 	inherited		(

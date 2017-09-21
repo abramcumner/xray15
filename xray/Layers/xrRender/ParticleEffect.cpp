@@ -1,7 +1,6 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "ParticleEffect.h"
+#include "../../xrEngine/Environment.h"
 
 using namespace PAPI;
 using namespace PS;

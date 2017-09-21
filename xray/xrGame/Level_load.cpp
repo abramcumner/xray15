@@ -13,6 +13,7 @@
 #include "PhysicsCommon.h"
 #include "level_sounds.h"
 #include "GamePersistent.h"
+#include "../xrEngine/Environment.h"
 
 ENGINE_API	bool g_dedicated_server;
 

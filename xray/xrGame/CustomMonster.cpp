@@ -46,14 +46,12 @@
 #include "alife_object_registry.h"
 #include "client_spawn_manager.h"
 #include "moving_object.h"
-
-// Lain: added
 #include "../xrEngine/IGame_Level.h"
-
 #ifdef DEBUG
 #	include "debug_renderer.h"
 #   include "animation_movement_controller.h"
 #endif // DEBUG
+#include "../xrEngine/Environment.h"
 
 extern int g_AI_inactive_time;
 
