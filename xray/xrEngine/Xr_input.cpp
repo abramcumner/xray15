@@ -468,6 +468,9 @@ void CInput::OnFrame			(void)
 	if (pKeyboard)	KeyUpdate				();
 	if (pMouse)		MouseUpdate				();
 	Device.Statistic->Input.End				();
+
+	void ImGui_NewFrame();
+	ImGui_NewFrame();
 }
 
 IInputReceiver*	 CInput::CurrentIR()
@@ -522,4 +525,12 @@ void  CInput::feedback(u16 s1, u16 s2, float time)
 #ifndef _EDITOR
 //.	set_vibration (s1, s2);
 #endif
+}
+
+int CInput::scancodeToChar(int scanCode, uint16_t ch[2])
+{
+	UINT vk = MapVirtualKey(scanCode, MAPVK_VSC_TO_VK);
+	if (vk == 0)
+		return 0;
+	return ToAscii(vk, scanCode, KBState, ch, 0);
 }

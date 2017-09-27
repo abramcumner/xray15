@@ -30,6 +30,10 @@ ENGINE_API BOOL g_bRendering = FALSE;
 BOOL		g_bLoaded = FALSE;
 ref_light	precache_light = 0;
 
+// need for imgui
+static INT64 g_Time = 0;
+static INT64 g_TicksPerSecond = 0;
+
 BOOL CRenderDevice::Begin	()
 {
 #ifndef DEDICATED_SERVER
@@ -105,13 +109,6 @@ void CRenderDevice::Clear	()
 extern void CheckPrivilegySlowdown();
 //#include "resourcemanager.h"
 
-bool bShowWindow = true;
-bool show_test_window = true;
-bool show_weather_window = false;
-ImVec4 clear_col = ImColor(114, 144, 154);
-static INT64                    g_Time = 0;
-static INT64                    g_TicksPerSecond = 0;
-
 void CRenderDevice::End		(void)
 {
 #ifndef DEDICATED_SERVER
@@ -171,23 +168,6 @@ void CRenderDevice::End		(void)
 	if (g_SASH.IsBenchmarkRunning())
 		g_SASH.DisplayFrame(Device.fTimeGlobal);
 
-	extern ENGINE_API BOOL g_appLoaded;
-	if (g_appLoaded) {
-		{
-			static float f = 0.0f;
-			ImGui::Text("Hello, world!");
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-			ImGui::ColorEdit3("clear color", (float*)&clear_col);
-			if (ImGui::Button("Test Window")) show_test_window ^= 1;
-			if (ImGui::Button("Weather")) show_weather_window ^= 1;
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		}
-		if (show_test_window)
-		{
-			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);     // Normally user code doesn't need/want to call it because positions are saved in .ini file anyway. Here we just want to make the demo initial state a bit more friendly!
-			ImGui::ShowTestWindow(&show_test_window);
-		}
-	}
 	ImGui::Render();
 
 	m_pRender->End();
@@ -259,13 +239,13 @@ int g_svDedicateServerUpdateReate = 100;
 
 ENGINE_API xr_list<LOADING_EVENT>			g_loading_events;
 
-void ImGui_NewFrame(HWND hwnd)
+void ImGui_NewFrame()
 {
 	ImGuiIO& io = ImGui::GetIO();
 
 	// Setup display size (every frame to accommodate for window resizing)
 	RECT rect;
-	GetClientRect(hwnd, &rect);
+	GetClientRect(Device.m_hWnd, &rect);
 	io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
 
 	if (g_TicksPerSecond == 0) {
@@ -279,10 +259,10 @@ void ImGui_NewFrame(HWND hwnd)
 	g_Time = current_time;
 
 	// Read keyboard modifiers inputs
-	io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-	io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
-	io.KeyAlt = false;// (GetKeyState(VK_MENU) & 0x8000) != 0;
-	io.KeySuper = false;
+	//io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+	//io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+	//io.KeyAlt =  (GetKeyState(VK_MENU) & 0x8000) != 0;
+	//io.KeySuper = false;
 	// io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
 	// io.MousePos : filled by WM_MOUSEMOVE events
 	// io.MouseDown : filled by WM_*BUTTON* events
@@ -308,8 +288,6 @@ void CRenderDevice::on_idle		()
 #endif
 	if (psDeviceFlags.test(rsStatistic))	g_bEnableStatGather	= TRUE;
 	else									g_bEnableStatGather	= FALSE;
-
-	ImGui_NewFrame(m_hWnd);
 
 	if(g_loading_events.size())
 	{
