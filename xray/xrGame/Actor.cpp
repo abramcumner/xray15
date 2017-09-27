@@ -27,10 +27,7 @@
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "Grenade.h"
 #include "Torch.h"
-
-// breakpoints
 #include "../xrEngine/xr_input.h"
-//
 #include "Actor.h"
 #include "ActorAnimation.h"
 #include "actor_anim_defs.h"
@@ -65,10 +62,9 @@
 #include "InventoryBox.h"
 #include "location_manager.h"
 #include "player_hud.h"
-
 #include "../Include/xrRender/UIRender.h"
-
 #include "ai_object_location.h"
+#include "embedded_editor/embedded_editor_prop.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -1276,6 +1272,8 @@ void CActor::shedule_Update	(u32 DT)
 	UpdateArtefactsOnBeltAndOutfit				();
 	m_pPhysics_support->in_shedule_Update		(DT);
 	Check_for_AutoPickUp						();
+
+	SetPropObject(RQ.O);
 };
 #include "debug_renderer.h"
 void CActor::renderable_Render	()
