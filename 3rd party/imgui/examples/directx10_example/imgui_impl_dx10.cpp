@@ -276,6 +276,12 @@ static void ImGui_ImplDX10_CreateFontsTexture()
 {
     ImGuiIO& io = ImGui::GetIO();
 
+	ImFontConfig font_config;
+	font_config.OversampleH = 1; //or 2 is the same
+	font_config.OversampleV = 1;
+	font_config.PixelSnapH = 1;
+	io.Fonts->AddFontFromFileTTF("Anonymous Pro.ttf", 13.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+
     // Build
     unsigned char* pixels;
     int width, height;
@@ -503,7 +509,6 @@ bool    ImGui_ImplDX10_Init(void* hwnd, ID3D10Device* device)
 {
     g_hWnd = (HWND)hwnd;
     g_pd3dDevice = device;
-	ImGui_ImplDX10_CreateDeviceObjects();
 
     //if (!QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
     //    return false;
@@ -511,28 +516,37 @@ bool    ImGui_ImplDX10_Init(void* hwnd, ID3D10Device* device)
     //    return false;
 
     ImGuiIO& io = ImGui::GetIO();
-    io.KeyMap[ImGuiKey_Tab] = VK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
-    io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
-    io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
-    io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
-    io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
-    io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
-    io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
-    io.KeyMap[ImGuiKey_Home] = VK_HOME;
-    io.KeyMap[ImGuiKey_End] = VK_END;
-    io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
-    io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
-    io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
-    io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
-    io.KeyMap[ImGuiKey_A] = 'A';
-    io.KeyMap[ImGuiKey_C] = 'C';
-    io.KeyMap[ImGuiKey_V] = 'V';
-    io.KeyMap[ImGuiKey_X] = 'X';
-    io.KeyMap[ImGuiKey_Y] = 'Y';
-    io.KeyMap[ImGuiKey_Z] = 'Z';
+    io.KeyMap[ImGuiKey_Tab] = DIK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
+    io.KeyMap[ImGuiKey_LeftArrow] = DIK_LEFT;
+    io.KeyMap[ImGuiKey_RightArrow] = DIK_RIGHT;
+    io.KeyMap[ImGuiKey_UpArrow] = DIK_UP;
+    io.KeyMap[ImGuiKey_DownArrow] = DIK_DOWN;
+    io.KeyMap[ImGuiKey_PageUp] = DIK_PRIOR;
+    io.KeyMap[ImGuiKey_PageDown] = DIK_NEXT;
+    io.KeyMap[ImGuiKey_Home] = DIK_HOME;
+    io.KeyMap[ImGuiKey_End] = DIK_END;
+    io.KeyMap[ImGuiKey_Delete] = DIK_DELETE;
+    io.KeyMap[ImGuiKey_Backspace] = DIK_BACK;
+    io.KeyMap[ImGuiKey_Enter] = DIK_RETURN;
+    io.KeyMap[ImGuiKey_Escape] = DIK_ESCAPE;
+    io.KeyMap[ImGuiKey_A] = DIK_A;
+    io.KeyMap[ImGuiKey_C] = DIK_C;
+    io.KeyMap[ImGuiKey_V] = DIK_V;
+    io.KeyMap[ImGuiKey_X] = DIK_X;
+    io.KeyMap[ImGuiKey_Y] = DIK_Y;
+    io.KeyMap[ImGuiKey_Z] = DIK_Z;
 
     io.RenderDrawListsFn = ImGui_ImplDX10_RenderDrawLists;  // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
     io.ImeWindowHandle = g_hWnd;
+
+	//ImFontConfig font_config;
+	//font_config.OversampleH = 1; //or 2 is the same
+	//font_config.OversampleV = 1;
+	//font_config.PixelSnapH = 1;
+	//io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 13.0f, &font_config, io.Fonts->GetGlyphRangesCyrillic());
+	//io.Fonts->AddFontFromFileTTF("ProggyClean.ttf", 13.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+
+	ImGui_ImplDX10_CreateDeviceObjects();
 
     return true;
 }
