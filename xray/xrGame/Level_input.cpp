@@ -27,11 +27,11 @@
 #   include "level_debug.h"
 #endif
 #include "GameObjectEvents.h"
-#include <imgui.h>
+#include "embedded_editor/embedded_editor_main.h"
 
 #ifdef DEBUG
-	extern void try_change_current_entity();
-	extern void restore_actor();
+extern void try_change_current_entity();
+extern void restore_actor();
 #endif
 
 bool g_bDisableAllInput = false;
@@ -39,82 +39,9 @@ extern	float	g_fTimeFactor;
 
 #define CURRENT_ENTITY()	(game?((GameID() == eGameIDSingle) ? CurrentEntity() : CurrentControlEntity()):NULL)
 
-bool isAlt = false;
-bool imgui_keypress(int key)
-{
-	if (key == DIK_RALT || key == DIK_LALT)
-		isAlt = true;
-	if (!isAlt)
-		return false;
-	//while (ShowCursor(TRUE) <= 0);
-
-	ImGuiIO& io = ImGui::GetIO();
-
-	io.MouseDrawCursor = true;
-
-	if (key == MOUSE_1)
-		io.MouseDown[0] = true;
-	if (key == MOUSE_2)
-		io.MouseDown[1] = true;
-	if (key == MOUSE_3)
-		io.MouseDown[2] = true;
-	if (key < 256)
-		io.KeysDown[key] = 1;
-
-	return true;
-}
-
-bool imgui_keyrelease(int key)
-{
-	if (key == DIK_RALT || key == DIK_LALT)
-		isAlt = false;
-	if (!isAlt) {
-		//while (ShowCursor(FALSE) >= 0);
-	}
-
-	ImGuiIO& io = ImGui::GetIO();
-
-	if (!isAlt)
-		io.MouseDrawCursor = false;
-
-	if (key == MOUSE_1)
-		io.MouseDown[0] = false;
-	if (key == MOUSE_2)
-		io.MouseDown[1] = false;
-	if (key == MOUSE_3)
-		io.MouseDown[2] = false;
-	if (key < 256)
-		io.KeysDown[key] = 0;
-
-	return isAlt;
-}
-
-bool imgui_mousemove(int dx, int dy)
-{
-	if (!isAlt)
-		return false;
-
-	ImGuiIO& io = ImGui::GetIO();
-	POINT p;
-	GetCursorPos(&p);
-	io.MousePos.x = p.x;
-	io.MousePos.y = p.y;
-	return true;
-}
-
-bool imgui_mousewheel(int direction)
-{
-	if (!isAlt)
-		return false;
-
-	ImGuiIO& io = ImGui::GetIO();
-	 io.MouseWheel += direction > 0 ? +1.0f : -1.0f;
-	 return true;
-}
-
 void CLevel::IR_OnMouseWheel( int direction )
 {
-	if (imgui_mousewheel(direction))
+	if (Editor_MouseWheel(direction))
 		return;
 
 	if(	g_bDisableAllInput	) return;
@@ -145,7 +72,7 @@ void CLevel::IR_OnMouseHold(int btn)
 
 void CLevel::IR_OnMouseMove( int dx, int dy )
 {
-	if (imgui_mousemove(dx, dy))
+	if (Editor_MouseMove(dx, dy))
 		return;
 
 	if(g_bDisableAllInput)							return;
@@ -192,7 +119,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	if(Device.dwPrecacheFrame)
 		return;
 
-	if (imgui_keypress(key))
+	if (Editor_KeyPress(key))
 		return;
 
 #ifdef INGAME_EDITOR
@@ -515,7 +442,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 void CLevel::IR_OnKeyboardRelease(int key)
 {
-	if (imgui_keyrelease(key))
+	if (Editor_KeyRelease(key))
 		return;
 
 	bool b_ui_exist = (pHUD && pHUD->GetUI());
@@ -537,6 +464,9 @@ void CLevel::IR_OnKeyboardRelease(int key)
 
 void CLevel::IR_OnKeyboardHold(int key)
 {
+	if (Editor_KeyHold(key))
+		return;
+
 	if(g_bDisableAllInput) return;
 
 	GameObject_OnKeyboardHold(g_actor, key);

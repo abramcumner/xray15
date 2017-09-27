@@ -2581,6 +2581,9 @@
     <Filter Include="Core\Client\Objects\items &amp; weapons\Devices\Dosimeter">
       <UniqueIdentifier>{d4cb7526-88b0-43ed-b57e-59efcee31875}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Embedded editor">
+      <UniqueIdentifier>{9e7da499-55df-4d00-b59f-3338b00484de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7488,6 +7491,15 @@
     <ClInclude Include="GameObjectEvents.h">
       <Filter>Core\Client\Objects\base\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_main.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_weather.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_prop.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11152,6 +11164,15 @@
     </ClCompile>
     <ClCompile Include="GameObjectEvents.cpp">
       <Filter>Core\Client\Objects\base\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_main.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_weather.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_prop.cpp">
+      <Filter>Embedded editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
