@@ -2,6 +2,8 @@
 #include "embedded_editor_main.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
+#include "embedded_editor_helper.h"
+#include "embedded_editor_logic.h"
 #include "embedded_editor_prop.h"
 #include "embedded_editor_weather.h"
 #include <addons/imguinodegrapheditor/imguinodegrapheditor.h>
@@ -33,35 +35,41 @@ bool IsEditorActive() { return stage == EditorStage::Full || (stage == EditorSta
 
 bool IsEditor() { return stage != EditorStage::None; }
 
+void ShowMain()
+{
+    ImguiWnd wnd("Main");
+    if (wnd.Collapsed)
+        return;
+
+    ImGui::Text(u8"Редактор XRAY 1.8");
+    if (ImGui::Button("Test Window"))
+        show_test_window ^= 1;
+    if (ImGui::Button("Test Node Editor"))
+        show_node_editor ^= 1;
+    if (ImGui::Button("Weather"))
+        show_weather_window ^= 1;
+    if (ImGui::Button("Properties"))
+        show_prop_window ^= 1;
+    if (ImGui::Button("Infoportions"))
+        show_info_window ^= 1;
+    if (ImGui::Button("Restrictors"))
+        show_restr_window ^= 1;
+    if (ImGui::Button("Shaders"))
+        show_shader_window ^= 1;
+    if (ImGui::Button("Occlusions"))
+        show_occ_window ^= 1;
+    bool full = stage == EditorStage::Full;
+    if (ImGui::Checkbox("Active", &full))
+        stage = full ? EditorStage::Full : EditorStage::Light;
+    ImGui::Text(
+        "Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+}
+
 void ShowEditor()
 {
     if (!IsEditor())
         return;
-    if (ImGui::Begin("Main")) {
-		ImGui::Text(u8"Редактор XRAY 1.8");
-        if (ImGui::Button("Test Window"))
-            show_test_window ^= 1;
-        if (ImGui::Button("Test Node Editor"))
-            show_node_editor ^= 1;
-        if (ImGui::Button("Weather"))
-            show_weather_window ^= 1;
-        if (ImGui::Button("Properties"))
-            show_prop_window ^= 1;
-        if (ImGui::Button("Infoportions"))
-            show_info_window ^= 1;
-        if (ImGui::Button("Restrictors"))
-            show_restr_window ^= 1;
-        if (ImGui::Button("Shaders"))
-            show_shader_window ^= 1;
-        if (ImGui::Button("Occlusions"))
-            show_occ_window ^= 1;
-        bool full = stage == EditorStage::Full;
-        if (ImGui::Checkbox("Active", &full))
-            stage = full ? EditorStage::Full : EditorStage::Light;
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
-            ImGui::GetIO().Framerate);
-        ImGui::End();
-    }
+    ShowMain();
     if (show_test_window) {
         ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
         ImGui::ShowTestWindow(&show_test_window);
@@ -77,10 +85,10 @@ void ShowEditor()
         ShowWeatherEditor(show_weather_window);
     if (show_prop_window)
         ShowPropEditor(show_prop_window);
-	if (show_lua_binder)
-		ShowLuaBinder(show_lua_binder);
-	if (show_logic_editor)
-		ShowLogicEditor(show_logic_editor);
+    if (show_lua_binder)
+        ShowLuaBinder(show_lua_binder);
+    if (show_logic_editor)
+        ShowLogicEditor(show_logic_editor);
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;
@@ -127,36 +135,36 @@ bool Editor_KeyPress(int key)
     case MOUSE_3:
         io.MouseDown[2] = true;
         break;
-	case DIK_NUMPAD0:
-	case DIK_NUMPAD1:
-	case DIK_NUMPAD2:
-	case DIK_NUMPAD3:
-	case DIK_NUMPAD4:
-	case DIK_NUMPAD5:
-	case DIK_NUMPAD6:
-	case DIK_NUMPAD7:
-	case DIK_NUMPAD8:
-	case DIK_NUMPAD9:
-		io.AddInputCharacter('0' + key - DIK_NUMPAD0);
-		break;
-    default: 
+    case DIK_NUMPAD0:
+    case DIK_NUMPAD1:
+    case DIK_NUMPAD2:
+    case DIK_NUMPAD3:
+    case DIK_NUMPAD4:
+    case DIK_NUMPAD5:
+    case DIK_NUMPAD6:
+    case DIK_NUMPAD7:
+    case DIK_NUMPAD8:
+    case DIK_NUMPAD9:
+        io.AddInputCharacter('0' + key - DIK_NUMPAD0);
+        break;
+    default:
         if (key < 512)
             io.KeysDown[key] = true;
-		if (key == DIK_SPACE && (pInput->iGetAsyncKeyState(DIK_RWIN) || pInput->iGetAsyncKeyState(DIK_LWIN)))
-			ActivateKeyboardLayout((HKL)HKL_NEXT, 0);
-		else {
-			uint16_t ch[1];
-			int n = pInput->scancodeToChar(key, ch);
-			if (n > 0) {
-				wchar_t buf;
-				MultiByteToWideChar(CP_ACP, 0, (char*)ch, n, &buf, 1);
-				io.AddInputCharacter(buf);
-				//char utf8[3];
-				//int c = WideCharToMultiByte(CP_UTF8, 0, &buf, 1, utf8, 3, nullptr, nullptr);
-				//utf8[c] = '\0';
-				//io.AddInputCharactersUTF8(utf8);
-			}
-		}
+        if (key == DIK_SPACE && (pInput->iGetAsyncKeyState(DIK_RWIN) || pInput->iGetAsyncKeyState(DIK_LWIN)))
+            ActivateKeyboardLayout((HKL)HKL_NEXT, 0);
+        else {
+            uint16_t ch[1];
+            int n = pInput->scancodeToChar(key, ch);
+            if (n > 0) {
+                wchar_t buf;
+                MultiByteToWideChar(CP_ACP, 0, (char*)ch, n, &buf, 1);
+                io.AddInputCharacter(buf);
+                // char utf8[3];
+                // int c = WideCharToMultiByte(CP_UTF8, 0, &buf, 1, utf8, 3, nullptr, nullptr);
+                // utf8[c] = '\0';
+                // io.AddInputCharactersUTF8(utf8);
+            }
+        }
     }
     return true;
 }

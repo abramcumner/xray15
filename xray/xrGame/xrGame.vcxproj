@@ -932,6 +932,8 @@
     <ClInclude Include="ElectricBall.h" />
     <ClInclude Include="ElevatorState.h" />
     <ClInclude Include="EliteDetector.h" />
+    <ClInclude Include="embedded_editor\embedded_editor_helper.h" />
+    <ClInclude Include="embedded_editor\embedded_editor_logic.h" />
     <ClInclude Include="embedded_editor\embedded_editor_main.h" />
     <ClInclude Include="embedded_editor\embedded_editor_prop.h" />
     <ClInclude Include="embedded_editor\embedded_editor_weather.h" />
@@ -3076,6 +3078,18 @@
     <ClCompile Include="ElectricBall.cpp" />
     <ClCompile Include="ElevatorState.cpp" />
     <ClCompile Include="EliteDetector.cpp" />
+    <ClCompile Include="embedded_editor\embedded_editor_helper.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_logic.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
     <ClCompile Include="embedded_editor\embedded_editor_main.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_prop.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
