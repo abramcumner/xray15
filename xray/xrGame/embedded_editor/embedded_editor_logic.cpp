@@ -771,7 +771,7 @@ void ShowLogicEditor(bool& show)
 
     ImGui::NodeGraphEditor* nge = logics[iniFile];
     if (!nge) {
-        nge = new ImGui::NodeGraphEditor();
+        nge = new ImGui::NodeGraphEditor(true, true, false);
         logics[iniFile] = nge;
     }
     if (nge->isInited()) {
