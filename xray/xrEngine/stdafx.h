@@ -11,7 +11,7 @@
 
 //#ifndef NDEBUG
 //#	ifndef INGAME_EDITOR
-#		define	INGAME_EDITOR
+//#		define	INGAME_EDITOR
 //#	endif // #ifndef INGAME_EDITOR
 //#endif // #ifndef NDEBUG
 
