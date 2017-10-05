@@ -263,23 +263,23 @@ void ShowWeatherEditor(bool& show)
     sel = -1;
     for (int i = 0; i != env.m_suns_config->sections().size(); i++)
         if (cur->lens_flare_id == env.m_suns_config->sections()[i]->Name)
-            sel = i + 1;
-    if (ImGui::Combo("sun", &sel, enumIniWithEmpty, env.m_suns_config, env.m_suns_config->sections().size())) {
-        cur->lens_flare_id = (sel == 0) ? env.eff_LensFlare->AppendDef(env, env.m_suns_config, "")
-                                        : env.eff_LensFlare->AppendDef(env, env.m_suns_config,
-                                              env.m_suns_config->sections()[sel - 1]->Name.c_str());
+            sel = i;
+    if (ImGui::Combo("sun", &sel, enumIni, env.m_suns_config, env.m_suns_config->sections().size())) {
+        cur->lens_flare_id
+            = env.eff_LensFlare->AppendDef(env, env.m_suns_config, env.m_suns_config->sections()[sel]->Name.c_str());
+		env.eff_LensFlare->Invalidate();
         changed = true;
     }
     if (ImGui::ColorEdit3("sun_color", (float*)&cur->sun_color))
         changed = true;
     if (ImGui::SliderFloat("sun_shafts_intensity", &cur->m_fSunShaftsIntensity, 0.0f, 2.0f))
         changed = true;
-    sel = -1;
+    sel = 0;
     for (int i = 0; i != env.m_thunderbolt_collections_config->sections().size(); i++)
         if (cur->tb_id == env.m_thunderbolt_collections_config->sections()[i]->Name)
             sel = i + 1;
     if (ImGui::Combo("thunderbolt_collection", &sel, enumIniWithEmpty, env.m_thunderbolt_collections_config,
-            env.m_thunderbolt_collections_config->sections().size())) {
+            env.m_thunderbolt_collections_config->sections().size() + 1)) {
         cur->tb_id = (sel == 0)
             ? env.eff_Thunderbolt->AppendDef(env, env.m_thunderbolt_collections_config, env.m_thunderbolts_config, "")
             : env.eff_Thunderbolt->AppendDef(env, env.m_thunderbolt_collections_config, env.m_thunderbolts_config,
