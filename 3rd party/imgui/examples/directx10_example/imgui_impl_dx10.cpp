@@ -280,7 +280,7 @@ static void ImGui_ImplDX10_CreateFontsTexture()
 	font_config.OversampleH = 1; //or 2 is the same
 	font_config.OversampleV = 1;
 	font_config.PixelSnapH = 1;
-	io.Fonts->AddFontFromFileTTF("Anonymous Pro.ttf", 13.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+	io.Fonts->AddFontFromFileTTF("extras/Anonymous Pro.ttf", 13.0f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
 
     // Build
     unsigned char* pixels;
