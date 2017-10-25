@@ -160,6 +160,9 @@
     <Filter Include="Models\Editor\NvMender2003">
       <UniqueIdentifier>{0ada7e6d-1a63-4631-a4d0-e14399bbde3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui_render">
+      <UniqueIdentifier>{167d4669-4956-4111-9499-fe7b694dbe71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\xrRender\cl_intersect.h">
@@ -627,6 +630,9 @@
     <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.h">
+      <Filter>imgui_render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\xrRender\xrRender_console.cpp">
@@ -1063,6 +1069,9 @@
     </ClCompile>
     <ClCompile Include="..\Editor\RAPIDMinBox.cpp">
       <Filter>Models\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
+      <Filter>imgui_render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

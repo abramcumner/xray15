@@ -6,7 +6,7 @@
 // If you are new to ImGui, see examples/README.txt and documentation at the top of imgui.cpp.
 // https://github.com/ocornut/imgui
 
-#include <imgui.h>
+#include "imgui.h"
 #include "imgui_impl_dx9.h"
 
 // DirectX
@@ -16,8 +16,8 @@
 
 // Data
 static HWND                     g_hWnd = 0;
-static INT64                    g_Time = 0;
-static INT64                    g_TicksPerSecond = 0;
+//static INT64                    g_Time = 0;
+//static INT64                    g_TicksPerSecond = 0;
 static LPDIRECT3DDEVICE9        g_pd3dDevice = NULL;
 static LPDIRECT3DVERTEXBUFFER9  g_pVB = NULL;
 static LPDIRECT3DINDEXBUFFER9   g_pIB = NULL;
@@ -171,86 +171,88 @@ void ImGui_ImplDX9_RenderDrawLists(ImDrawData* draw_data)
     d3d9_state_block->Release();
 }
 
-IMGUI_API LRESULT ImGui_ImplDX9_WndProcHandler(HWND, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    ImGuiIO& io = ImGui::GetIO();
-    switch (msg)
-    {
-    case WM_LBUTTONDOWN:
-        io.MouseDown[0] = true;
-        return true;
-    case WM_LBUTTONUP:
-        io.MouseDown[0] = false;
-        return true;
-    case WM_RBUTTONDOWN:
-        io.MouseDown[1] = true;
-        return true;
-    case WM_RBUTTONUP:
-        io.MouseDown[1] = false;
-        return true;
-    case WM_MBUTTONDOWN:
-        io.MouseDown[2] = true;
-        return true;
-    case WM_MBUTTONUP:
-        io.MouseDown[2] = false;
-        return true;
-    case WM_MOUSEWHEEL:
-        io.MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
-        return true;
-    case WM_MOUSEMOVE:
-        io.MousePos.x = (signed short)(lParam);
-        io.MousePos.y = (signed short)(lParam >> 16);
-        return true;
-    case WM_KEYDOWN:
-        if (wParam < 256)
-            io.KeysDown[wParam] = 1;
-        return true;
-    case WM_KEYUP:
-        if (wParam < 256)
-            io.KeysDown[wParam] = 0;
-        return true;
-    case WM_CHAR:
-        // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
-        if (wParam > 0 && wParam < 0x10000)
-            io.AddInputCharacter((unsigned short)wParam);
-        return true;
-    }
-    return 0;
-}
+//IMGUI_API LRESULT ImGui_ImplDX9_WndProcHandler(HWND, UINT msg, WPARAM wParam, LPARAM lParam)
+//{
+//    ImGuiIO& io = ImGui::GetIO();
+//    switch (msg)
+//    {
+//    case WM_LBUTTONDOWN:
+//        io.MouseDown[0] = true;
+//        return true;
+//    case WM_LBUTTONUP:
+//        io.MouseDown[0] = false;
+//        return true;
+//    case WM_RBUTTONDOWN:
+//        io.MouseDown[1] = true;
+//        return true;
+//    case WM_RBUTTONUP:
+//        io.MouseDown[1] = false;
+//        return true;
+//    case WM_MBUTTONDOWN:
+//        io.MouseDown[2] = true;
+//        return true;
+//    case WM_MBUTTONUP:
+//        io.MouseDown[2] = false;
+//        return true;
+//    case WM_MOUSEWHEEL:
+//        io.MouseWheel += GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? +1.0f : -1.0f;
+//        return true;
+//    case WM_MOUSEMOVE:
+//        io.MousePos.x = (signed short)(lParam);
+//        io.MousePos.y = (signed short)(lParam >> 16);
+//        return true;
+//    case WM_KEYDOWN:
+//        if (wParam < 256)
+//            io.KeysDown[wParam] = 1;
+//        return true;
+//    case WM_KEYUP:
+//        if (wParam < 256)
+//            io.KeysDown[wParam] = 0;
+//        return true;
+//    case WM_CHAR:
+//        // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
+//        if (wParam > 0 && wParam < 0x10000)
+//            io.AddInputCharacter((unsigned short)wParam);
+//        return true;
+//    }
+//    return 0;
+//}
 
 bool    ImGui_ImplDX9_Init(void* hwnd, IDirect3DDevice9* device)
 {
     g_hWnd = (HWND)hwnd;
     g_pd3dDevice = device;
 
-    if (!QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
-        return false;
-    if (!QueryPerformanceCounter((LARGE_INTEGER *)&g_Time))
-        return false;
+    //if (!QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
+    //    return false;
+    //if (!QueryPerformanceCounter((LARGE_INTEGER *)&g_Time))
+    //    return false;
 
     ImGuiIO& io = ImGui::GetIO();
-    io.KeyMap[ImGuiKey_Tab] = VK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
-    io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
-    io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
-    io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
-    io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
-    io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
-    io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
-    io.KeyMap[ImGuiKey_Home] = VK_HOME;
-    io.KeyMap[ImGuiKey_End] = VK_END;
-    io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
-    io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
-    io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
-    io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
-    io.KeyMap[ImGuiKey_A] = 'A';
-    io.KeyMap[ImGuiKey_C] = 'C';
-    io.KeyMap[ImGuiKey_V] = 'V';
-    io.KeyMap[ImGuiKey_X] = 'X';
-    io.KeyMap[ImGuiKey_Y] = 'Y';
-    io.KeyMap[ImGuiKey_Z] = 'Z';
+	io.KeyMap[ImGuiKey_Tab] = DIK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
+	io.KeyMap[ImGuiKey_LeftArrow] = DIK_LEFT;
+	io.KeyMap[ImGuiKey_RightArrow] = DIK_RIGHT;
+	io.KeyMap[ImGuiKey_UpArrow] = DIK_UP;
+	io.KeyMap[ImGuiKey_DownArrow] = DIK_DOWN;
+	io.KeyMap[ImGuiKey_PageUp] = DIK_PRIOR;
+	io.KeyMap[ImGuiKey_PageDown] = DIK_NEXT;
+	io.KeyMap[ImGuiKey_Home] = DIK_HOME;
+	io.KeyMap[ImGuiKey_End] = DIK_END;
+	io.KeyMap[ImGuiKey_Delete] = DIK_DELETE;
+	io.KeyMap[ImGuiKey_Backspace] = DIK_BACK;
+	io.KeyMap[ImGuiKey_Enter] = DIK_RETURN;
+	io.KeyMap[ImGuiKey_Escape] = DIK_ESCAPE;
+	io.KeyMap[ImGuiKey_A] = DIK_A;
+	io.KeyMap[ImGuiKey_C] = DIK_C;
+	io.KeyMap[ImGuiKey_V] = DIK_V;
+	io.KeyMap[ImGuiKey_X] = DIK_X;
+	io.KeyMap[ImGuiKey_Y] = DIK_Y;
+	io.KeyMap[ImGuiKey_Z] = DIK_Z;
 
     io.RenderDrawListsFn = ImGui_ImplDX9_RenderDrawLists;   // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
     io.ImeWindowHandle = g_hWnd;
+	
+	ImGui_ImplDX9_CreateDeviceObjects();
 
     return true;
 }
@@ -321,38 +323,38 @@ void ImGui_ImplDX9_InvalidateDeviceObjects()
     io.Fonts->TexID = NULL;
 }
 
-void ImGui_ImplDX9_NewFrame()
-{
-    if (!g_FontTexture)
-        ImGui_ImplDX9_CreateDeviceObjects();
-
-    ImGuiIO& io = ImGui::GetIO();
-
-    // Setup display size (every frame to accommodate for window resizing)
-    RECT rect;
-    GetClientRect(g_hWnd, &rect);
-    io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
-
-    // Setup time step
-    INT64 current_time;
-    QueryPerformanceCounter((LARGE_INTEGER *)&current_time);
-    io.DeltaTime = (float)(current_time - g_Time) / g_TicksPerSecond;
-    g_Time = current_time;
-
-    // Read keyboard modifiers inputs
-    io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
-    io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
-    io.KeyAlt = (GetKeyState(VK_MENU) & 0x8000) != 0;
-    io.KeySuper = false;
-    // io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
-    // io.MousePos : filled by WM_MOUSEMOVE events
-    // io.MouseDown : filled by WM_*BUTTON* events
-    // io.MouseWheel : filled by WM_MOUSEWHEEL events
-
-    // Hide OS mouse cursor if ImGui is drawing it
-    if (io.MouseDrawCursor)
-        SetCursor(NULL);
-
-    // Start the frame
-    ImGui::NewFrame();
-}
+//void ImGui_ImplDX9_NewFrame()
+//{
+//    if (!g_FontTexture)
+//        ImGui_ImplDX9_CreateDeviceObjects();
+//
+//    ImGuiIO& io = ImGui::GetIO();
+//
+//    // Setup display size (every frame to accommodate for window resizing)
+//    RECT rect;
+//    GetClientRect(g_hWnd, &rect);
+//    io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
+//
+//    // Setup time step
+//    INT64 current_time;
+//    QueryPerformanceCounter((LARGE_INTEGER *)&current_time);
+//    io.DeltaTime = (float)(current_time - g_Time) / g_TicksPerSecond;
+//    g_Time = current_time;
+//
+//    // Read keyboard modifiers inputs
+//    io.KeyCtrl = (GetKeyState(VK_CONTROL) & 0x8000) != 0;
+//    io.KeyShift = (GetKeyState(VK_SHIFT) & 0x8000) != 0;
+//    io.KeyAlt = (GetKeyState(VK_MENU) & 0x8000) != 0;
+//    io.KeySuper = false;
+//    // io.KeysDown : filled by WM_KEYDOWN/WM_KEYUP events
+//    // io.MousePos : filled by WM_MOUSEMOVE events
+//    // io.MouseDown : filled by WM_*BUTTON* events
+//    // io.MouseWheel : filled by WM_MOUSEWHEEL events
+//
+//    // Hide OS mouse cursor if ImGui is drawing it
+//    if (io.MouseDrawCursor)
+//        SetCursor(NULL);
+//
+//    // Start the frame
+//    ImGui::NewFrame();
+//}

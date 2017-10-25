@@ -166,6 +166,9 @@
     <Filter Include="pch">
       <UniqueIdentifier>{612cb47e-22e7-4d3c-866d-f97856d0ddae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui_render">
+      <UniqueIdentifier>{088049fb-4e3b-4540-ae7f-0473e8063084}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cl_intersect.h">
@@ -659,6 +662,9 @@
     </ClInclude>
     <ClInclude Include="pch\stdafx.h">
       <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.h">
+      <Filter>imgui_render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1192,6 +1198,9 @@
     </ClCompile>
     <ClCompile Include="pch\stdafx.cpp">
       <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
+      <Filter>imgui_render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
