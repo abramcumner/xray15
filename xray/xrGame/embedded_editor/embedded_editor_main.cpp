@@ -2,6 +2,7 @@
 #include "embedded_editor_main.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
+#include "embedded_editor_ae.h"
 #include "embedded_editor_helper.h"
 #include "embedded_editor_logic.h"
 #include "embedded_editor_prop.h"
@@ -19,6 +20,7 @@ bool show_restr_window = false;
 bool show_shader_window = false;
 bool show_occ_window = false;
 bool show_node_editor = false;
+bool show_ae_window = false;
 
 static bool isAlt = false;
 
@@ -41,7 +43,7 @@ void ShowMain()
     if (wnd.Collapsed)
         return;
 
-    ImGui::Text(u8"Редактор XRAY 1.8");
+    ImGui::Text(u8"Editor");
     if (ImGui::Button("Test Window"))
         show_test_window ^= 1;
     if (ImGui::Button("Test Node Editor"))
@@ -58,6 +60,12 @@ void ShowMain()
         show_shader_window ^= 1;
     if (ImGui::Button("Occlusions"))
         show_occ_window ^= 1;
+    if (ImGui::Button("AE"))
+        show_ae_window ^= 1;
+    ImGui::SameLine();
+    ImGui::Button("LE");
+    ImGui::SameLine();
+    ImGui::Button("SE");
     bool full = stage == EditorStage::Full;
     if (ImGui::Checkbox("Active", &full))
         stage = full ? EditorStage::Full : EditorStage::Light;
@@ -89,6 +97,8 @@ void ShowEditor()
         ShowLuaBinder(show_lua_binder);
     if (show_logic_editor)
         ShowLogicEditor(show_logic_editor);
+    if (show_ae_window)
+        ShowAeWindow(show_ae_window);
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;
@@ -159,10 +169,6 @@ bool Editor_KeyPress(int key)
                 wchar_t buf;
                 MultiByteToWideChar(CP_ACP, 0, (char*)ch, n, &buf, 1);
                 io.AddInputCharacter(buf);
-                // char utf8[3];
-                // int c = WideCharToMultiByte(CP_UTF8, 0, &buf, 1, utf8, 3, nullptr, nullptr);
-                // utf8[c] = '\0';
-                // io.AddInputCharactersUTF8(utf8);
             }
         }
     }
