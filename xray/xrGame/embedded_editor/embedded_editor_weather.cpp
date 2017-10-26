@@ -210,9 +210,9 @@ void ShowWeatherEditor(bool& show)
         cur->on_device_create();
         changed = true;
     }
-    if (ImGui::SliderFloat("far_plane", &cur->far_plane, 0.0f, 10000.0f))
+    if (ImGui::SliderFloat("far_plane", &cur->far_plane, 0.001f, 10000.0f, "%.3f", 3.0f))
         changed = true;
-    if (ImGui::SliderFloat("fog_distance", &cur->fog_distance, 0.0f, 10000.0f))
+    if (ImGui::SliderFloat("fog_distance", &cur->fog_distance, 0.0f, 10000.0f, "%.3f", 3.0f))
         changed = true;
     if (ImGui::SliderFloat("fog_density", &cur->fog_density, 0.0f, 10.0f))
         changed = true;
