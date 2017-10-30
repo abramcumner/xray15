@@ -162,6 +162,7 @@ void ShowMotionWindow(u16 motion)
         sprintf(buf, "Motion [%d] - not available###Motion%d", motion, motion);
     }
     bool opened = true;
+	ImGui::SetNextWindowSize(ImVec2(100, 100), ImGuiCond_FirstUseEver);
     ImguiWnd wnd(buf, &opened);
     if (!opened)
         opened_motions.erase(motion);
