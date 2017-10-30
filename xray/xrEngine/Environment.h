@@ -357,6 +357,7 @@ public:
 	float						p_sky_color;
 	float						p_sun_color;
 	float						p_fog_color;
+	bool m_dynamicSun;
 };
 
 #undef INGAME_EDITOR_VIRTUAL

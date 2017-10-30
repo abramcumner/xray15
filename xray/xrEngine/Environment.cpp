@@ -183,6 +183,7 @@ CEnvironment::CEnvironment	() :
 	p_sky_color		= config->r_float							( "environment","sky_color" );
 	p_sun_color		= config->r_float							( "environment","sun_color" );
 	p_fog_color		= config->r_float							( "environment","fog_color" );
+	m_dynamicSun = config->line_exist("environment", "dynamic_sun") ? config->r_bool("environment", "dynamic_sun") : true;
 
 	xr_delete		(config);
 }
@@ -481,7 +482,7 @@ void CEnvironment::OnFrame()
 	lerp					(current_weight);
 
 	//	Igor. Dynamic sun position. 
-	if ( !::Render->is_sun_static())
+	if (m_dynamicSun)
 		calculate_dynamic_sun_dir();
 
 #ifndef MASTER_GOLD
