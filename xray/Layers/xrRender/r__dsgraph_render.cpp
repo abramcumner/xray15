@@ -534,7 +534,6 @@ void	R_dsgraph_structure::r_dsgraph_render_sorted	()
 	mapSorted.traverseRL	(sorted_L1);
 	mapSorted.clear			();
 
-#if	RENDER != R_R1
 	ENGINE_API extern float		psHUD_FOV;
 	// Change projection
 	Fmatrix Pold = Device.mProject;
@@ -557,7 +556,6 @@ void	R_dsgraph_structure::r_dsgraph_render_sorted	()
 	Device.mProject = Pold;
 	Device.mFullTransform = FTold;
 	RCache.set_xform_project(Device.mProject);
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////////
