@@ -610,6 +610,10 @@ void CSE_SmartCover::fill_visuals()
 {
 	delete_data(m_visuals);
 
+	shared_str preview = pSettings->line_exist(name(), "preview_visual")
+		? pSettings->r_string(name(), "preview_visual")
+		: "characters\\neutral\\neutral_wolf.ogf";
+
 	xr_vector<SSCDrawHelper>::iterator I = m_draw_data.begin();
 	xr_vector<SSCDrawHelper>::iterator E = m_draw_data.end();
 	for ( ; I != E; ++I) {
@@ -617,7 +621,7 @@ void CSE_SmartCover::fill_visuals()
 			return;
 
 		CSE_Visual *visual			= xr_new<CSE_SmartVisual>();
-		visual->set_visual			("actors\\stalker_neutral\\stalker_neutral_1");
+		visual->set_visual			(preview.c_str());
 
 		if (I->animation_id.size() == 0) {
 			Msg						("cover [%s] doesn't have idle_2_fire animation", I->string_identifier.c_str());
