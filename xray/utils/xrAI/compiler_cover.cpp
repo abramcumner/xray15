@@ -562,7 +562,7 @@ void compute_non_covers		()
 }
 
 extern	void mem_Optimize();
-void	xrCover	(bool pure_covers)
+void	xrCover	(bool pure_covers, const u32 numThread)
 {
 	Status("Calculating...");
 
@@ -574,13 +574,10 @@ void	xrCover	(bool pure_covers)
 	// Start threads, wait, continue --- perform all the work
 	u32	start_time		= timeGetTime();
 	CThreadManager		Threads;
-	SYSTEM_INFO info;
-	GetSystemInfo(&info);
-	const u32 NUM_THREADS = info.dwNumberOfProcessors;
-	u32	stride			= g_nodes.size()/NUM_THREADS;
-	u32	last			= g_nodes.size()-stride*(NUM_THREADS-1);
-	for (u32 thID=0; thID<NUM_THREADS; thID++) {
-		Threads.start(xr_new<CoverThread>(thID,thID*stride,thID*stride+((thID==(NUM_THREADS-1))?last:stride)));
+	u32	stride			= g_nodes.size()/ numThread;
+	u32	last			= g_nodes.size()-stride*(numThread -1);
+	for (u32 thID=0; thID<numThread; thID++) {
+		Threads.start(xr_new<CoverThread>(thID,thID*stride,thID*stride+((thID==(numThread -1))?last:stride)));
 //		CoverThread(thID,thID*stride,thID*stride+((thID==(NUM_THREADS-1))?last:stride)).Execute();
 //		Threads.wait		();
 	}

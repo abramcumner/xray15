@@ -16,7 +16,7 @@
 
 extern LPCSTR LEVEL_GRAPH_NAME;
 
-extern void	xrCompiler			(LPCSTR name, bool draft_mode, bool pure_covers, LPCSTR out_name);
+extern void	xrCompiler			(LPCSTR name, bool draft_mode, bool pure_covers, LPCSTR out_name, u32 numThread);
 extern void logThread			(void *dummy);
 extern volatile BOOL bClose;
 extern void test_smooth_path	(LPCSTR name);
@@ -41,7 +41,8 @@ static const char* h_str =
 	"-draft\n"
 	"-pure_covers\n"
 	"-start\n"
-	"-no_separator_check\n";
+	"-no_separator_check\n"
+	"-thread <COUNT> == multi-threaded cover calculation\n";
 
 void Help()
 {	MessageBox(0,h_str,"Command line options",MB_OK|MB_ICONINFORMATION); }
@@ -142,7 +143,17 @@ void execute	(LPSTR cmd)
 		else
 			output		= (pstr)LEVEL_GRAPH_NAME;
 
-		xrCompiler		(prjName,!!strstr(cmd,"-draft"),!!strstr(cmd,"-pure_covers"),output);
+		const char* threadOption = strstr(cmd, "-thread");
+		u32 numThread = 0;
+		if (threadOption)
+			sscanf(threadOption + strlen("-thread"), "%lu", &numThread);
+		if (numThread == 0 || numThread > 256) {
+			SYSTEM_INFO info;
+			GetSystemInfo(&info);
+			numThread = info.dwNumberOfProcessors;
+		}
+
+		xrCompiler(prjName, !!strstr(cmd,"-draft"), !!strstr(cmd,"-pure_covers"), output, numThread);
 	}
 	else {
 		if (strstr(cmd,"-s")) {
