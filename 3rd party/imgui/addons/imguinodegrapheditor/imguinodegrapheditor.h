@@ -263,6 +263,7 @@ class Node
     inline int getNumInputSlots() const {return InputsCount;}
     inline int getNumOutputSlots() const {return OutputsCount;}
     inline void setOpen(bool flag) {isOpen=flag;}    
+	inline const ImVec2 GetPos(float currentFontWindowScale = 1.f) const { return ImVec2(Pos.x*currentFontWindowScale, Pos.y*currentFontWindowScale); }
 
     protected:
     FieldInfoVector fields; // I guess you can just skip these at all and implement virtual methods... but it was supposed to be useful...
@@ -324,7 +325,6 @@ class Node
 
     inline ImVec2 GetInputSlotPos(int slot_no,float currentFontWindowScale=1.f) const   { return ImVec2(Pos.x*currentFontWindowScale,           Pos.y*currentFontWindowScale + Size.y * ((float)slot_no+1) / ((float)InputsCount+1)); }
     inline ImVec2 GetOutputSlotPos(int slot_no,float currentFontWindowScale=1.f) const  { return ImVec2(Pos.x*currentFontWindowScale + Size.x,  Pos.y*currentFontWindowScale + Size.y * ((float)slot_no+1) / ((float)OutputsCount+1)); }
-    inline const ImVec2 GetPos(float currentFontWindowScale=1.f) const {return ImVec2(Pos.x*currentFontWindowScale,Pos.y*currentFontWindowScale);}
 
     friend struct NodeLink;
     friend class NodeGraphEditor;
@@ -397,8 +397,12 @@ class NodeGraphEditor
 
     typedef void (*NodeCallback)(Node*& node,NodeState state,NodeGraphEditor& editor);
     typedef void (*LinkCallback)(const NodeLink& link,LinkState state,NodeGraphEditor& editor);
+	typedef void(*LeftPaneCallback)(NodeGraphEditor& editor);
+	typedef void(*SaveCallback)(NodeGraphEditor& editor);
     LinkCallback linkCallback;// called after a link is added and before it's deleted
     NodeCallback nodeCallback;// called after a node is added, after it's edited and before it's deleted
+	LeftPaneCallback leftPaneCallback;// called in left pane render
+	SaveCallback saveCallback;// called after button "Save" is pressed
     float nodeEditedTimeThreshold; // time in seconds that must elapse after the last "editing touch" before the NS_EDITED callback is called
 
     public:
@@ -508,7 +512,11 @@ class NodeGraphEditor
         activeNode = dragNode.node = sourceCopyNode = NULL;
         allowOnlyOneLinkPerInputSlot = _allowOnlyOneLinkPerInputSlot;
         avoidCircularLinkLoopsInOut = _avoidCircularLinkLoopsInOut;
-        nodeCallback = NULL;linkCallback=NULL;nodeEditedTimeThreshold=1.5f;
+		nodeCallback = NULL;
+		linkCallback = NULL;
+		leftPaneCallback = nullptr;
+		saveCallback = nullptr;
+		nodeEditedTimeThreshold = 1.5f;
         user_ptr = NULL;
         show_left_pane = true;
         show_top_pane = true;
@@ -675,6 +683,8 @@ class NodeGraphEditor
     void setNodeCallback(NodeCallback cb) {nodeCallback=cb;}
     void setLinkCallback(LinkCallback cb) {linkCallback=cb;}
     void setNodeEditedCallbackTimeThreshold(int seconds) {nodeEditedTimeThreshold=seconds;}
+	void setLeftPaneCallback(LeftPaneCallback cb) { leftPaneCallback = cb; }
+	void setSaveCallback(SaveCallback cb) { saveCallback = cb; }
 
 //-------------------------------------------------------------------------------
 #       if (defined(IMGUIHELPER_H_) && !defined(NO_IMGUIHELPER_SERIALIZATION))
