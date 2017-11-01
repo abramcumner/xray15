@@ -643,6 +643,9 @@ void NodeGraphEditor::render()
         }
 #       endif //NO_IMGUIHELPER_SERIALIZATION
 
+		if (leftPaneCallback)
+			leftPaneCallback(*this);
+
         ImGui::EndChild();
 
         // horizontal splitter
