@@ -148,9 +148,7 @@ void execute	(LPSTR cmd)
 		if (threadOption)
 			sscanf(threadOption + strlen("-thread"), "%lu", &numThread);
 		if (numThread == 0 || numThread > 256) {
-			SYSTEM_INFO info;
-			GetSystemInfo(&info);
-			numThread = info.dwNumberOfProcessors;
+			numThread = CPU::ID.threadCount;
 		}
 
 		xrCompiler(prjName, !!strstr(cmd,"-draft"), !!strstr(cmd,"-pure_covers"), output, numThread);
