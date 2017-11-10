@@ -163,7 +163,6 @@ public:
 
 //#pragma optimize( "g", off )
 
-#define	NUM_THREADS	8
 void ImplicitLighting()
 {
 	if (g_params().m_quality==ebqDraft) return;
@@ -220,8 +219,8 @@ void ImplicitLighting()
 
 		// Start threads
 		CThreadManager			tmanager;
-		u32	stride				= defl.Height()/NUM_THREADS;
-		for (u32 thID=0; thID<NUM_THREADS; thID++)
+		u32	stride				= defl.Height()/ inlc_global_data()->numThread();
+		for (u32 thID=0; thID<inlc_global_data()->numThread(); thID++)
 			tmanager.start		(xr_new<ImplicitThread> (thID,&defl,thID*stride,thID*stride+stride));
 		tmanager.wait			();
 

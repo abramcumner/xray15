@@ -31,6 +31,7 @@ static const char* h_str =
 	"-skipinvalid  == skip crash if invalid faces exists\n"
 	"-lmap_quality == lightmap quality\n"
 	"-lmap_rgba    == save lightmaps with lossless format\n"
+	"-thread <COUNT> == multi-threaded light implicit\n"
 	"-f<NAME>      == compile level in GameData\\Levels\\<NAME>\\\n"
 	"\n"
 	"NOTE: The last key is required for any functionality\n";
@@ -108,6 +109,14 @@ void Startup(LPSTR     lpCmdLine)
 	lc_global_data()->b_no_lmaps_set(strstr(cmd, "-nolmaps") != nullptr);
 	lc_global_data()->b_skip_invalid_set(strstr(cmd, "-skipinvalid") != nullptr);
 	lc_global_data()->b_lmap_rgba_set(strstr(cmd, "-lmap_rgba") != nullptr);
+	const char* threadOption = strstr(cmd, "-thread");
+	u32 numThread = 0;
+	if (threadOption)
+		sscanf(threadOption + strlen("-thread"), "%lu", &numThread);
+	if (numThread == 0 || numThread > 256) {
+		numThread = CPU::ID.threadCount;
+	}
+	lc_global_data()->setNumThread(numThread);
 	
 	// Give a LOG-thread a chance to startup
 	//_set_sbh_threshold(1920);

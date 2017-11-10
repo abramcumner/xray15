@@ -42,12 +42,13 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		bool							_b_no_lmaps;
 		bool							_b_skip_invalid;
 		bool							_b_lmap_rgba;
+		u32								_numThread;
 public:
 
 public:
 									xrLC_GlobalData	():_RCAST_Model (0), _b_nosun(false),_gl_linear(false),
 										_b_norgb(false), _b_no_lmaps(false), _b_skip_invalid(false),
-										_b_lmap_rgba(false){}
+										_b_lmap_rgba(false), _numThread(8) {}
 									~xrLC_GlobalData();
 		IC xr_vector<b_BuildTexture>& textures		()		{	return _textures; }
 		IC xr_vector<CLightmap*>	& lightmaps		()		{	return _g_lightmaps; }
@@ -91,6 +92,9 @@ IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						b_skip_invalid_set(bool v){ _b_skip_invalid = v; }
 		bool						b_lmap_rgba() { return _b_lmap_rgba; }
 		void						b_lmap_rgba_set(bool v) { _b_lmap_rgba = v; }
+		u32							numThread() { return _numThread; }
+		void						setNumThread(u32 v) { _numThread = v; }
+
 private:
 //std::pair<u32,u32>					get_id		( const _face * v ) const;
 //std::pair<u32,u32>					get_id		( const _vertex * v ) const;
