@@ -1,19 +1,12 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "xrdebug.h"
 #include "os_clipboard.h"
-
 #include "../../3rd party/DxErr/src/dxerr.h"
-
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
 #include <direct.h>
 #pragma warning(pop)
-
-extern bool shared_str_initialized;
-
 #ifdef __BORLANDC__
     #	include "d3d9.h"
     #	include "d3dx9.h"
@@ -27,22 +20,19 @@ extern bool shared_str_initialized;
     #	define DEBUG_INVOKE	__asm int 3
         static BOOL			bException	= FALSE;
 #endif
-
 #ifndef USE_BUG_TRAP
 #	include <exception>
 #endif // #ifndef USE_BUG_TRAP
-
 #include <dbghelp.h>						// MiniDump flags
-
 #ifdef USE_BUG_TRAP
 #	include "../../3rd party/bugtrap/bugtrap/bugtrap.h"						// for BugTrap functionality
     #ifdef __BORLANDC__
         #	pragma comment(lib,"BugTrapB.lib")		// Link to ANSI DLL
     #endif
 #endif // USE_BUG_TRAP
-
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
+#include <Shellapi.h>
 
 #ifdef DEBUG
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
@@ -57,6 +47,7 @@ static bool	error_after_dialog = false;
 extern void BuildStackTrace();
 extern char g_stackTrace[100][4096];
 extern int	g_stackTraceCount;
+extern bool shared_str_initialized;
 
 void LogStackTrace	(LPCSTR header)
 {
@@ -231,6 +222,8 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 			BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
 #       ifndef DEBUG
+			if (strstr(GetCommandLine(),"-show_log"))
+				ShellExecute(nullptr, "open", logFullName(), nullptr, nullptr, SW_SHOWNORMAL);
 			TerminateProcess(GetCurrentProcess(), 1);
 #       else
 		DEBUG_INVOKE;
