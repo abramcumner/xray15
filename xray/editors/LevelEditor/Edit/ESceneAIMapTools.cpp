@@ -123,10 +123,10 @@ void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools)
 	u32 			id;
     u16 			pl;
 	NodePosition 	np;
-    F.r				(&id,3); 			n1 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n2 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n3 = (SAINode*)tools->UnpackLink(id);
-    F.r				(&id,3); 			n4 = (SAINode*)tools->UnpackLink(id);
+    F.r				(&id, sizeof(id));	n1 = (SAINode*)tools->UnpackLink(id);
+    F.r				(&id, sizeof(id)); 	n2 = (SAINode*)tools->UnpackLink(id);
+    F.r				(&id, sizeof(id)); 	n3 = (SAINode*)tools->UnpackLink(id);
+    F.r				(&id, sizeof(id)); 	n4 = (SAINode*)tools->UnpackLink(id);
 	pl				= F.r_u16(); 		pvDecompress(Plane.n,pl);
     F.r				(&np,sizeof(np)); 	tools->UnpackPosition(Pos,np,tools->m_AIBBox,tools->m_Params);
 	Plane.build		(Pos,Plane.n);
@@ -139,10 +139,10 @@ void SAINode::SaveStream(IWriter& F, ESceneAIMapTool* tools)
     u16 			pl;
 	NodePosition 	np;
 
-    id = n1?(u32)n1->idx:InvalidNode; F.w(&id,3);
-    id = n2?(u32)n2->idx:InvalidNode; F.w(&id,3);
-    id = n3?(u32)n3->idx:InvalidNode; F.w(&id,3);
-    id = n4?(u32)n4->idx:InvalidNode; F.w(&id,3);
+    id = n1?(u32)n1->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n2?(u32)n2->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n3?(u32)n3->idx:InvalidNode; F.w(&id, sizeof(id));
+    id = n4?(u32)n4->idx:InvalidNode; F.w(&id, sizeof(id));
     pl = pvCompress (Plane.n);	 F.w_u16(pl);
 	tools->PackPosition(np,Pos,tools->m_AIBBox,tools->m_Params); F.w(&np,sizeof(np));
     F.w_u8			(flags.get());

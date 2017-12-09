@@ -10,7 +10,7 @@
 #include "Etextureparams.h"
 
 // base patch used all the time up to merging
-const u32 InvalidNode		= (1<<24)-1;
+const u32 InvalidNode		= 0xffffffff;
 const u32 UnkonnectedNode	= 0xfffffff0;
 const WORD	InvalidSector	= 0xff;
 
@@ -173,7 +173,7 @@ IC CNodePositionCompressor::CNodePositionCompressor(NodePosition& Pdest, Fvector
 	int row_length = iFloor((H.aabb.max.z - H.aabb.min.z)/H.size + EPS_L + 1.5f);
 	int pxz	= iFloor((Psrc.x - H.aabb.min.x)*sp + EPS_L + .5f)*row_length + iFloor((Psrc.z - H.aabb.min.z)*sp   + EPS_L + .5f);
 	int py	= iFloor(65535.f*(Psrc.y-H.aabb.min.y)/(H.size_y)+EPS_L);
-	VERIFY	(pxz < (1 << MAX_NODE_BIT_COUNT) - 1);
+	VERIFY	(pxz < MAX_AI_NODES);
 	Pdest.xz(pxz);
 	clamp	(py,0,     65535);	Pdest.y			(u16(py));
 }

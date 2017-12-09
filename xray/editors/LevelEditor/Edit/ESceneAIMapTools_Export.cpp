@@ -13,7 +13,7 @@ void ESceneAIMapTool::UnpackPosition(Fvector& Pdest, const NodePosition& Psrc, F
 
 u32 ESceneAIMapTool::UnpackLink(u32& L)
 {
-	return L&0x00ffffff;
+	return L;
 }
 
 void ESceneAIMapTool::PackPosition(NodePosition& Dest, Fvector& Src, Fbox& bb, SAIParams& params)
@@ -63,10 +63,10 @@ bool ESceneAIMapTool::Export(LPCSTR path)
             u16 			pl;
             NodePosition 	np;
 
-            id = (*it)->n1?(u32)(*it)->n1->idx:InvalidNode;  	F->w(&id,3);
-            id = (*it)->n2?(u32)(*it)->n2->idx:InvalidNode;  	F->w(&id,3);
-            id = (*it)->n3?(u32)(*it)->n3->idx:InvalidNode;  	F->w(&id,3);
-            id = (*it)->n4?(u32)(*it)->n4->idx:InvalidNode;  	F->w(&id,3);
+            id = (*it)->n1?(u32)(*it)->n1->idx:InvalidNode;  	F->w(&id, sizeof(id));
+            id = (*it)->n2?(u32)(*it)->n2->idx:InvalidNode;  	F->w(&id, sizeof(id));
+            id = (*it)->n3?(u32)(*it)->n3->idx:InvalidNode;  	F->w(&id, sizeof(id));
+            id = (*it)->n4?(u32)(*it)->n4->idx:InvalidNode;  	F->w(&id, sizeof(id));
             pl = pvCompress ((*it)->Plane.n);	 				F->w_u16(pl);
             PackPosition	(np,(*it)->Pos,bb,m_Params); 	F->w(&np,sizeof(np));
         }

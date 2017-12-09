@@ -118,6 +118,100 @@ public:
 
 struct NodeCompressed {
 public:
+	u8				data[13];
+	static const u32 NODE_BIT_COUNT = 25;
+	static const u32 LINK_MASK_0 = (1 << NODE_BIT_COUNT) - 1;
+	static const u32 LINK_MASK_1 = LINK_MASK_0 << 1;
+	static const u32 LINK_MASK_2 = LINK_MASK_0 << 2;
+	static const u32 LINK_MASK_3 = LINK_MASK_0 << 3;
+
+private:
+
+	ICF	void link(u8 link_index, u32 value)
+	{
+		value &= LINK_MASK_0;
+		switch (link_index) {
+		case 0: {
+			value |= (*(u32*)data) & ~LINK_MASK_0;
+			CopyMemory(data, &value, sizeof(u32));
+			break;
+		}
+		case 1: {
+			value <<= 1;
+			value |= (*(u32*)(data + 3)) & ~LINK_MASK_1;
+			CopyMemory(data + 3, &value, sizeof(u32));
+			break;
+		}
+		case 2: {
+			value <<= 2;
+			value |= (*(u32*)(data + 6)) & ~LINK_MASK_2;
+			CopyMemory(data + 6, &value, sizeof(u32));
+			break;
+		}
+		case 3: {
+			value <<= 3;
+			value |= (*(u32*)(data + 9)) & ~LINK_MASK_3;
+			CopyMemory(data + 9, &value, sizeof(u32));
+			break;
+		}
+		}
+	}
+
+	ICF	void light(u8 value)
+	{
+		data[12] = (data[12] & 0x0f) | (value << 4);
+	}
+
+public:
+	struct SCover {
+		u16			cover0 : 4;
+		u16			cover1 : 4;
+		u16			cover2 : 4;
+		u16			cover3 : 4;
+
+		ICF	u16	cover(u8 index) const
+		{
+			switch (index) {
+			case 0: return(cover0);
+			case 1: return(cover1);
+			case 2: return(cover2);
+			case 3: return(cover3);
+			default: NODEFAULT;
+			}
+#ifdef DEBUG
+			return				(u8(-1));
+#endif
+		}
+	};
+
+	SCover			high;
+	SCover			low;
+	u16				plane;
+	NodePosition	p;
+	// 13 + 2 + 2 + 2 + 5 = 24 bytes
+
+	ICF	u32	link(u8 index) const
+	{
+		switch (index) {
+		case 0:	return	((*(u32*)data) & LINK_MASK_0);
+		case 1:	return	(((*(u32*)(data + 3)) >> 1) & LINK_MASK_0);
+		case 2:	return	(((*(u32*)(data + 6)) >> 2) & LINK_MASK_0);
+		case 3:	return	(((*(u32*)(data + 9)) >> 3) & LINK_MASK_0);
+		default:	NODEFAULT;
+		}
+#ifdef DEBUG
+		return			(0);
+#endif
+	}
+
+	friend class	CLevelGraph;
+	friend struct	CNodeCompressed;
+	friend class	CNodeRenumberer;
+	friend class	CRenumbererConverter;
+};
+
+struct NodeCompressed10 {
+public:
 	u8				data[12];
 private:
 	
@@ -307,7 +401,7 @@ typedef	SNodePositionOld NodePosition;
 const u32 XRCL_CURRENT_VERSION		=	18; //17;	// input
 const u32 XRCL_PRODUCTION_VERSION	=	14;	// output 
 const u32 CFORM_CURRENT_VERSION		=	4;
-const u32 MAX_NODE_BIT_COUNT		=	23;
-const u32 XRAI_CURRENT_VERSION		=	10;
+const u32 MAX_AI_NODES				=	NodeCompressed::LINK_MASK_0;
+const u32 XRAI_CURRENT_VERSION		=	11;
 
 #endif // xrLevelH

@@ -300,7 +300,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 
 		R_ASSERT			(F->open_chunk(E_AIMAP_CHUNK_NODES));
 		u32					N = F->r_u32();
-		R_ASSERT2			(N < ((u32(1) << u32(MAX_NODE_BIT_COUNT)) - 2),"Too many nodes!");
+		R_ASSERT2			(N < MAX_AI_NODES - 1,"Too many nodes!");
 		g_nodes.resize		(N);
 
 		hdrNODES			H;
@@ -310,7 +310,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 		H.size_y			= 1.f;
 		H.aabb				= LevelBB;
 		
-		typedef BYTE NodeLink[3];
+		typedef u32 NodeLink;
 		for (u32 i=0; i<N; i++) {
 			NodeLink			id;
 			u16 				pl;
@@ -318,8 +318,8 @@ void xrLoad(LPCSTR name, bool draft_mode)
 			NodePosition 		np;
 			
 			for (int j=0; j<4; ++j) {
-				F->r			(&id,3);
-				g_nodes[i].n[j]	= (*LPDWORD(&id)) & 0x00ffffff;
+				F->r(&id, sizeof(NodeLink));
+				g_nodes[i].n[j]	= id;
 			}
 
 			pl				= F->r_u16();
