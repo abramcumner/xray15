@@ -1001,6 +1001,9 @@
     <ClCompile Include="BoneEditor.cpp">
       <Filter>Game API\Animator</Filter>
     </ClCompile>
+    <ClCompile Include="XR_IOConsole_control.cpp">
+      <Filter>Engine\Console</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
