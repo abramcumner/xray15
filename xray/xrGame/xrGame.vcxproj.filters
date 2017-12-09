@@ -7509,6 +7509,9 @@
     <ClInclude Include="embedded_editor\embedded_editor_ae.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_postprocess.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11190,6 +11193,9 @@
       <Filter>Embedded editor</Filter>
     </ClCompile>
     <ClCompile Include="embedded_editor\embedded_editor_ae.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_postprocess.cpp">
       <Filter>Embedded editor</Filter>
     </ClCompile>
   </ItemGroup>
