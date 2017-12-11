@@ -23,6 +23,7 @@ class CGraphAbstract;
 
 namespace GameGraph {
 	struct CVertex;
+	typedef u16	_GRAPH_ID;
 };
 
 class NET_Packet;
@@ -50,12 +51,10 @@ private:
 	graph_type				*m_graph;
 	xrGUID					m_graph_guid;
 	// cross table generation stuff
-	xr_vector<bool>			m_marks;
-	xr_vector<u32>			m_mark_stack;
-	DISTANCES				m_distances;
-	xr_vector<u32>			m_current_fringe;
-	xr_vector<u32>			m_next_fringe;
-	xr_vector<u32>			m_results;
+	xr_vector<GameGraph::_GRAPH_ID> m_parents;//к каким граф-поинтам относится аи-нода
+	xr_vector<u32> m_distances;// расстояние до ближайшего граф-понта
+	xr_vector<xr_set<GameGraph::_GRAPH_ID>> m_neighbours;// соседи граф-поинта
+
 	// cross table itself
 	CGameLevelCrossTable	*m_cross_table;
 	TRIPPLES				m_tripples;
@@ -69,19 +68,14 @@ private:
 			void		load_graph_points			(const float &start, const float &amount);
 
 private:
-			void		mark_vertices				(u32 level_vertex_id);
-			void		fill_marks					(const float &start, const float &amount);
-			void		fill_distances				(const float &start, const float &amount);
-			void		recursive_update			(const u32 &index, const float &start, const float &amount);
 			void		iterate_distances			(const float &start, const float &amount);
+			void		check_fill					();
 			void		save_cross_table			(const float &start, const float &amount);
 			void		build_cross_table			(const float &start, const float &amount);
 			void		load_cross_table			(const float &start, const float &amount);
 			
 private:
-			void		fill_neighbours				(const u32 &game_vertex_id);
 			float		path_distance				(const u32 &game_vertex_id0, const u32 &game_vertex_id1);
-			void		generate_edges				(const u32 &vertex_id);
 			void		generate_edges				(const float &start, const float &amount);
 			void		connectivity_check			(const float &start, const float &amount);
 			void		create_tripples				(const float &start, const float &amount);
