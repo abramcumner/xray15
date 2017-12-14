@@ -10,6 +10,7 @@
 #include "Etextureparams.h"
 
 // base patch used all the time up to merging
+const u32 InvalidNode_v1	= 0x00ffffff;
 const u32 InvalidNode		= 0xffffffff;
 const u32 UnkonnectedNode	= 0xfffffff0;
 const WORD	InvalidSector	= 0xff;

@@ -58,6 +58,7 @@ private:
 	u32						m_column_length;
 	u32						m_max_x;
 	u32						m_max_z;
+	xr_vector<NodeCompressed> m_old_nodes;	// ноды для аи-сетки старых версий
 
 private:
 			u32		vertex						(const Fvector &position) const;

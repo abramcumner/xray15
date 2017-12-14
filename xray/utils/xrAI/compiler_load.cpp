@@ -290,7 +290,8 @@ void xrLoad(LPCSTR name, bool draft_mode)
 		R_ASSERT2			(F, file_name);
 
 		R_ASSERT			(F->open_chunk(E_AIMAP_CHUNK_VERSION));
-		R_ASSERT			(F->r_u16() == E_AIMAP_VERSION);
+		u16 version =		F->r_u16();
+		R_ASSERT			(version == E_AIMAP_VERSION || version == 1);
 
 		R_ASSERT			(F->open_chunk(E_AIMAP_CHUNK_BOX));
 		F->r				(&LevelBB,sizeof(LevelBB));
@@ -316,10 +317,21 @@ void xrLoad(LPCSTR name, bool draft_mode)
 			u16 				pl;
 			SNodePositionOld 	_np;
 			NodePosition 		np;
-			
-			for (int j=0; j<4; ++j) {
-				F->r(&id, sizeof(NodeLink));
-				g_nodes[i].n[j]	= id;
+
+			if (version == 1) {
+				for (int j = 0; j < 4; ++j) {
+					F->r(&id, 3);
+					id = id & 0x00ffffff;
+					if (id == InvalidNode_v1)
+						id = InvalidNode;
+					g_nodes[i].n[j] = id;
+				}
+			}
+			else {
+				for (int j = 0; j < 4; ++j) {
+					F->r(&id, sizeof(NodeLink));
+					g_nodes[i].n[j] = id;
+				}
 			}
 
 			pl				= F->r_u16();

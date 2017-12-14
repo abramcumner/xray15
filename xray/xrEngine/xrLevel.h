@@ -204,13 +204,15 @@ public:
 #endif
 	}
 
+	u8 light() const { return data[12] >> 4; }
+
 	friend class	CLevelGraph;
 	friend struct	CNodeCompressed;
 	friend class	CNodeRenumberer;
 	friend class	CRenumbererConverter;
 };
 
-struct NodeCompressed10 {
+struct NodeCompressed_v10 {
 public:
 	u8				data[12];
 private:
@@ -247,7 +249,7 @@ private:
 	
 	ICF	void light(u8 value)
 	{
-		data[10]		|= value << 4;
+		data[11]		|= value << 4;
 	}
 
 public:
@@ -291,6 +293,8 @@ public:
 		return			(0);
 #endif
 	}
+
+	u8 light() const { return data[11] >> 4; }
 	
 	friend class	CLevelGraph;
 	friend struct	CNodeCompressed;
