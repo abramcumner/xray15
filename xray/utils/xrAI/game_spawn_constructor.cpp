@@ -324,12 +324,13 @@ void clear_temp_folder	()
 
 	_findclose		(handle);
 
-	FILES::const_iterator	I = files.begin();
-	FILES::const_iterator	E = files.end();
-	for ( ; I != E; ++I) {
-		if (DeleteFile(**I))
-			Msg		("file %s is successfully deleted",**I);
+	string_path	dir, fileName;
+	FS.update_path(dir, "$app_data_root$", "temp\\");
+	for (auto file: files) {
+		strconcat(sizeof(fileName), fileName, dir, *file);
+		if (DeleteFile(fileName))
+			Msg		("file %s is successfully deleted", file);
 		else
-			Msg		("cannot delete file %s",**I);
+			Msg		("cannot delete file %s", file);
 	}
 }

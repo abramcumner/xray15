@@ -42,6 +42,7 @@ private:
 private:
 	LPCSTR					m_graph_name;
 	LPCSTR					m_cross_table_name;
+	LPCSTR					m_short_level_name;
 
 private:
 	shared_str				m_level_name;
@@ -92,7 +93,7 @@ private:
 public:
 						CGameGraphBuilder			();
 						~CGameGraphBuilder			();
-			void		build_graph					(LPCSTR graph_name, LPCSTR cross_table_name, LPCSTR level_name);
+			void		build_graph					(LPCSTR graph_name, LPCSTR cross_table_name, LPCSTR level_name, LPCSTR short_level_name);
 };
 
 #include "game_graph_builder_inline.h"

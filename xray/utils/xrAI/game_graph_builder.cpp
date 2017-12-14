@@ -240,15 +240,37 @@ void CGameGraphBuilder::iterate_distances	(const float &start, const float &amou
 
 void CGameGraphBuilder::check_fill()
 {
-	u32 count = 0;
+	struct ErrorNode
+	{
+		Fvector3 Pos;
+		u32 Id;
+	};
+	xr_vector<ErrorNode> error_nodes;
+
 	for (u32 i = 0; i != m_parents.size(); i++) {
 		if (m_parents[i] != GameGraph::_GRAPH_ID(-1))
 			continue;
 
 		Msg("! AI-node [%.3f, %.3f, %.3f] not connected to AI-map", VPUSH(level_graph().vertex_position(i)));
-		count++;
+		error_nodes.push_back({ level_graph().vertex_position(i), i });
 	}
-	R_ASSERT2(count == 0, "Some ai-node is not connected to AI-map. See log for details.");
+
+	// сохранить информацию об ошибочных нодах для LE
+	string_path error_nodes_filename, fn;
+	strconcat(sizeof(fn), fn, "ai_nodes_", m_short_level_name, ".err");
+	FS.update_path(error_nodes_filename, "$logs$", fn);
+	FS.file_delete(error_nodes_filename);
+	if (!error_nodes.empty()) {
+		CMemoryWriter tMemoryStream;
+		const u32 VERSION_ERROR_NODES = 1;
+		tMemoryStream.w(&VERSION_ERROR_NODES, sizeof(VERSION_ERROR_NODES));
+		u32 count = error_nodes.size();
+		tMemoryStream.w(&count, sizeof(count));
+		tMemoryStream.w(&error_nodes[0], count * sizeof(ErrorNode));
+		tMemoryStream.save_to(error_nodes_filename);
+	}
+
+	R_ASSERT2(error_nodes.empty(), "Some ai-node is not connected to AI-map. See log for details.");
 }
 
 void CGameGraphBuilder::save_cross_table	(const float &start, const float &amount)
@@ -585,7 +607,8 @@ void CGameGraphBuilder::build_graph			(const float &start, const float &amount)
 void CGameGraphBuilder::build_graph			(
 		LPCSTR graph_name,
 		LPCSTR cross_table_name,
-		LPCSTR level_name
+		LPCSTR level_name,
+		LPCSTR short_level_name
 	)
 {
 	Phase					("Building level game graph");
@@ -594,6 +617,7 @@ void CGameGraphBuilder::build_graph			(
 	m_graph_name			= graph_name;
 	m_cross_table_name		= cross_table_name;
 	m_level_name			= level_name;
+	m_short_level_name		= short_level_name;
 	
 //	CTimer					timer;
 //	timer.Start				();

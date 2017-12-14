@@ -578,7 +578,7 @@ CGraphMerger::CGraphMerger(
 		string_path					level_folder;
 		FS.update_path				(level_folder,"$game_levels$",*tLevel.m_name);
 		strcat						(level_folder,"\\");
-		CGameGraphBuilder().build_graph	(_0,_1,level_folder);
+		CGameGraphBuilder			().build_graph(_0, _1, level_folder, *tLevel.m_name);
 		::CLevelGameGraph			*tpLevelGraph = xr_new<::CLevelGameGraph>(
 			_0,
 			_1,

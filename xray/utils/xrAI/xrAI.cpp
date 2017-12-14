@@ -173,8 +173,8 @@ void execute	(LPSTR cmd)
 				start			= temp1;
 			}
 			char				*no_separator_check = strstr(cmd,"-no_separator_check");
-			clear_temp_folder	();
 			CGameSpawnConstructor(name,output,start,!!no_separator_check);
+			clear_temp_folder	();
 		}
 		else
 			if (strstr(cmd,"-verify")) {
