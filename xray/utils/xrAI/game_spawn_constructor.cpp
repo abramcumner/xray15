@@ -329,8 +329,8 @@ void clear_temp_folder	()
 	for (auto file: files) {
 		strconcat(sizeof(fileName), fileName, dir, *file);
 		if (DeleteFile(fileName))
-			Msg		("file %s is successfully deleted", file);
+			Msg		("file %s is successfully deleted", *file);
 		else
-			Msg		("cannot delete file %s", file);
+			Msg		("cannot delete file %s", *file);
 	}
 }
