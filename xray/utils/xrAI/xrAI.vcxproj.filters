@@ -394,6 +394,9 @@
     <ClCompile Include="guid_generator.cpp">
       <Filter>ALife\guid_generator</Filter>
     </ClCompile>
+    <ClCompile Include="compiler_cover_tbb.cpp">
+      <Filter>Compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIMapExport.h">
@@ -917,6 +920,9 @@
     </ClInclude>
     <ClInclude Include="guid_generator.h">
       <Filter>ALife\guid_generator</Filter>
+    </ClInclude>
+    <ClInclude Include="compiler_cover_tools.h">
+      <Filter>Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -62,15 +62,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath);$(SolutionDir)3rd party\tbb\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\SDK\</OutDir>
+    <IncludePath>$(IncludePath);$(SolutionDir)3rd party\tbb\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
     <OutDir>..\..\..\..\binaries\</OutDir>
     <IntDir>..\..\..\..\intermediate\$(Configuration)\$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(IncludePath);$(SolutionDir)3rd party\tbb\include</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -107,7 +110,8 @@
       <MapFileName />
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>comctl32.lib;winmm.lib;MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;winmm.lib;MagicFM.lib;tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rd party\tbb\lib\ia32\vc14\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -153,7 +157,8 @@
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>comctl32.lib;winmm.lib;MagicFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;winmm.lib;MagicFM.lib;tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rd party\tbb\lib\ia32\vc14\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -199,7 +204,7 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\sdk\libraries;..\..\..\..\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rd party\tbb\lib\ia32\vc14\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <GenerateMapFile>false</GenerateMapFile>
       <MapFileName>$(OutDir)$(ProjectName).map</MapFileName>
@@ -210,6 +215,7 @@
       <TerminalServerAware />
       <ImportLibrary>..\..\libraries\$(ProjectName).lib</ImportLibrary>
       <TargetMachine>NotSet</TargetMachine>
+      <AdditionalDependencies>tbb.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -239,6 +245,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="compiler_cover.cpp" />
+    <ClCompile Include="compiler_cover_tbb.cpp" />
     <ClCompile Include="compiler_display.cpp" />
     <ClCompile Include="compiler_light.cpp" />
     <ClCompile Include="compiler_link.cpp">
@@ -362,6 +369,7 @@
     <ClInclude Include="cl_log.h" />
     <ClInclude Include="communicate.h" />
     <ClInclude Include="compiler.h" />
+    <ClInclude Include="compiler_cover_tools.h" />
     <ClInclude Include="cover_point.h" />
     <ClInclude Include="cover_point_inline.h" />
     <ClInclude Include="data_storage_binary_heap.h" />

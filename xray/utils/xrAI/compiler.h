@@ -141,7 +141,7 @@ void	xrLoad			(LPCSTR name, bool draft_mode);
 //void	xrBuildNodes	();
 void	xrSmoothNodes	();
 void	xrLight			();
-void	xrCover			(bool pure_covers, u32 numThread);
+void	xrCover			(bool pure_covers, u32 numThread, bool useTbb);
 void	xrMerge			();
 void	xrConvertAndLink();
 void	xrDisplay		();
