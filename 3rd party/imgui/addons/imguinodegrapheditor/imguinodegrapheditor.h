@@ -440,7 +440,7 @@ class NodeGraphEditor
         ImU32 color_mouse_rectangular_selection;
         ImU32 color_mouse_rectangular_selection_frame;
         Style() {
-            color_background =          ImColor(60,60,70,200);
+            color_background =          ImColor(21, 21, 21, 200);
             color_grid =                ImColor(200,200,200,40);
             grid_line_width =           1.f;
             grid_size =                 64.f;
@@ -456,20 +456,20 @@ class NodeGraphEditor
             node_rounding =             4.f;
             node_window_padding =       ImVec2(8.f,8.f);
 
-            color_node_input_slots =    ImColor(150,150,150,150);
-            color_node_output_slots =   ImColor(150,150,150,150);
+            color_node_input_slots =    ImColor(47, 241, 74, 150);
+            color_node_output_slots =   ImColor(0, 231, 49, 150);
             node_slots_radius =         5.f;
 
-            color_link =                ImColor(200,200,100);
+            color_link =                ImColor(93, 193, 72);
             link_line_width =           3.f;
             link_control_point_distance = 50.f;
             link_num_segments =         0;
 
-            color_node_title = ImGui::GetStyle().Colors[ImGuiCol_Text];
+            color_node_title =          ImColor(255, 255, 255, 255);
             color_node_title_background = 0;//ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive]);
             color_node_title_background_gradient = 0.f;   // in [0,0.5f] used only if available (performance is better when 0)
-            color_node_input_slots_names = ImGui::GetStyle().Colors[ImGuiCol_Text];color_node_input_slots_names.w=0.75f;
-            color_node_output_slots_names = ImGui::GetStyle().Colors[ImGuiCol_Text];color_node_output_slots_names.w=0.75f;
+            color_node_input_slots_names = ImColor(49, 255, 43, 191);
+			color_node_output_slots_names = ImColor(143, 255, 128, 191);
 
             color_mouse_rectangular_selection =         ImColor(255,0,0,45);
             color_mouse_rectangular_selection_frame =   ImColor(45,0,0,175);
