@@ -8,6 +8,7 @@
 #ifndef IMGUI_API
 #include <imgui.h>
 #endif //IMGUI_API
+#define NO_IMGUIFILESYSTEM
 
 /*
  *   // Basic usage:
