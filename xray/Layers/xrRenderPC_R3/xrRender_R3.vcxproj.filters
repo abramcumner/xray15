@@ -750,7 +750,7 @@
     <ClInclude Include="pch\stdafx.h">
       <Filter>Kernel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.h">
+    <ClInclude Include="..\xrRenderDX10\imgui_impl_dx10.h">
       <Filter>imgui_render</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1379,7 +1379,7 @@
     <ClCompile Include="pch\stdafx.cpp">
       <Filter>Kernel</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.cpp">
+    <ClCompile Include="..\xrRenderDX10\imgui_impl_dx10.cpp">
       <Filter>imgui_render</Filter>
     </ClCompile>
   </ItemGroup>

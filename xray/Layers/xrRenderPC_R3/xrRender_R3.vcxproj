@@ -178,7 +178,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.h" />
     <ClInclude Include="..\..\common\NvMender2003\convert.h" />
     <ClInclude Include="..\..\common\NvMender2003\mender_input_output.h" />
     <ClInclude Include="..\..\common\NvMender2003\NVMeshMender.h" />
@@ -230,6 +229,7 @@
     <ClInclude Include="..\xrRenderDX10\dx10r_constants_cache.h" />
     <ClInclude Include="..\xrRenderDX10\dx10StateUtils.h" />
     <ClInclude Include="..\xrRenderDX10\dx10TextureUtils.h" />
+    <ClInclude Include="..\xrRenderDX10\imgui_impl_dx10.h" />
     <ClInclude Include="..\xrRenderDX10\MSAA\dx10MSAABlender.h" />
     <ClInclude Include="..\xrRenderDX10\StateManager\dx10SamplerStateCache.h" />
     <ClInclude Include="..\xrRenderDX10\StateManager\dx10ShaderResourceStateCache.h" />
@@ -367,10 +367,6 @@
     <ClInclude Include="SMAP_Allocator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx10_example\imgui_impl_dx10.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="..\..\common\NvMender2003\NVMeshMender.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_debug.cpp" />
     <ClCompile Include="..\..\xrEngine\ai_script_lua_extension.cpp" />
@@ -409,6 +405,9 @@
     <ClCompile Include="..\xrRenderDX10\dx10StateUtils.cpp" />
     <ClCompile Include="..\xrRenderDX10\dx10Texture.cpp" />
     <ClCompile Include="..\xrRenderDX10\dx10TextureUtils.cpp" />
+    <ClCompile Include="..\xrRenderDX10\imgui_impl_dx10.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\xrRenderDX10\MSAA\dx10MSAABlender.cpp" />
     <ClCompile Include="..\xrRenderDX10\StateManager\dx10SamplerStateCache.cpp" />
     <ClCompile Include="..\xrRenderDX10\StateManager\dx10ShaderResourceStateCache.cpp" />

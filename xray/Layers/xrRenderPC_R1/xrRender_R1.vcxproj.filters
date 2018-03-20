@@ -630,7 +630,7 @@
     <ClInclude Include="..\..\common\NvMender2003\remove_isolated_verts.h">
       <Filter>Models\Editor\NvMender2003</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.h">
+    <ClInclude Include="..\xrRenderDX9\imgui_impl_dx9.h">
       <Filter>imgui_render</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1070,7 +1070,7 @@
     <ClCompile Include="..\Editor\RAPIDMinBox.cpp">
       <Filter>Models\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\3rd party\imgui\examples\directx9_example\imgui_impl_dx9.cpp">
+    <ClCompile Include="..\xrRenderDX9\imgui_impl_dx9.cpp">
       <Filter>imgui_render</Filter>
     </ClCompile>
   </ItemGroup>
