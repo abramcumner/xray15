@@ -1,7 +1,5 @@
 //- Common Code For All Addons needed just to ease inclusion as separate files in user code ----------------------
 #include "../../imgui.h"
-#undef IMGUI_DEFINE_PLACEMENT_NEW
-#define IMGUI_DEFINE_PLACEMENT_NEW
 #undef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "../../imgui_internal.h"
@@ -9,9 +7,13 @@
 
 #include <stdlib.h> // qsort
 
+
 #if !defined(alloca)
 #   ifdef _WIN32
 #       include <malloc.h>     // alloca
+#       if !defined(alloca)
+#           define alloca _alloca  // for clang with MS Codegen
+#       endif //alloca
 #   elif defined(__GLIBC__) || defined(__sun)
 #       include <alloca.h>     // alloca
 #   else
@@ -36,10 +38,10 @@ namespace ImGui	{
 
 namespace NGE_Draw {
 // This methods are a subset of the ones already present in imguihelper.h, copied here to enable stand alone usage. Scoped for better isolation (in case of multi .cpp chaining and/or usage in amalgamation engines).
-static void ImDrawListPathFillAndStroke(ImDrawList *dl, const ImU32 &fillColor, const ImU32 &strokeColor, bool strokeClosed, float strokeThickness, bool antiAliased)    {
+static void ImDrawListPathFillAndStroke(ImDrawList *dl, const ImU32 &fillColor, const ImU32 &strokeColor, bool strokeClosed, float strokeThickness)    {
     if (!dl) return;
-    if ((fillColor & IM_COL32_A_MASK) != 0) dl->AddConvexPolyFilled(dl->_Path.Data, dl->_Path.Size, fillColor, antiAliased);
-    if ((strokeColor& IM_COL32_A_MASK)!= 0 && strokeThickness>0) dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, strokeClosed, strokeThickness, antiAliased);
+    if ((fillColor & IM_COL32_A_MASK) != 0) dl->AddConvexPolyFilled(dl->_Path.Data, dl->_Path.Size, fillColor);
+    if ((strokeColor& IM_COL32_A_MASK)!= 0 && strokeThickness>0) dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, strokeClosed, strokeThickness);
     dl->PathClear();
 }
 static void ImDrawListPathArcTo(ImDrawList *dl, const ImVec2 &centre, const ImVec2 &radii, float amin, float amax, int num_segments)  {
@@ -52,12 +54,12 @@ static void ImDrawListPathArcTo(ImDrawList *dl, const ImVec2 &centre, const ImVe
         dl->_Path.push_back(ImVec2(centre.x + cosf(a) * radii.x, centre.y + sinf(a) * radii.y));
     }
 }
-static void ImDrawListAddCircle(ImDrawList *dl, const ImVec2 &centre, float radius, const ImU32 &fillColor, const ImU32 &strokeColor, int num_segments, float strokeThickness, bool antiAliased)   {
+static void ImDrawListAddCircle(ImDrawList *dl, const ImVec2 &centre, float radius, const ImU32 &fillColor, const ImU32 &strokeColor, int num_segments, float strokeThickness)   {
     if (!dl) return;
     const ImVec2 radii(radius,radius);
     const float a_max = IM_PI*2.0f * ((float)num_segments - 1.0f) / (float)num_segments;
     ImDrawListPathArcTo(dl,centre, radii, 0.0f, a_max, num_segments);
-    ImDrawListPathFillAndStroke(dl,fillColor,strokeColor,true,strokeThickness,antiAliased);
+    ImDrawListPathFillAndStroke(dl,fillColor,strokeColor,true,strokeThickness);
 }
 
 inline static void GetVerticalGradientTopAndBottomColors(ImU32 c,float fillColorGradientDeltaIn0_05,ImU32& tc,ImU32& bc)  {
@@ -111,15 +113,15 @@ inline static ImU32 GetVerticalGradient(const ImVec4& ct,const ImVec4& cb,float 
         ct.w * fc + cb.w * fa)
     );
 }
-static void ImDrawListAddConvexPolyFilledWithVerticalGradient(ImDrawList *dl, const ImVec2 *points, const int points_count, ImU32 colTop, ImU32 colBot, bool anti_aliased,float miny,float maxy)
+static void ImDrawListAddConvexPolyFilledWithVerticalGradient(ImDrawList *dl, const ImVec2 *points, const int points_count, ImU32 colTop, ImU32 colBot, float miny,float maxy)
 {
     if (!dl) return;
     if (colTop==colBot)  {
-        dl->AddConvexPolyFilled(points,points_count,colTop,anti_aliased);
+        dl->AddConvexPolyFilled(points,points_count,colTop);
         return;
     }
-    const ImVec2 uv = GImGui->FontTexUvWhitePixel;
-    anti_aliased &= GImGui->Style.AntiAliasedShapes;
+    const ImVec2 uv = GImGui->DrawListSharedData.TexUvWhitePixel;
+    const bool anti_aliased = GImGui->Style.AntiAliasedFill;
     //if (ImGui::GetIO().KeyCtrl) anti_aliased = false; // Debug
 
     int height=0;
@@ -218,35 +220,34 @@ static void ImDrawListAddConvexPolyFilledWithVerticalGradient(ImDrawList *dl, co
         dl->_VtxCurrentIdx += (ImDrawIdx)vtx_count;
     }
 }
-static void ImDrawListPathFillWithVerticalGradientAndStroke(ImDrawList *dl, const ImU32 &fillColorTop, const ImU32 &fillColorBottom, const ImU32 &strokeColor, bool strokeClosed = false, float strokeThickness = 1.0f, bool antiAliased = true, float miny=-1.f, float maxy=-1.f)    {
+static void ImDrawListPathFillWithVerticalGradientAndStroke(ImDrawList *dl, const ImU32 &fillColorTop, const ImU32 &fillColorBottom, const ImU32 &strokeColor, bool strokeClosed = false, float strokeThickness = 1.0f, float miny=-1.f, float maxy=-1.f)    {
     if (!dl) return;
-    if (fillColorTop==fillColorBottom) dl->AddConvexPolyFilled(dl->_Path.Data,dl->_Path.Size, fillColorTop, antiAliased);
-    else if ((fillColorTop & IM_COL32_A_MASK) != 0 || (fillColorBottom & IM_COL32_A_MASK) != 0) ImDrawListAddConvexPolyFilledWithVerticalGradient(dl, dl->_Path.Data, dl->_Path.Size, fillColorTop, fillColorBottom, antiAliased,miny,maxy);
-    if ((strokeColor& IM_COL32_A_MASK)!= 0 && strokeThickness>0) dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, strokeClosed, strokeThickness, antiAliased);
+    if (fillColorTop==fillColorBottom) dl->AddConvexPolyFilled(dl->_Path.Data,dl->_Path.Size, fillColorTop);
+    else if ((fillColorTop & IM_COL32_A_MASK) != 0 || (fillColorBottom & IM_COL32_A_MASK) != 0) ImDrawListAddConvexPolyFilledWithVerticalGradient(dl, dl->_Path.Data, dl->_Path.Size, fillColorTop, fillColorBottom, miny,maxy);
+    if ((strokeColor& IM_COL32_A_MASK)!= 0 && strokeThickness>0) dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, strokeClosed, strokeThickness);
     dl->PathClear();
 }
-static void ImDrawListAddRectWithVerticalGradient(ImDrawList *dl, const ImVec2 &a, const ImVec2 &b, const ImU32 &fillColorTop, const ImU32 &fillColorBottom, const ImU32 &strokeColor, float rounding = 0.0f, int rounding_corners = 0x0F,float strokeThickness = 1.0f,bool antiAliased = true) {
+static void ImDrawListAddRectWithVerticalGradient(ImDrawList *dl, const ImVec2 &a, const ImVec2 &b, const ImU32 &fillColorTop, const ImU32 &fillColorBottom, const ImU32 &strokeColor, float rounding = 0.0f, int rounding_corners = 0x0F,float strokeThickness = 1.0f) {
     if (!dl || (((fillColorTop & IM_COL32_A_MASK) == 0) && ((fillColorBottom & IM_COL32_A_MASK) == 0) && ((strokeColor & IM_COL32_A_MASK) == 0)))  return;
     if (rounding==0.f || rounding_corners==0) {
         dl->AddRectFilledMultiColor(a,b,fillColorTop,fillColorTop,fillColorBottom,fillColorBottom); // Huge speedup!
         if ((strokeColor& IM_COL32_A_MASK)!= 0 && strokeThickness>0.f) {
             dl->PathRect(a, b, rounding, rounding_corners);
-            dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, true, strokeThickness, antiAliased);
+            dl->AddPolyline(dl->_Path.Data, dl->_Path.Size, strokeColor, true, strokeThickness);
             dl->PathClear();
         }
     }
     else    {
         dl->PathRect(a, b, rounding, rounding_corners);
-        ImDrawListPathFillWithVerticalGradientAndStroke(dl,fillColorTop,fillColorBottom,strokeColor,true,strokeThickness,antiAliased,a.y,b.y);
+        ImDrawListPathFillWithVerticalGradientAndStroke(dl,fillColorTop,fillColorBottom,strokeColor,true,strokeThickness,a.y,b.y);
     }
 }
-static void ImDrawListAddRectWithVerticalGradient(ImDrawList *dl, const ImVec2 &a, const ImVec2 &b, const ImU32 &fillColor, float fillColorGradientDeltaIn0_05, const ImU32 &strokeColor, float rounding = 0.0f, int rounding_corners = 0x0F,float strokeThickness = 1.0f,bool antiAliased = true)   {
+static void ImDrawListAddRectWithVerticalGradient(ImDrawList *dl, const ImVec2 &a, const ImVec2 &b, const ImU32 &fillColor, float fillColorGradientDeltaIn0_05, const ImU32 &strokeColor, float rounding = 0.0f, int rounding_corners = 0x0F,float strokeThickness = 1.0f)   {
     ImU32 fillColorTop,fillColorBottom;GetVerticalGradientTopAndBottomColors(fillColor,fillColorGradientDeltaIn0_05,fillColorTop,fillColorBottom);
-    ImDrawListAddRectWithVerticalGradient(dl,a,b,fillColorTop,fillColorBottom,strokeColor,rounding,rounding_corners,strokeThickness,antiAliased);
+    ImDrawListAddRectWithVerticalGradient(dl,a,b,fillColorTop,fillColorBottom,strokeColor,rounding,rounding_corners,strokeThickness);
 }
 } // namespace
 
-NodeGraphEditor::Style NodeGraphEditor::style;  // static variable initialization
 inline static bool EditColorImU32(const char* label,ImU32& color) {
     static ImVec4 tmp;
     tmp = ImColor(color);
@@ -566,7 +567,8 @@ void NodeGraphEditor::render()
             if (ImGui::CollapsingHeader("Style Editor##styleEditor",NULL,false))   {
                 ImGui::Separator();
                 //ImGui::ColorEditMode(colorEditMode);
-                Style::Edit(this->style);
+                Style& thisStyle = GetStyle();
+                Style::Edit(thisStyle);
                 ImGui::Separator();
 #if             (defined(IMGUIHELPER_H_) && !defined(NO_IMGUIHELPER_SERIALIZATION))
                 const char* saveName = "nodeGraphEditor.nge.style";
@@ -577,7 +579,7 @@ void NodeGraphEditor::render()
 #                   ifdef YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
                     pSaveName = saveNamePersistent;
 #                   endif //YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
-                    if (Style::Save(this->style,pSaveName)) {
+                    if (Style::Save(thisStyle,pSaveName)) {
 #                   ifdef YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
                         ImGui::EmscriptenFileSystemHelper::Sync();
 #                   endif //YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
@@ -590,14 +592,14 @@ void NodeGraphEditor::render()
 #                   ifdef YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
                     if (ImGuiHelper::FileExists(saveNamePersistent)) pSaveName = saveNamePersistent;
 #                   endif //YES_IMGUIEMSCRIPTENPERSISTENTFOLDER
-                    Style::Load(this->style,pSaveName);
+                    Style::Load(thisStyle,pSaveName);
                 }
                 ImGui::SameLine();
 #               endif //NO_IMGUIHELPER_SERIALIZATION_LOAD
 #               endif //NO_IMGUIHELPER_SERIALIZATION
 
                 if (ImGui::SmallButton("Reset##resetGNEStyle")) {
-                    Style::Reset(this->style);
+                    Style::Reset(thisStyle);
                 }
             }
             ImGui::Separator();
@@ -640,9 +642,6 @@ void NodeGraphEditor::render()
             ImGui::Separator();
         }
 #       endif //NO_IMGUIHELPER_SERIALIZATION
-
-		if (leftPaneCallback)
-			leftPaneCallback(*this);
 
         ImGui::EndChild();
 
@@ -711,7 +710,8 @@ void NodeGraphEditor::render()
 	gNodeGraphEditorWindowPadding = ImGui::GetStyle().WindowPadding;
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(1,1));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0,0));
-        ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, style.color_background);
+    const Style& style = GetStyle();
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, style.color_background);
         if (ImGui::BeginChild("scrolling_region", ImVec2(0,0), true, ImGuiWindowFlags_NoScrollbar|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoScrollWithMouse))  {
 
             ImGuiContext& g = *GImGui;
@@ -833,7 +833,7 @@ void NodeGraphEditor::render()
             }
             // End Clipping Data
 
-            const bool isMouseHoveringWindow = ImGui::IsWindowRectHovered();
+            const bool isMouseHoveringWindow = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem);
 
             const bool isLMBClicked = ImGui::IsMouseClicked(0);
             const bool isLMBDoubleClicked = ImGui::IsMouseDoubleClicked(0);
@@ -890,7 +890,7 @@ void NodeGraphEditor::render()
 
                 bool nodeInEditMode = false;
                 ImGui::BeginGroup(); // Lock horizontal position
-                ImGui::SetNextTreeNodeOpen(node->isOpen, ImGuiCond_Always);
+                ImGui::SetNextTreeNodeOpen(node->isOpen,ImGuiCond_Always);
 
                 ImU32 titleTextColorU32 = 0, titleBgColorU32 = 0;float titleBgGradient = -1.f;
                 node->getDefaultTitleBarColors(titleTextColorU32,titleBgColorU32,titleBgGradient);
@@ -1186,7 +1186,7 @@ void NodeGraphEditor::render()
                 for (int slot_idx = 0; slot_idx < node->InputsCount; slot_idx++)    {
                     connectorScreenPos = offset + node->GetInputSlotPos(slot_idx,currentFontWindowScale);
                     //draw_list->AddCircleFilled(connectorScreenPos, NODE_SLOT_RADIUS, style.color_node_input_slots,connectorNumSegments);
-                    ImGui::NGE_Draw::ImDrawListAddCircle(draw_list,connectorScreenPos,NODE_SLOT_RADIUS,style.color_node_input_slots,style.color_node_input_slots_border,style.node_slots_num_segments,connectorBorderThickness,true);
+                    ImGui::NGE_Draw::ImDrawListAddCircle(draw_list,connectorScreenPos,NODE_SLOT_RADIUS,style.color_node_input_slots,style.color_node_input_slots_border,style.node_slots_num_segments,connectorBorderThickness);
                     /*if ((style.color_node_input_slots & IM_COL32_A_MASK) != 0)  {
                 const float a_max = IM_PI * 0.5f * 11.f/12.f;
                 draw_list->PathArcTo(connectorScreenPos, NODE_SLOT_RADIUS, IM_PI-a_max, IM_PI+a_max, 12);
@@ -1263,7 +1263,7 @@ void NodeGraphEditor::render()
                 for (int slot_idx = 0; slot_idx < node->OutputsCount; slot_idx++)   {
                     connectorScreenPos = offset + node->GetOutputSlotPos(slot_idx,currentFontWindowScale);
                     //draw_list->AddCircleFilled(connectorScreenPos, NODE_SLOT_RADIUS, style.color_node_output_slots,connectorNumSegments);
-                    ImGui::NGE_Draw::ImDrawListAddCircle(draw_list,connectorScreenPos,NODE_SLOT_RADIUS,style.color_node_output_slots,style.color_node_output_slots_border,style.node_slots_num_segments,connectorBorderThickness,true);
+                    ImGui::NGE_Draw::ImDrawListAddCircle(draw_list,connectorScreenPos,NODE_SLOT_RADIUS,style.color_node_output_slots,style.color_node_output_slots_border,style.node_slots_num_segments,connectorBorderThickness);
                     /*if ((style.color_node_output_slots & IM_COL32_A_MASK) != 0)  {
                 const float a_max = IM_PI * 0.5f * 11.f/12.f;
                 draw_list->PathArcTo(connectorScreenPos, NODE_SLOT_RADIUS, -a_max, a_max, 12);
@@ -1447,7 +1447,7 @@ void NodeGraphEditor::render()
                 menuNode = node_hovered_in_list = node_hovered_in_scene = NULL;
                 open_delete_only_context_menu = false;	// just in case...
             }
-            else if (/*!isAContextMenuOpen &&*/ !ImGui::IsAnyItemHovered() && ImGui::IsWindowRectHovered() && getNumAvailableNodeTypes()>0 && nodeFactoryFunctionPtr)   {
+            else if (/*!isAContextMenuOpen &&*/ !ImGui::IsAnyItemHovered() && ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem) && getNumAvailableNodeTypes()>0 && nodeFactoryFunctionPtr)   {
                 if (ImGui::IsMouseClicked(1))   {   // Open context menu for adding nodes
                     menuNode = node_hovered_in_scene ? node_hovered_in_scene : node_hovered_in_list ? node_hovered_in_list : NULL;
                     //fprintf(stderr,"menuNode.name=%s\n",menuNode?menuNode->getName():"NULL");
@@ -1588,16 +1588,17 @@ void NodeGraphEditor::render()
             ImGui::PopItemWidth();
 
             // Scrolling
-            //if (!isSomeNodeMoving && !isaNodeInActiveState && !dragNode.node && ImGui::IsWindowHovered() &&  ImGui::IsMouseDragging(0, 6.0f)) scrolling = scrolling - io.MouseDelta;
-            if (isMouseDraggingForScrolling /*&& ImGui::IsWindowHovered()*/ && (ImGui::IsWindowHovered() || ImGui::IsWindowFocused() || ImGui::IsRootWindowFocused())) {
+            //if (!isSomeNodeMoving && !isaNodeInActiveState && !dragNode.node && ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem) &&  ImGui::IsMouseDragging(0, 6.0f)) scrolling = scrolling - io.MouseDelta;
+            // TODO: We can probably adjust the or-group better, using the new flags/methods, in next line
+            if (isMouseDraggingForScrolling && (ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem) || ImGui::IsWindowFocused() || IsWindowFocused(ImGuiFocusedFlags_RootWindow))) {
                 scrolling = scrolling - io.MouseDelta;
-                ImGui::SetMouseCursor(ImGuiMouseCursor_Move);
+                ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
                 // This must be fixed somehow: ImGui::GetIO().WantCaptureMouse == false, because g.ActiveID == 0
                 //        fprintf(stderr,"g.ActiveId=%d\n",g.ActiveId);     // This is the inner cause
                 //        ImGui::GetIO().WantCaptureMouse = true; // does nothing
                 //        g.ActiveId = window->MoveId;            // makes WantCaptureMouse and WantCaptureKeyboard toggle like crazy every frame
             }
-            else if (isSomeNodeMoving) ImGui::SetMouseCursor(ImGuiMouseCursor_Move);
+            else if (isSomeNodeMoving) ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
 
             if (!io.FontAllowUserScaling)   {
                 // Reset the font scale (3 lines)

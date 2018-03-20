@@ -8,7 +8,6 @@
 #ifndef IMGUI_API
 #include <imgui.h>
 #endif //IMGUI_API
-#define NO_IMGUIFILESYSTEM
 
 /*
  *   // Basic usage:
@@ -54,6 +53,12 @@
 -> FIXED: https://github.com/Flix01/imgui/issues/16
 */
 
+// Enforce cdecl calling convention for functions called by the standard library, in case compilation settings changed the default to e.g. __vectorcall
+#ifdef _MSC_VER
+#define IMGUINGE_CDECL __cdecl
+#else
+#define IMGUINGE_CDECL
+#endif
 
 namespace ImGui	{
 #   ifndef IMGUIHELPER_H_
@@ -263,7 +268,6 @@ class Node
     inline int getNumInputSlots() const {return InputsCount;}
     inline int getNumOutputSlots() const {return OutputsCount;}
     inline void setOpen(bool flag) {isOpen=flag;}    
-	inline const ImVec2 GetPos(float currentFontWindowScale = 1.f) const { return ImVec2(Pos.x*currentFontWindowScale, Pos.y*currentFontWindowScale); }
 
     protected:
     FieldInfoVector fields; // I guess you can just skip these at all and implement virtual methods... but it was supposed to be useful...
@@ -292,16 +296,16 @@ class Node
 
     // some constants
 #   ifndef IMGUINODE_MAX_NAME_LENGTH
-#   define IMGUINODE_MAX_NAME_LENGTH 64
+#   define IMGUINODE_MAX_NAME_LENGTH 32
 #   endif //IMGUINODE_MAX_NAME_LENGTH
 #   ifndef IMGUINODE_MAX_INPUT_SLOTS
 #   define IMGUINODE_MAX_INPUT_SLOTS 8
 #   endif //IMGUINODE_MAX_INPUT_SLOTS
 #   ifndef IMGUINODE_MAX_OUTPUT_SLOTS
-#   define IMGUINODE_MAX_OUTPUT_SLOTS 10
+#   define IMGUINODE_MAX_OUTPUT_SLOTS 8
 #   endif //IMGUINODE_MAX_OUTPUT_SLOTS
 #   ifndef IMGUINODE_MAX_SLOT_NAME_LENGTH
-#   define IMGUINODE_MAX_SLOT_NAME_LENGTH 32
+#   define IMGUINODE_MAX_SLOT_NAME_LENGTH 12
 #   endif //IMGUINODE_MAX_SLOT_NAME_LENGTH
     // ---------------
 
@@ -325,6 +329,7 @@ class Node
 
     inline ImVec2 GetInputSlotPos(int slot_no,float currentFontWindowScale=1.f) const   { return ImVec2(Pos.x*currentFontWindowScale,           Pos.y*currentFontWindowScale + Size.y * ((float)slot_no+1) / ((float)InputsCount+1)); }
     inline ImVec2 GetOutputSlotPos(int slot_no,float currentFontWindowScale=1.f) const  { return ImVec2(Pos.x*currentFontWindowScale + Size.x,  Pos.y*currentFontWindowScale + Size.y * ((float)slot_no+1) / ((float)OutputsCount+1)); }
+    inline const ImVec2 GetPos(float currentFontWindowScale=1.f) const {return ImVec2(Pos.x*currentFontWindowScale,Pos.y*currentFontWindowScale);}
 
     friend struct NodeLink;
     friend class NodeGraphEditor;
@@ -354,7 +359,7 @@ struct NodeLink
         OutputNode = output_node; OutputSlot = output_slot;
     }
 
-    friend class NodeGraphEditor;
+    friend struct NodeGraphEditor;
 };
 
 class NodeGraphEditor
@@ -397,12 +402,8 @@ class NodeGraphEditor
 
     typedef void (*NodeCallback)(Node*& node,NodeState state,NodeGraphEditor& editor);
     typedef void (*LinkCallback)(const NodeLink& link,LinkState state,NodeGraphEditor& editor);
-	typedef void(*LeftPaneCallback)(NodeGraphEditor& editor);
-	typedef void(*SaveCallback)(NodeGraphEditor& editor);
     LinkCallback linkCallback;// called after a link is added and before it's deleted
     NodeCallback nodeCallback;// called after a node is added, after it's edited and before it's deleted
-	LeftPaneCallback leftPaneCallback;// called in left pane render
-	SaveCallback saveCallback;// called after button "Save" is pressed
     float nodeEditedTimeThreshold; // time in seconds that must elapse after the last "editing touch" before the NS_EDITED callback is called
 
     public:
@@ -438,37 +439,42 @@ class NodeGraphEditor
         ImU32 color_mouse_rectangular_selection;
         ImU32 color_mouse_rectangular_selection_frame;
         Style() {
-            color_background =          ImColor(21,21,21,200);
+            color_background =          ImColor(60,60,70,200);
             color_grid =                ImColor(200,200,200,40);
             grid_line_width =           1.f;
             grid_size =                 64.f;
+
             color_node =                ImColor(60,60,60);
+            color_node_frame =          ImColor(100,100,100);
             color_node_selected =       ImColor(75,75,85);
             color_node_active =         ImColor(85,85,65);
-			color_node_hovered = ImColor(85, 85, 85);
-			color_node_frame = ImColor(100, 100, 100);
             color_node_frame_selected = ImColor(115,115,115);
             color_node_frame_active =   ImColor(125,125,105);
+            color_node_hovered =        ImColor(85,85,85);
             color_node_frame_hovered =  ImColor(125,125,125);
             node_rounding =             4.f;
             node_window_padding =       ImVec2(8.f,8.f);
-            color_node_input_slots =    ImColor(47,241,74,150);
-			color_node_input_slots_border = ImColor(60, 60, 60, 0);
-            color_node_output_slots =   ImColor(0,231,49,150);
-			color_node_output_slots_border = ImColor(60, 60, 60, 0);
+
+            color_node_input_slots =    ImColor(150,150,150,150);
+            color_node_output_slots =   ImColor(150,150,150,150);
             node_slots_radius =         5.f;
-			node_slots_num_segments = 12;
-			color_mouse_rectangular_selection = ImColor(255, 0, 0, 45);
-			color_mouse_rectangular_selection_frame = ImColor(45, 0, 0, 175);
-            color_link =                ImColor(93,193,72);
-            link_line_width =           1.f;
+
+            color_link =                ImColor(200,200,100);
+            link_line_width =           3.f;
             link_control_point_distance = 50.f;
             link_num_segments =         0;
-            color_node_title = ImColor(255, 255, 255, 255);
+
+            color_node_title = ImGui::GetStyle().Colors[ImGuiCol_Text];
             color_node_title_background = 0;//ImGui::ColorConvertFloat4ToU32(ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive]);
             color_node_title_background_gradient = 0.f;   // in [0,0.5f] used only if available (performance is better when 0)
-            color_node_input_slots_names = ImColor(49, 255, 43, 191);
-            color_node_output_slots_names = ImColor(143, 255, 128, 191);
+            color_node_input_slots_names = ImGui::GetStyle().Colors[ImGuiCol_Text];color_node_input_slots_names.w=0.75f;
+            color_node_output_slots_names = ImGui::GetStyle().Colors[ImGuiCol_Text];color_node_output_slots_names.w=0.75f;
+
+            color_mouse_rectangular_selection =         ImColor(255,0,0,45);
+            color_mouse_rectangular_selection_frame =   ImColor(45,0,0,175);
+
+            color_node_input_slots_border = color_node_output_slots_border = ImColor(60,60,60,0);
+            node_slots_num_segments = 12;
         }
 
         IMGUI_API static bool Edit(Style& style);
@@ -501,7 +507,7 @@ class NodeGraphEditor
     bool show_node_copy_paste_buttons;
     static bool UseSlidersInsteadOfDragControls;
     mutable void* user_ptr;
-    static Style& GetStyle() {return style;}
+    static Style& GetStyle() {static Style style;return style;}
     /*mutable ImGuiColorEditMode colorEditMode;*/
     float nodesBaseWidth;
 
@@ -512,11 +518,7 @@ class NodeGraphEditor
         activeNode = dragNode.node = sourceCopyNode = NULL;
         allowOnlyOneLinkPerInputSlot = _allowOnlyOneLinkPerInputSlot;
         avoidCircularLinkLoopsInOut = _avoidCircularLinkLoopsInOut;
-		nodeCallback = NULL;
-		linkCallback = NULL;
-		leftPaneCallback = nullptr;
-		saveCallback = nullptr;
-		nodeEditedTimeThreshold = 1.5f;
+        nodeCallback = NULL;linkCallback=NULL;nodeEditedTimeThreshold=1.5f;
         user_ptr = NULL;
         show_left_pane = true;
         show_top_pane = true;
@@ -683,8 +685,6 @@ class NodeGraphEditor
     void setNodeCallback(NodeCallback cb) {nodeCallback=cb;}
     void setLinkCallback(LinkCallback cb) {linkCallback=cb;}
     void setNodeEditedCallbackTimeThreshold(int seconds) {nodeEditedTimeThreshold=seconds;}
-	void setLeftPaneCallback(LeftPaneCallback cb) { leftPaneCallback = cb; }
-	void setSaveCallback(SaveCallback cb) { saveCallback = cb; }
 
 //-------------------------------------------------------------------------------
 #       if (defined(IMGUIHELPER_H_) && !defined(NO_IMGUIHELPER_SERIALIZATION))
@@ -774,7 +774,7 @@ class NodeGraphEditor
     // Refactored for cleaner exposure (without the misleading 'flag' argument)
     void selectNodePrivate(const Node* node, bool flag=true,bool findANewActiveNodeWhenNeeded=true);
     void selectAllNodesPrivate(bool flag=true,bool findANewActiveNodeWhenNeeded=true);
-    static int AvailableNodeInfoNameSorter(const void *s0, const void *s1) {
+    static int IMGUINGE_CDECL AvailableNodeInfoNameSorter(const void *s0, const void *s1) {
         const AvailableNodeInfo& ni0 = *((AvailableNodeInfo*) s0);
         const AvailableNodeInfo& ni1 = *((AvailableNodeInfo*) s1);
         return strcmp(ni0.name,ni1.name);
