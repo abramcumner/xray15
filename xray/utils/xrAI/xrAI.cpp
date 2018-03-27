@@ -107,15 +107,12 @@ void execute	(LPSTR cmd)
 	name[0]=0; 
 	if (strstr(cmd,"-f"))
 		sscanf	(strstr(cmd,"-f")+2,"%s",name);
-	else
-		if (strstr(cmd,"-s"))
-			sscanf	(strstr(cmd,"-s")+2,"%s",name);
-		else
-			if (strstr(cmd,"-t"))
-				sscanf	(strstr(cmd,"-t")+2,"%s",name);
-			else
-				if (strstr(cmd,"-verify"))
-					sscanf	(strstr(cmd,"-verify")+xr_strlen("-verify"),"%s",name);
+	else if (strstr(cmd,"-s"))
+		sscanf	(strstr(cmd,"-s")+2,"%s",name);
+	else if (strstr(cmd,"-t"))
+		sscanf	(strstr(cmd,"-t")+2,"%s",name);
+	else if (strstr(cmd,"-verify"))
+		sscanf	(strstr(cmd,"-verify")+xr_strlen("-verify"),"%s",name);
 
 	if (xr_strlen(name))
 		strcat			(name,"\\");
@@ -154,34 +151,31 @@ void execute	(LPSTR cmd)
 
 		xrCompiler(prjName, !!strstr(cmd,"-draft"), !!strstr(cmd,"-pure_covers"), output, numThread, !!strstr(cmd, "-use_tbb"));
 	}
-	else {
-		if (strstr(cmd,"-s")) {
-			if (xr_strlen(name))
-				name[xr_strlen(name) - 1] = 0;
-			char				*output = strstr(cmd,"-out");
-			string256			temp0, temp1;
-			if (output) {
-				output			+= xr_strlen("-out");
-				sscanf			(output,"%s",temp0);
-				_TrimLeft		(temp0);
-				output			= temp0;
-			}
-			char				*start = strstr(cmd,"-start");
-			if (start) {
-				start			+= xr_strlen("-start");
-				sscanf			(start,"%s",temp1);
-				_TrimLeft		(temp1);
-				start			= temp1;
-			}
-			char				*no_separator_check = strstr(cmd,"-no_separator_check");
-			CGameSpawnConstructor(name,output,start,!!no_separator_check);
-			clear_temp_folder	();
+	else if (strstr(cmd,"-s")) {
+		if (xr_strlen(name))
+			name[xr_strlen(name) - 1] = 0;
+		char				*output = strstr(cmd,"-out");
+		string256			temp0, temp1;
+		if (output) {
+			output			+= xr_strlen("-out");
+			sscanf			(output,"%s",temp0);
+			_TrimLeft		(temp0);
+			output			= temp0;
 		}
-		else
-			if (strstr(cmd,"-verify")) {
-				R_ASSERT3			(can_use_name,"Too big level name",name);
-				verify_level_graph	(prjName,!strstr(cmd,"-noverbose"));
-			}
+		char				*start = strstr(cmd,"-start");
+		if (start) {
+			start			+= xr_strlen("-start");
+			sscanf			(start,"%s",temp1);
+			_TrimLeft		(temp1);
+			start			= temp1;
+		}
+		char				*no_separator_check = strstr(cmd,"-no_separator_check");
+		CGameSpawnConstructor(name,output,start,!!no_separator_check);
+		clear_temp_folder	();
+	}
+	else if (strstr(cmd,"-verify")) {
+		R_ASSERT3			(can_use_name,"Too big level name",name);
+		verify_level_graph	(prjName,!strstr(cmd,"-noverbose"));
 	}
 }
 
