@@ -134,6 +134,123 @@ void nextTexture(char* tex, int texSize, int offset)
     FS.file_list_close(files);
 }
 
+bool ImGui_ListBox(const char* label, int* current_item, bool (*items_getter)(void*, int, const char**), void* data,
+    int items_count, const ImVec2& size_arg = ImVec2(0, 0));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// from https://www.strchr.com/natural_sorting
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int count_digits(const char* s)
+{
+    const char* p = s;
+    while (isdigit(*p))
+        p++;
+    return (int)(p - s);
+}
+
+int compare_naturally(const void* a_ptr, const void* b_ptr)
+{
+    const char* a = (const char*)a_ptr;
+    const char* b = (const char*)b_ptr;
+
+    for (;;) {
+        if (isdigit(*a) && isdigit(*b)) {
+            int a_count = count_digits(a);
+            int diff = a_count - count_digits(b);
+            if (diff)
+                return diff;
+            diff = memcmp(a, b, a_count);
+            if (diff)
+                return diff;
+            a += a_count;
+            b += a_count;
+        }
+        if (*a != *b)
+            return *a - *b;
+        if (*a == '\0')
+            return 0;
+        a++, b++;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool editTexture(const char* label, shared_str& texName)
+{
+    char tex[100];
+    strncpy(tex, texName.data(), 100);
+    bool changed = false;
+    static shared_str prevValue;
+    ImGui::PushID(label);
+    if (ImGui::InputText("", tex, 100)) {
+        texName = tex;
+        changed = true;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("...")) {
+        ImGui::OpenPopup("Choose texture");
+        prevValue = texName;
+    }
+    ImGui::SameLine();
+    ImGui::Text(label);
+    ImGui::SetNextWindowSize(ImVec2(250, 400), ImGuiCond_FirstUseEver);
+    if (ImGui::BeginPopupModal("Choose texture", NULL, 0)) {
+        string_path dir, fn;
+        _splitpath(tex, nullptr, dir, fn, nullptr);
+        strconcat(sizeof(fn), fn, fn, ".dds");
+        static xr_map<xr_string, xr_vector<xr_string>> dirs;
+        auto filtered = dirs[dir];
+        if (filtered.empty()) {
+            xr_vector<LPSTR>* files = FS.file_list_open("$game_textures$", dir, FS_ListFiles);
+            if (files) {
+                filtered.resize(files->size());
+                auto e = std::copy_if(files->begin(), files->end(), filtered.begin(),
+                    [](auto x) { return strstr(x, "#small") == nullptr && strstr(x, ".thm") == nullptr; });
+                filtered.resize(e - filtered.begin());
+                std::sort(filtered.begin(), filtered.end(),
+                    [](auto a, auto b) { return compare_naturally(a.c_str(), b.c_str()) < 0; });
+                dirs[dir] = filtered;
+            }
+            FS.file_list_close(files);
+        }
+        int cur = -1;
+        for (size_t i = 0; i != filtered.size(); i++)
+            if (filtered[i] == fn) {
+                cur = i;
+                break;
+            }
+        if (ImGui_ListBox("", &cur,
+                [](void* data, int idx, const char** out_text) -> bool {
+                    xr_vector<xr_string>* textures = (xr_vector<xr_string>*)data;
+                    *out_text = (*textures)[idx].c_str();
+                    return true;
+                },
+                &filtered, filtered.size(), ImVec2(-1.0f, -20.0f))) {
+            string_path newFn;
+            _splitpath(filtered[cur].c_str(), nullptr, nullptr, newFn, nullptr);
+            strconcat(100, tex, dir, newFn);
+            texName = tex;
+            changed = true;
+        }
+        if (ImGui::Button("OK", ImVec2(120, 0))) {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+            ImGui::CloseCurrentPopup();
+            string_path newFn;
+            _splitpath(prevValue.data(), nullptr, nullptr, newFn, nullptr);
+            strconcat(100, tex, dir, newFn);
+            texName = tex;
+            changed = true;
+        }
+        ImGui::EndPopup();
+    }
+    ImGui::PopID();
+    return changed;
+}
+
 void ShowWeatherEditor(bool& show)
 {
     if (!ImGui::Begin(modifiedWeathers.empty() ? "Weather###Weather" : "Weather*###Weather", &show)) {
@@ -182,31 +299,13 @@ void ShowWeatherEditor(bool& show)
     }
     if (ImGui::ColorEdit3("ambient_color", (float*)&cur->ambient))
         changed = true;
-    Fvector4 temp1;
-    temp1 = convert(cur->clouds_color);
-    if (ImGui::ColorEdit4("clouds_color", (float*)&temp1, ImGuiColorEditFlags_AlphaBar))
+    //Fvector4 temp1;
+   // temp1 = convert(cur->clouds_color);
+    if (ImGui::ColorEdit4("clouds_color", (float*)&cur->clouds_color, ImGuiColorEditFlags_AlphaBar))
         changed = true;
-    cur->clouds_color = convert(temp1);
-    ImGui::Text("clouds_texture");
-    ImGui::SameLine();
+    //cur->clouds_color = convert(temp1);
     char buf[100];
-    strcpy(buf, cur->clouds_texture_name.c_str());
-    if (ImGui::Button("<##clouds_texture")) {
-        nextTexture(buf, sizeof(buf), -1);
-        cur->clouds_texture_name = buf;
-        cur->on_device_create();
-        changed = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::InputText("##clouds_texture", buf, 100)) {
-        cur->clouds_texture_name = buf;
-        cur->on_device_create();
-        changed = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button(">##clouds_texture")) {
-        nextTexture(buf, sizeof(buf), +1);
-        cur->clouds_texture_name = buf;
+    if (editTexture("clouds_texture", cur->clouds_texture_name)) {
         cur->on_device_create();
         changed = true;
     }
@@ -232,34 +331,12 @@ void ShowWeatherEditor(bool& show)
     cur->sky_color = convert(temp);
     if (ImGui::SliderFloat("sky_rotation", &cur->sky_rotation, 0.0f, 6.28318f))
         changed = true;
-    ImGui::Text("sky_texture");
-    ImGui::SameLine();
-    strcpy(buf, cur->sky_texture_name.c_str());
-    if (ImGui::Button("<##sky_texture")) {
-        nextTexture(buf, sizeof(buf), -1);
-        cur->sky_texture_name = buf;
-        strconcat(sizeof(buf), buf, buf, "#small");
-        cur->sky_texture_env_name = buf;
-        cur->on_device_create();
-        changed = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::InputText("##sky_texture", buf, 100)) {
-        cur->sky_texture_name = buf;
-        strconcat(sizeof(buf), buf, buf, "#small");
-        cur->sky_texture_env_name = buf;
-        cur->on_device_create();
-        changed = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button(">##sky_texture")) {
-        nextTexture(buf, sizeof(buf), +1);
-        cur->sky_texture_name = buf;
-        strconcat(sizeof(buf), buf, buf, "#small");
-        cur->sky_texture_env_name = buf;
-        cur->on_device_create();
-        changed = true;
-    }
+	if (editTexture("sky_texture", cur->sky_texture_name)) {
+		strconcat(sizeof(buf), buf, cur->sky_texture_name.data(), "#small");
+		cur->sky_texture_env_name = buf;
+		cur->on_device_create();
+		changed = true;
+	}
     sel = -1;
     for (int i = 0; i != env.m_suns_config->sections().size(); i++)
         if (cur->lens_flare_id == env.m_suns_config->sections()[i]->Name)
@@ -267,7 +344,7 @@ void ShowWeatherEditor(bool& show)
     if (ImGui::Combo("sun", &sel, enumIni, env.m_suns_config, env.m_suns_config->sections().size())) {
         cur->lens_flare_id
             = env.eff_LensFlare->AppendDef(env, env.m_suns_config, env.m_suns_config->sections()[sel]->Name.c_str());
-		env.eff_LensFlare->Invalidate();
+        env.eff_LensFlare->Invalidate();
         changed = true;
     }
     if (ImGui::ColorEdit3("sun_color", (float*)&cur->sun_color))
