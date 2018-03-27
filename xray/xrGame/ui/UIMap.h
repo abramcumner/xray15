@@ -35,6 +35,7 @@ public:
 	void			FitToHeight						(float height);
 	float			GetCurrentZoom					(){return GetWndRect().width()/m_BoundRect.width();}
 	const Frect&    BoundRect						()const					{return m_BoundRect;};
+	void			SetBoundRect					(const Frect& r)		{ m_BoundRect = r; }
 	virtual void	OptimalFit						(const Frect& r);
 
 	const shared_str& MapName						() {return m_name;}
@@ -101,6 +102,7 @@ public:
 								CUILevelMap			(CUIMapWnd*);
 	virtual						~CUILevelMap		();
 	const Frect&				GlobalRect			() const								{return m_GlobalRect;}
+	void						SetGlobalRect		(const Frect& r)						{ m_GlobalRect = r; }
 	virtual void				Draw				();
 	virtual void				Show				(bool status);
 	virtual void				Update				();

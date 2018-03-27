@@ -790,3 +790,6 @@ void test_draw()
 	attach_draw_adjust_mode();
 }
 
+CUICustomMap* CUIMainIngameWnd::MiniMap() {
+	return UIZoneMap->MiniMap();
+}

@@ -45,8 +45,9 @@ public:
 	void						SetupCurrentMap	();
 	void						OnSectorChanged	(int sector);
 	void						Counter_ResetClrAnimation();
+	CUICustomMap*				MiniMap()											{ return m_activeMap; }
 
-private:
+    private:
 	void						SetHeading		(float angle);
 	void						UpdateRadar		(Fvector pos);
 
