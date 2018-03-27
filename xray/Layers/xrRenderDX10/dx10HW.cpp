@@ -16,7 +16,7 @@
 
 #include "d3dx10core.h"
 #include <imgui.h>
-#include <examples/directx10_example/imgui_impl_dx10.h>
+#include "imgui_impl_dx10.h"
 
 #ifndef _EDITOR
 void	fill_vid_mode_list			(CHW* _hw);
@@ -557,7 +557,6 @@ void CHW::Reset (HWND hwnd)
 	*/
 
 	ImGui_ImplDX10_CreateDeviceObjects();
-	ImGui::NewFrame();
 }
 
 D3DFORMAT CHW::selectDepthStencil	(D3DFORMAT fTarget)

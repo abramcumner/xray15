@@ -407,6 +407,7 @@
     <ClCompile Include="..\xrRenderDX10\dx10TextureUtils.cpp" />
     <ClCompile Include="..\xrRenderDX10\imgui_impl_dx10.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\xrRenderDX10\MSAA\dx10MSAABlender.cpp" />
     <ClCompile Include="..\xrRenderDX10\StateManager\dx10SamplerStateCache.cpp" />

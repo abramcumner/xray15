@@ -43,7 +43,7 @@ void ShowMain()
     if (wnd.Collapsed)
         return;
 
-    ImGui::Text(u8"Editor");
+    ImGui::Text(u8"Xray 1.8 Editor");
     if (ImGui::Button("Test Window"))
         show_test_window ^= 1;
     if (ImGui::Button("Test Node Editor"))
@@ -51,7 +51,7 @@ void ShowMain()
     if (ImGui::Button("Weather"))
         show_weather_window ^= 1;
     if (ImGui::Button("Properties"))
-        show_prop_window ^= 1;
+        show_prop_window ^= 0;
     if (ImGui::Button("Infoportions"))
         show_info_window ^= 1;
     if (ImGui::Button("Restrictors"))
@@ -62,10 +62,10 @@ void ShowMain()
         show_occ_window ^= 1;
     if (ImGui::Button("AE"))
         show_ae_window ^= 1;
-    ImGui::SameLine();
     ImGui::Button("LE");
-    ImGui::SameLine();
     ImGui::Button("SE");
+    ImGui::Button("PP Editor");
+
     bool full = stage == EditorStage::Full;
     if (ImGui::Checkbox("Active", &full))
         stage = full ? EditorStage::Full : EditorStage::Light;
@@ -80,7 +80,7 @@ void ShowEditor()
     ShowMain();
     if (show_test_window) {
         ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiCond_FirstUseEver);
-        ImGui::ShowTestWindow(&show_test_window);
+        ImGui::ShowDemoWindow(&show_test_window);
     }
     if (show_node_editor) {
         ImGui::SetNextWindowSize(ImVec2(700, 600), ImGuiCond_FirstUseEver);

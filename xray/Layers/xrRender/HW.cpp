@@ -10,7 +10,7 @@
 #include "HW.h"
 #include "../../xrEngine/XR_IOConsole.h"
 #include <imgui.h>
-#include <examples/directx9_example/imgui_impl_dx9.h>
+#include "../xrRenderDX9/imgui_impl_dx9.h"
 
 #ifndef _EDITOR
 	void	fill_vid_mode_list			(CHW* _hw);
@@ -92,7 +92,6 @@ void CHW::Reset		(HWND hwnd)
 #endif
 
 	ImGui_ImplDX9_CreateDeviceObjects();
-	ImGui::NewFrame();
 }
 
 //xr_token*				vid_mode_token = NULL;

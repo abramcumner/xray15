@@ -168,7 +168,9 @@ void CRenderDevice::End		(void)
 	if (g_SASH.IsBenchmarkRunning())
 		g_SASH.DisplayFrame(Device.fTimeGlobal);
 
-	ImGui::Render();
+	extern BOOL g_appLoaded;
+	if (g_appLoaded)
+		ImGui::Render();
 
 	m_pRender->End();
 	//RCache.OnFrameEnd	();
@@ -295,14 +297,14 @@ void CRenderDevice::on_idle		()
 			g_loading_events.pop_front();
 		pApp->LoadDraw				();
 		return;
-	}else 
-	{
-		if ( (!Device.dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning())
-			&& g_bLoaded)
-			g_SASH.StartBenchmark();
-
-		FrameMove						( );
 	}
+
+	if ( (!Device.dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning()) && g_bLoaded)
+		g_SASH.StartBenchmark();
+
+	ImGui_NewFrame();
+
+	FrameMove();
 
 	// Precache
 	if (dwPrecacheFrame)
@@ -354,6 +356,8 @@ void CRenderDevice::on_idle		()
 	// Release end point - allow thread to wait for startup point
 	mt_csEnter.Enter						();
 	mt_csLeave.Leave						();
+	
+	ImGui::EndFrame();
 
 	// Ensure, that second thread gets chance to execute anyway
 	if (dwFrame!=mt_Thread_marker)			{

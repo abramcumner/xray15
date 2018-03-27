@@ -228,6 +228,7 @@ bool    ImGui_ImplDX9_Init(void* hwnd, IDirect3DDevice9* device)
     //if (!QueryPerformanceCounter((LARGE_INTEGER *)&g_Time))
     //    return false;
 
+	ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
 	io.KeyMap[ImGuiKey_Tab] = DIK_TAB;                       // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array that we will update during the application lifetime.
 	io.KeyMap[ImGuiKey_LeftArrow] = DIK_LEFT;
@@ -260,7 +261,6 @@ bool    ImGui_ImplDX9_Init(void* hwnd, IDirect3DDevice9* device)
 void ImGui_ImplDX9_Shutdown()
 {
     ImGui_ImplDX9_InvalidateDeviceObjects();
-    ImGui::Shutdown();
     g_pd3dDevice = NULL;
     g_hWnd = 0;
 }

@@ -468,9 +468,6 @@ void CInput::OnFrame			(void)
 	if (pKeyboard)	KeyUpdate				();
 	if (pMouse)		MouseUpdate				();
 	Device.Statistic->Input.End				();
-
-	void ImGui_NewFrame();
-	ImGui_NewFrame();
 }
 
 IInputReceiver*	 CInput::CurrentIR()
