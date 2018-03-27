@@ -31,6 +31,9 @@ public:
 	virtual void	Update						();
 	
 	void			SetVisiblePart				(CUIFrameRect::EFramePart p, BOOL b)	{m_UIWndFrame.SetVisiblePart(p,b);};
+
+	shared_str TextureName() const { return m_TextureName; }
+
 protected:
 
 	CUIFrameRect	m_UIWndFrame;
@@ -39,5 +42,5 @@ protected:
 	
 private:
 	inline void		ClampMax_Zero				(Frect &r);
-
+	shared_str m_TextureName;
 };

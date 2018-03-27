@@ -8,6 +8,7 @@
 #include "embedded_editor_logic.h"
 #include "embedded_editor_map.h"
 #include "embedded_editor_prop.h"
+#include "embedded_editor_ui.h"
 #include "embedded_editor_weather.h"
 #include <addons/imguinodegrapheditor/imguinodegrapheditor.h>
 #include <dinput.h>
@@ -23,6 +24,7 @@ bool show_shader_window = false;
 bool show_occ_window = false;
 bool show_node_editor = false;
 bool show_ae_window = false;
+bool show_ui_editor = false;
 bool show_map_editor = false;
 bool show_hud_editor = false;
 
@@ -69,6 +71,8 @@ void ShowMain()
     ImGui::Button("LE");
     ImGui::Button("SE");
     ImGui::Button("PP Editor");
+    if (ImGui::Button("UI Editor"))
+        show_ui_editor = !show_ui_editor;
     if (ImGui::Button("Map Editor"))
         show_map_editor = !show_map_editor;
     if (ImGui::Button("HUD Editor"))
@@ -107,6 +111,8 @@ void ShowEditor()
         ShowLogicEditor(show_logic_editor);
     if (show_ae_window)
         ShowAeWindow(show_ae_window);
+    if (show_ui_editor)
+        showUiEditor(show_ui_editor);
     if (show_map_editor)
         ShowMapEditor(show_map_editor);
 	if (show_hud_editor)

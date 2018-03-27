@@ -155,6 +155,9 @@ public:
 	void SetTextColor(u32 color, E4States state);
 
 	CUILines*				m_pLines;
+
+	shared_str TextureName() const { return m_texName; }
+
 protected:
 	bool			m_bEnableTextHighlighting;
 		// Цвет подсветки
@@ -180,6 +183,7 @@ protected:
 	Fvector2		m_TextureOffset;
 
 	Frect	m_ClipRect;
+	shared_str m_texName;
 
 public:
 	DECLARE_SCRIPT_REGISTER_FUNCTION
