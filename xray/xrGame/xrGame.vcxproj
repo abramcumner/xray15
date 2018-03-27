@@ -116,10 +116,9 @@
 /ignore:4075 /time %(AdditionalOptions)</AdditionalOptions>
       <ShowProgress>NotSet</ShowProgress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\sdk\libraries;..\..\..\libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <MapFileName />
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>$(TargetDir)xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;$(TargetDir)xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -225,7 +224,7 @@
       <LargeAddressAware>true</LargeAddressAware>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>$(TargetDir)xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(TargetDir)xrEngine.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -934,6 +933,7 @@
     <ClInclude Include="EliteDetector.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ae.h" />
     <ClInclude Include="embedded_editor\embedded_editor_helper.h" />
+    <ClInclude Include="embedded_editor\embedded_editor_hud.h" />
     <ClInclude Include="embedded_editor\embedded_editor_logic.h" />
     <ClInclude Include="embedded_editor\embedded_editor_main.h" />
     <ClInclude Include="embedded_editor\embedded_editor_postprocess.h" />
@@ -3087,6 +3087,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_hud.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_logic.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>

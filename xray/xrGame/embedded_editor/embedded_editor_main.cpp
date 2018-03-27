@@ -4,6 +4,7 @@
 #include "../xr_level_controller.h"
 #include "embedded_editor_ae.h"
 #include "embedded_editor_helper.h"
+#include "embedded_editor_hud.h"
 #include "embedded_editor_logic.h"
 #include "embedded_editor_prop.h"
 #include "embedded_editor_weather.h"
@@ -21,6 +22,7 @@ bool show_shader_window = false;
 bool show_occ_window = false;
 bool show_node_editor = false;
 bool show_ae_window = false;
+bool show_hud_editor = false;
 
 static bool isAlt = false;
 
@@ -51,7 +53,7 @@ void ShowMain()
     if (ImGui::Button("Weather"))
         show_weather_window ^= 1;
     if (ImGui::Button("Properties"))
-        show_prop_window ^= 0;
+        show_prop_window ^= 1;
     if (ImGui::Button("Infoportions"))
         show_info_window ^= 1;
     if (ImGui::Button("Restrictors"))
@@ -65,6 +67,8 @@ void ShowMain()
     ImGui::Button("LE");
     ImGui::Button("SE");
     ImGui::Button("PP Editor");
+    if (ImGui::Button("HUD Editor"))
+        show_hud_editor = !show_hud_editor;
 
     bool full = stage == EditorStage::Full;
     if (ImGui::Checkbox("Active", &full))
@@ -99,6 +103,8 @@ void ShowEditor()
         ShowLogicEditor(show_logic_editor);
     if (show_ae_window)
         ShowAeWindow(show_ae_window);
+	if (show_hud_editor)
+		ShowHudEditor(show_hud_editor);
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;
