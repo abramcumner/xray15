@@ -23,6 +23,7 @@
 #include "xrSash.h"
 #include "igame_persistent.h"
 #include <imgui.h>
+#include <addons/ImGuizmo/ImGuizmo.h>
 
 ENGINE_API CRenderDevice Device;
 ENGINE_API BOOL g_bRendering = FALSE; 
@@ -276,6 +277,7 @@ void ImGui_NewFrame()
 
 	// Start the frame
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 }
 
 void CRenderDevice::on_idle		()
