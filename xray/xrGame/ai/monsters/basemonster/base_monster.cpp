@@ -25,7 +25,7 @@
 #include "../../../entitycondition.h"
 #include "../../../sound_player.h"
 #include "../../../level.h"
-#include "../../../ui/UIMainIngameWnd.h"
+//#include "../../../ui/UIMainIngameWnd.h"
 #include "../state_manager.h"
 #include "../controlled_entity.h"
 #include "../control_animation_base.h"

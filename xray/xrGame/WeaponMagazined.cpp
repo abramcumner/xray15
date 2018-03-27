@@ -17,7 +17,7 @@
 #include "string_table.h"
 #include "MPPlayersBag.h"
 #include "ui/UIXmlInit.h"
-#include "ui/UIStatic.h"
+#include "ui/UIWindow.h"
 
 ENGINE_API	bool	g_dedicated_server;
 
