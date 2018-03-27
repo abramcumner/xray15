@@ -939,6 +939,7 @@
     <ClInclude Include="embedded_editor\embedded_editor_map.h" />
     <ClInclude Include="embedded_editor\embedded_editor_postprocess.h" />
     <ClInclude Include="embedded_editor\embedded_editor_prop.h" />
+    <ClInclude Include="embedded_editor\embedded_editor_stats.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ui.h" />
     <ClInclude Include="embedded_editor\embedded_editor_weather.h" />
     <ClInclude Include="encyclopedia_article.h" />
@@ -3105,6 +3106,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_stats.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_ui.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_weather.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>

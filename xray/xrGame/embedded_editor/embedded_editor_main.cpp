@@ -8,6 +8,7 @@
 #include "embedded_editor_logic.h"
 #include "embedded_editor_map.h"
 #include "embedded_editor_prop.h"
+#include "embedded_editor_stats.h"
 #include "embedded_editor_ui.h"
 #include "embedded_editor_weather.h"
 #include <addons/imguinodegrapheditor/imguinodegrapheditor.h>
