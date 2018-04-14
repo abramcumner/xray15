@@ -5,7 +5,7 @@
 #pragma hdrstop
 
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
 #include "../xrRender/HW.h"
 #include "../../xrEngine/XR_IOConsole.h"
@@ -14,7 +14,7 @@
 #include "StateManager\dx10SamplerStateCache.h"
 #include "StateManager\dx10StateCache.h"
 
-#include "d3dx10core.h"
+#include <d3dx/d3dx10core.h>
 #include <imgui.h>
 #include "imgui_impl_dx10.h"
 

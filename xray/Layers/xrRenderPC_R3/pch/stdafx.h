@@ -7,7 +7,7 @@
 #pragma warning(disable:4995)
 #include "../../../xrEngine/stdafx.h"
 #pragma warning(disable:4995)
-#include <d3dx9.h>
+#include <d3dx/d3dx9.h>
 #pragma warning(default:4995)
 #pragma warning(disable:4714)
 #pragma warning( 4 : 4018 )
@@ -15,7 +15,7 @@
 #pragma warning(disable:4237)
 
 #include "d3d10_1.h"
-#include <D3Dx10core.h>
+#include <d3dx/D3Dx10core.h>
 
 #include "../../xrRender/xrD3DDefs.h"
 #include "../../xrRender/Debug/dxPixEventWrapper.h"

@@ -19,15 +19,12 @@
 #if !defined(WINAPI_FAMILY) || (WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)
 #include <ddraw.h>
 #include <d3d9.h>
-#include <audiodefs.h>
 #include <dsound.h>
 
 #define DIRECTINPUT_VERSION 0x800
 #include <dinput.h>
 #include <dinputd.h>
 #endif
-
-struct DXGI_RGBA;
 
 #include <d3d10_1.h>
 #include <d3d11_1.h>
