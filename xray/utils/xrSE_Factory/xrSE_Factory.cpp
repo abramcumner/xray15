@@ -22,7 +22,6 @@
 //#include "character_rank.h"
 //#include "character_reputation.h"
 
-#include <lua/library_linkage.h>
 #include <luabind/library_linkage.h>
 
 extern CSE_Abstract *F_entity_Create	(LPCSTR section);
