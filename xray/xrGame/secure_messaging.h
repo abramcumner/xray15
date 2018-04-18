@@ -1,18 +1,20 @@
 #ifndef SECRET_KEY_GENERATOR_INCLUDED
 #define SECRET_KEY_GENERATOR_INCLUDED
 
-#include <boost/noncopyable.hpp>
 #include "../xrCore/_random.h"
 
 namespace secure_messaging
 {
 
 
-class seed_generator : private boost::noncopyable
+class seed_generator
 {
 public:
 			seed_generator	();
 			~seed_generator	();
+			//non copyable
+			seed_generator(const seed_generator&) = delete;
+			seed_generator& operator=(const seed_generator&) = delete;
 
 	s32	const	genrate		();
 private:

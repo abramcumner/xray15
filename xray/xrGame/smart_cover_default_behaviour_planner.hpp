@@ -8,7 +8,6 @@
 #ifndef SMART_COVER_DEFAULT_BEHAVIOUR_PLANNER_HPP_INCLUDED
 #define SMART_COVER_DEFAULT_BEHAVIOUR_PLANNER_HPP_INCLUDED
 
-#include <boost/noncopyable.hpp>
 #include "smart_cover_detail.h"
 #include "action_planner_action.h"
 #include "debug_make_final.hpp"
@@ -19,7 +18,6 @@ class animation_planner;
 
 class default_behaviour_planner : 
 	public CActionPlannerAction<animation_planner>,
-	private boost::noncopyable,
 	private debug::make_final<default_behaviour_planner>
 {
 private:
@@ -31,6 +29,10 @@ private:
 
 public:
 							default_behaviour_planner	(animation_planner *object, LPCSTR action_name);
+							//non copyable
+							default_behaviour_planner(const default_behaviour_planner&) = delete;
+							default_behaviour_planner& operator=(const default_behaviour_planner&) = delete;
+
 		virtual	void		setup						(animation_planner *object, CPropertyStorage *storage);
 		virtual	void		initialize					();
 		virtual void		update						();
