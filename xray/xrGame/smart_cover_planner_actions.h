@@ -10,7 +10,6 @@
 
 #include "smart_cover_detail.h"
 #include "stalker_combat_action_base.h"
-#include "debug_make_final.hpp"
 
 class CAI_Stalker;
 
@@ -46,9 +45,7 @@ public:
 // change_loophole
 ////////////////////////////////////////////////////////////////////////////
 
-class change_loophole :	
-	public action_base,
-	private debug::make_final<change_loophole>
+class change_loophole final: public action_base
 {
 private:
 	typedef action_base								inherited;
@@ -66,9 +63,7 @@ public:
 // non_animated_change_loophole
 ////////////////////////////////////////////////////////////////////////////
 
-class non_animated_change_loophole:
-	public action_base,
-	private debug::make_final<non_animated_change_loophole>
+class non_animated_change_loophole final: public action_base
 {
 private:
 	typedef action_base								inherited;
@@ -87,9 +82,7 @@ public:
 // exit
 ////////////////////////////////////////////////////////////////////////////
 
-class exit :
-	public action_base,
-	private debug::make_final<exit>
+class exit final: public action_base
 {
 private:
 	typedef action_base								inherited;
