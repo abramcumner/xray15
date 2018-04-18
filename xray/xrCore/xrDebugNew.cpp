@@ -25,7 +25,7 @@
 #endif // #ifndef USE_BUG_TRAP
 #include <dbghelp.h>						// MiniDump flags
 #ifdef USE_BUG_TRAP
-#	include "../../3rd party/bugtrap/bugtrap/bugtrap.h"						// for BugTrap functionality
+#	include <BugTrap/BugTrap.h>				// for BugTrap functionality
     #ifdef __BORLANDC__
         #	pragma comment(lib,"BugTrapB.lib")		// Link to ANSI DLL
     #endif
@@ -355,7 +355,7 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 	if (*g_bug_report_file)
 		BT_AddLogFile		(g_bug_report_file);
 
-	BT_MakeSnapshot			( 0 );
+	BT_SaveSnapshot			( 0 );
 #endif // USE_BUG_TRAP
 }
 

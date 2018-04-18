@@ -86,6 +86,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
+      <AdditionalDependencies>zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,6 +103,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -257,9 +259,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\3rd party\bugtrap\zlib\zlib.vcxproj">
-      <Project>{ca2604ca-a2ac-49a1-a468-8ab5a2e6cbc9}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\xrCDB\xrCDB.vcxproj">
       <Project>{a19b1df2-82ec-4364-8bdf-85d13a1c89b5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

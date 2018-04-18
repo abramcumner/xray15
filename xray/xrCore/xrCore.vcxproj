@@ -104,6 +104,7 @@
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
       <TargetMachine>NotSet</TargetMachine>
+      <AdditionalDependencies>BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,6 +141,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalDependencies>BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
@@ -479,9 +481,6 @@
     <ResourceCompile Include="xrCore.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\3rd party\bugtrap\bugtrap\BugTrap.vcxproj">
-      <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\3rd party\DxErr\DxErr.vcxproj">
       <Project>{7a19cbb1-ff90-44bd-9112-c2a269d9c280}</Project>
     </ProjectReference>
