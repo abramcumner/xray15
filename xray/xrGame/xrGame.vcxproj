@@ -207,16 +207,15 @@
       </BrowseInformation>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DisableSpecificWarnings>4237;4297;4589;4913;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/time %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4237;4297;4315;4589;4913;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0419</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/MACHINE:I386 
-/ignore:4075 /time %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/ignore:4075 /time %(AdditionalOptions)</AdditionalOptions>
       <ShowProgress>NotSet</ShowProgress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MapFileName>
@@ -430,7 +429,6 @@
       <Culture>0x0419</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/MACHINE:I386  %(AdditionalOptions)</AdditionalOptions>
       <MapFileName>
       </MapFileName>
       <SubSystem>NotSet</SubSystem>

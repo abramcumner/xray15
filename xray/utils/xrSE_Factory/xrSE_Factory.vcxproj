@@ -175,7 +175,6 @@
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <MapFileName>
       </MapFileName>
       <SubSystem>Windows</SubSystem>

@@ -79,14 +79,18 @@ void BuildStackTrace	()
 	if (!GetThreadContext(GetCurrentThread(),&context))
 		return;
 
+#ifdef _M_X64
+	context.Rip = program_counter();
+#else
 	context.Eip				= program_counter();
-#ifndef _EDITOR
+#  ifndef _EDITOR
 	__asm					mov context.Ebp, ebp
 	__asm					mov context.Esp, esp
-#else // _EDITOR
+#  else // _EDITOR
 	__asm					mov EBP, ebp
 	__asm					mov ESP, esp
-#endif // _EDITOR
+#  endif // _EDITOR
+#endif
 
 	EXCEPTION_POINTERS		ex_ptrs;
 	ex_ptrs.ContextRecord	= &context;

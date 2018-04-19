@@ -525,10 +525,10 @@ static DWORD ConvertAddress ( DWORD dwAddr , LPTSTR szOutBuff )
     }
 
     // Get the function.
-    DWORD dwDisp ;
-    if ( 0 != g_cSym.SymGetSymFromAddr ( dwAddr , &dwDisp , pIHS ) )
+	DWORD_PTR dwpDisp;
+    if ( 0 != g_cSym.SymGetSymFromAddr ( dwAddr , &dwpDisp, pIHS ) )
     {
-        if ( 0 == dwDisp )
+        if ( 0 == dwpDisp )
         {
             pCurrPos += wsprintf ( pCurrPos , _T ( "%s" ) , pIHS->Name);
         }
@@ -537,7 +537,7 @@ static DWORD ConvertAddress ( DWORD dwAddr , LPTSTR szOutBuff )
             pCurrPos += wsprintf ( pCurrPos               ,
                                    _T ( "%s + %d bytes" ) ,
                                    pIHS->Name             ,
-                                   dwDisp                  ) ;
+				                   dwpDisp                 ) ;
         }
 
         // If I got a symbol, give the source and line a whirl.
@@ -547,6 +547,7 @@ static DWORD ConvertAddress ( DWORD dwAddr , LPTSTR szOutBuff )
 
         stIHL.SizeOfStruct = sizeof ( IMAGEHLP_LINE ) ;
 
+		DWORD dwDisp;
         if ( 0 != g_cSym.SymGetLineFromAddr ( dwAddr  ,
                                               &dwDisp ,
                                               &stIHL   ) )
@@ -560,7 +561,7 @@ static DWORD ConvertAddress ( DWORD dwAddr , LPTSTR szOutBuff )
             {
                 pCurrPos += wsprintf ( pCurrPos             ,
                                        _T ( " + %d bytes" ) ,
-                                       dwDisp                ) ;
+					                   dwDisp                ) ;
             }
         }
     }
@@ -651,6 +652,14 @@ void DoStackTrace ( LPTSTR szString  ,
 #elif defined (_M_ALPHA)
         dwMachine                = IMAGE_FILE_MACHINE_ALPHA ;
         stFrame.AddrPC.Offset    = (unsigned long)stCtx.Fir ;
+#elif defined (_M_X64)
+		dwMachine = IMAGE_FILE_MACHINE_AMD64;
+		stFrame.AddrPC.Offset = stCtx.Rip;
+		stFrame.AddrStack.Offset = stCtx.Rsp;
+		stFrame.AddrFrame.Offset = stCtx.Rbp;
+		stFrame.AddrPC.Mode = AddrModeFlat;
+		stFrame.AddrStack.Mode = AddrModeFlat;
+		stFrame.AddrFrame.Mode = AddrModeFlat;
 #else
 #error ( "Unknown machine!" )
 #endif
