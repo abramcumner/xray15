@@ -141,38 +141,10 @@ void LuaError(lua_State* L)
 #	endif // USE_MEMORY_MONITOR
 #endif // PURE_ALLOC
 
-#ifndef USE_DL_ALLOCATOR
-	static void *lua_alloc	(void *ud, void *ptr, size_t osize, size_t nsize)
-	{
-		(void)ud;
-		(void)osize;
-		if (nsize == 0) {
-			xr_free	(ptr);
-			return	NULL;
-		}
-
-#		ifdef DEBUG_MEMORY_NAME
-			return Memory.mem_realloc	(ptr, nsize, "LUA:Render");
-#		else // DEBUG_MEMORY_MANAGER
-			return Memory.mem_realloc	(ptr, nsize);
-#		endif // DEBUG_MEMORY_MANAGER
-	}
-#else // USE_DL_ALLOCATOR
-#	include "../xrRender/doug_lea_memory_allocator.h"
-
-	static void *lua_alloc		(void *ud, void *ptr, size_t osize, size_t nsize)
-	{
-		(void)ud;
-		(void)osize;
-		if (nsize == 0)	{	dlfree			(ptr);	 return	NULL;  }
-		else				return dlrealloc	(ptr, nsize);
-	}
-#endif // USE_DL_ALLOCATOR
-
 // export
 void	CResourceManager::LS_Load			()
 {
-	LSVM			= lua_newstate(lua_alloc, NULL);
+	LSVM			= luaL_newstate();
 	if (!LSVM)		{
 		Msg			("! ERROR : Cannot initialize LUA VM!");
 		return;
