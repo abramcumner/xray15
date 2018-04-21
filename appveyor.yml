@@ -2,9 +2,8 @@ version: 1.5.10-{build}
 configuration: Release
 platform:
 - Win32
+- x64
 shallow_clone: true
-environment:
-  DXSDK: '%DXSDK_DIR%'
 before_build:
 - cmd: >-
     echo %PLATFORM%
@@ -25,6 +24,10 @@ build:
   verbosity: minimal
 after_build:
 - cmd: >-
+    set BUGTRAP=BugTrap-%COR_PLAT%.dll
+
+    IF "%COR_PLAT%" == "x86" set BUGTRAP=BugTrap.dll
+
     md dist
 
     echo ===================== engine files =====================
@@ -38,6 +41,14 @@ after_build:
     copy intermediate\%PLATFORM%-%CONFIGURATION%\*.exe dist\engine\bin_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\*.dll dist\engine\bin_%COR_PLAT%\
+
+    copy SDK\binaries\%COR_PLAT%\lua51.dll dist\engine\bin_%COR_PLAT%\
+
+    md dist\engine\bin_%COR_PLAT%\lua\jit
+
+    copy SDK\binaries\%COR_PLAT%\lua\jit\* dist\engine\bin_%COR_PLAT%\lua\jit\
+
+    copy SDK\binaries\%COR_PLAT%\%BUGTRAP% dist\engine\bin_%COR_PLAT%\
 
     md dist\engine\gamedata
 
@@ -65,13 +76,17 @@ after_build:
 
     copy SDK\binaries\%COR_PLAT%\nvtt.dll dist\sdk_%COR_PLAT%\
 
-    copy intermediate\%PLATFORM%-%CONFIGURATION%\BugTrap.dll dist\sdk_%COR_PLAT%\
+    copy SDK\binaries\%COR_PLAT%\%BUGTRAP% dist\sdk_%COR_PLAT%\
+
+    copy SDK\binaries\%COR_PLAT%\lua51.dll dist\sdk_%COR_PLAT%\
+
+    md dist\sdk_%COR_PLAT%\lua\jit
+
+    copy SDK\binaries\%COR_PLAT%\lua\jit\* dist\sdk_%COR_PLAT%\lua\jit\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCore.dll dist\sdk_%COR_PLAT%\
 
-    copy intermediate\%PLATFORM%-%CONFIGURATION%\lua.JIT.1.1.4.dll dist\sdk_%COR_PLAT%\
-
-    copy intermediate\%PLATFORM%-%CONFIGURATION%\luabind.beta7-devel.rc4.dll dist\sdk_%COR_PLAT%\
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\luabind.dll dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCDB.dll dist\sdk_%COR_PLAT%\
 
