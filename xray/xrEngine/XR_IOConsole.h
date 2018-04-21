@@ -80,9 +80,9 @@ public:
 protected:
 	int				scroll_delta;
 
-	CGameFont*		pFont;
-	CGameFont*		pFont2;
-	FactoryPtr<IUIShader>* m_hShader_back;
+	CGameFont*		pFont = nullptr;
+	CGameFont*		pFont2 = nullptr;
+	FactoryPtr<IUIShader>* m_hShader_back = nullptr;
 
 	POINT			m_mouse_pos;
 	bool			m_disable_tips;
@@ -136,7 +136,7 @@ public:
 	IConsole_Command* GetCommand		(LPCSTR cmd) const;
 
 protected:
-	text_editor::line_editor*			m_editor;
+	text_editor::line_editor*			m_editor = nullptr;
 	text_editor::line_edit_control&		ec();
 
 	enum Console_mark // (int)=char
