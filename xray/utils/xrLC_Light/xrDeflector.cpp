@@ -286,7 +286,7 @@ void CDeflector::RemapUV(u32 base_u, u32 base_v, u32 size_u, u32 size_v, u32 lm_
 }
 
 
-void CDeflector::L_Calculate(CDB::COLLIDER* DB, base_lighting* LightsSelected, HASH& H)
+void CDeflector::L_Calculate(CDB::COLLIDER_Work* DB, base_lighting* LightsSelected, HASH& H)
 {
 	try {
 		lm_layer&		lm	= layer;

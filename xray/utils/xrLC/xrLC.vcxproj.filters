@@ -178,6 +178,9 @@
       <Filter>%2a%2a%2a COMPILER %2a%2a%2a\net</Filter>
     </ClInclude>
     <ClInclude Include="xrGameMaterials.h" />
+    <ClInclude Include="SaveAsSmf.h">
+      <Filter>Kernel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">

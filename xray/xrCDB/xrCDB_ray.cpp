@@ -177,15 +177,15 @@ template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest>
 class _MM_ALIGN16	ray_collider
 {
 public:
-	COLLIDER*		dest;
-	TRI*			tris;
+	COLLIDER_Base*		dest;
+	void*			tris;
 	Fvector*		verts;
 	
 	ray_t			ray;
 	float			rRange;
 	float			rRange2;
 
-	IC void			_init		(COLLIDER* CL, Fvector* V, TRI* T, const Fvector& C, const Fvector& D, float R)
+	IC void			_init		(COLLIDER_Base* CL, Fvector* V, void* T, const Fvector& C, const Fvector& D, float R)
 	{
 		dest			= CL;
 		tris			= T;
@@ -220,7 +220,7 @@ public:
         return 		isect_sse	(box,ray,dist);
 	}
 	
-	IC bool			_tri		(u32* p, float& u, float& v, float& range)
+	IC bool			_tri		(const u32* p, float& u, float& v, float& range)
 	{
 		Fvector edge1, edge2, tvec, pvec, qvec;
 		float	det,inv_det;
@@ -267,50 +267,32 @@ public:
 	
 	void			_prim		(DWORD prim)
 	{
+		const TRI_Base* T = (const TRI_Base *)((char*)tris + prim * dest->triSize());
 		float	u,v,r;
-		if (!_tri(tris[prim].verts, u, v, r))	return;
+		if (!_tri(T->verts, u, v, r))	return;
 		if (r<=0 || r>rRange)					return;
 		
 		if (bNearest)	
 		{
 			if (dest->r_count())	
 			{
-				RESULT& R = *dest->r_begin();
+				RESULT_Base& R = *dest->r_first();
 				if (r<R.range)	{
-					R.id		= prim;
-					R.range		= r;
-					R.u			= u;
-					R.v			= v;
-					R.verts	[0]	= verts[tris[prim].verts[0]];
-					R.verts	[1]	= verts[tris[prim].verts[1]];
-					R.verts	[2]	= verts[tris[prim].verts[2]];
-					R.dummy		= tris[prim].dummy;
+					dest->r_free();
+					Fvector vr[3] = { verts[T->verts[0]] , verts[T->verts[1]], verts[T->verts[2]] };
+					dest->r_add(prim, vr, r, u, v, T);
 					rRange		= r;
 					rRange2		= r*r;
 				}
 			} else {
-				RESULT& R	= dest->r_add();
-				R.id		= prim;
-				R.range		= r;
-				R.u			= u;
-				R.v			= v;
-				R.verts	[0]	= verts[tris[prim].verts[0]];
-				R.verts	[1]	= verts[tris[prim].verts[1]];
-				R.verts	[2]	= verts[tris[prim].verts[2]];
-				R.dummy		= tris[prim].dummy;
+				Fvector vr[3] = { verts[T->verts[0]] , verts[T->verts[1]], verts[T->verts[2]] };
+				dest->r_add(prim, vr, r, u, v, T);
 				rRange		= r;
 				rRange2		= r*r;
 			}
 		} else {
-			RESULT& R	= dest->r_add();
-			R.id		= prim;
-			R.range		= r;
-			R.u			= u;
-			R.v			= v;
-			R.verts	[0]	= verts[tris[prim].verts[0]];
-			R.verts	[1]	= verts[tris[prim].verts[1]];
-			R.verts	[2]	= verts[tris[prim].verts[2]];
-			R.dummy		= tris[prim].dummy;
+			Fvector vr[3] = { verts[T->verts[0]] , verts[T->verts[1]], verts[T->verts[2]] };
+			dest->r_add(prim, vr, r, u, v, T);
 		}
 	}
 	void			_stab		(const AABBNoLeafNode* node)
@@ -341,14 +323,14 @@ public:
 	}
 };
 
-void	COLLIDER::ray_query	(const MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
+void	COLLIDER_Base::ray_query	(const MODEL_Base *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
 {
 	m_def->syncronize		();
 
 	// Get nodes
 	const AABBNoLeafTree* T = (const AABBNoLeafTree*)m_def->tree->GetTree();
 	const AABBNoLeafNode* N = T->GetNodes();
-	r_clear					();
+	r_free					();
 	
 	if (CPU::ID.hasSSE())	{
 		// SSE

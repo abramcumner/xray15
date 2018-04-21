@@ -200,15 +200,15 @@ float CSoundRender_Core::get_occlusion_to( const Fvector& hear_pt, const Fvector
 		u32 r_cnt				= ETOOLS::r_count();
 		CDB::RESULT*	_B 		= ETOOLS::r_begin();
 #else
-		geom_DB.ray_options		(CDB::OPT_CULL);
-		geom_DB.ray_query		(geom_SOM,hear_pt,dir,range);
-		u32 r_cnt				= geom_DB.r_count();
-		CDB::RESULT*	_B 		= geom_DB.r_begin();
+		som_DB.ray_options		(CDB::OPT_CULL);
+		som_DB.ray_query		(geom_SOM,hear_pt,dir,range);
+		u32 r_cnt				= som_DB.r_count();
+		auto _B 				= som_DB.r_begin();
 #endif            
 		if (0!=r_cnt){
 			for (u32 k=0; k<r_cnt; k++){
-				CDB::RESULT* R	 = _B+k;
-				occ_value		*= *(float*)&R->dummy;
+				auto R			 = _B+k;
+				occ_value		*= R->occ_value;
 			}
 		}
 	}
@@ -245,13 +245,13 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 				// cache polygon
 				const CDB::RESULT*	R = ETOOLS::r_begin			();
 #else
-			geom_DB.ray_options		(CDB::OPT_ONLYNEAREST);
-			geom_DB.ray_query		(geom_MODEL,base,dir,range);
-			if (0!=geom_DB.r_count()){ 
+			model_DB.ray_options	(CDB::OPT_ONLYNEAREST);
+			model_DB.ray_query		(geom_MODEL,base,dir,range);
+			if (0!= model_DB.r_count()){
 				// cache polygon
-				const CDB::RESULT*	R = geom_DB.r_begin		();
+				auto R				= model_DB.r_begin		();
 #endif            
-				const CDB::TRI&		T = geom_MODEL->get_tris	() [ R->id ];
+				const auto&			T = geom_MODEL->get_tris	() [ R->id ];
 				const Fvector*		V = geom_MODEL->get_verts	();
 				occ[0].set			(V[T.verts[0]]);
 				occ[1].set			(V[T.verts[1]]);
@@ -267,15 +267,15 @@ float CSoundRender_Core::get_occlusion(Fvector& P, float R, Fvector* occ)
 		u32 r_cnt				= ETOOLS::r_count();
         CDB::RESULT*	_B 		= ETOOLS::r_begin();
 #else
-		geom_DB.ray_options		(CDB::OPT_CULL);
-		geom_DB.ray_query		(geom_SOM,base,dir,range);
-		u32 r_cnt				= geom_DB.r_count();
-        CDB::RESULT*	_B 		= geom_DB.r_begin();
+		som_DB.ray_options		(CDB::OPT_CULL);
+		som_DB.ray_query		(geom_SOM,base,dir,range);
+		u32 r_cnt				= som_DB.r_count();
+        auto			_B 		= som_DB.r_begin();
 #endif            
 		if (0!=r_cnt){
 			for (u32 k=0; k<r_cnt; k++){
-				CDB::RESULT* R	 = _B+k;
-				occ_value		*= *(float*)&R->dummy;
+				auto R			 = _B+k;
+				occ_value		*= R->occ_value;
 			}
 		}
 	}

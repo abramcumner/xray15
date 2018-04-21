@@ -9,8 +9,11 @@
 //#include "cl_collector.h"
 namespace	CDB
 {
-	class	MODEL;
-	class	CollectorPacked;
+	struct WorkPayload;
+	template<class Payload> class MODEL_Generic;
+	using MODEL_Work = MODEL_Generic<WorkPayload>;
+	template<class Payload> class CollectorPacked;
+	using CollectorPacked_Work = CollectorPacked<WorkPayload>;
 };
 struct OGF;
 class base_lighting;
@@ -77,11 +80,11 @@ public:
 //	void					calc_normals		();
 	void					calc_materials		();
 	void					calc_faceopacity	();
-	void					calc_lighting		( xr_vector<base_color>& dest, Fmatrix& xform, CDB::MODEL* M, base_lighting& lights, u32 flags );
+	void					calc_lighting		( xr_vector<base_color>& dest, Fmatrix& xform, CDB::MODEL_Work* M, base_lighting& lights, u32 flags );
 	void					calc_lighting		();
 //	void					calc_ogf			();
 //	void					export_geometry		();
-	void					export_cform_rcast	( CDB::CollectorPacked& CL, Fmatrix& xform );
+	void					export_cform_rcast	( CDB::CollectorPacked_Work& CL, Fmatrix& xform );
 	void					read				( INetReader	&r );
 	void					write				( IWriter	&w ) const ;
 

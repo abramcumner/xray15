@@ -90,7 +90,7 @@ public:
 		Sleep					(0);
 		R_ASSERT				(DATA);
 		ImplicitDeflector&		defl	= *DATA;
-		CDB::COLLIDER			DB;
+		CDB::COLLIDER_Work		DB;
 		
 		// Setup variables
 		Fvector2	dim,half;

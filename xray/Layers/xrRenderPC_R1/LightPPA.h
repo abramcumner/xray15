@@ -18,7 +18,7 @@ struct	CLightR_Vertex
 
 class	CLightR_Manager
 {
-	xrXRC							xrc;
+	xrXRC<CDB::GamePayload>			xrc;
 	xr_vector<light*>				selected_point;
 	xr_vector<light*>				selected_spot;
 public:

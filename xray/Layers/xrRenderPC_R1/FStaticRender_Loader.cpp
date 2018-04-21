@@ -304,7 +304,7 @@ void CRender::LoadSectors(IReader* fs)
 	if (count) 
 	{
 		u32	i;
-		CDB::Collector	CL;
+		CDB::Collector_Generic<PortalPayload>	CL;
 		fs->find_chunk	(fsL_PORTALS);
 		for (i=0; i<count; i++)
 		{
@@ -315,7 +315,7 @@ void CRender::LoadSectors(IReader* fs)
 				(CSector*)getSector(P.sector_front),
 				(CSector*)getSector(P.sector_back));
 			for (u32 j=2; j<P.vertices.size(); j++)
-				CL.add_face_packed_D	( P.vertices[0],P.vertices[j-1],P.vertices[j], u32(i) );
+				CL.add_face_packed(P.vertices[0], P.vertices[j - 1], P.vertices[j], { i });
 		}
 		if (CL.getTS()<2)
 		{
@@ -323,11 +323,11 @@ void CRender::LoadSectors(IReader* fs)
 			v1.set		(-20000.f,-20000.f,-20000.f);
 			v2.set		(-20001.f,-20001.f,-20001.f);
 			v3.set		(-20002.f,-20002.f,-20002.f);
-			CL.add_face_packed_D		( v1,v2,v3, 0 );
+			CL.add_face_packed(v1, v2, v3, { 0 });
 		}
 
 		// build portal model
-		rmPortals = xr_new	<CDB::MODEL> ();
+		rmPortals = xr_new	<MODEL_Portal> ();
 		rmPortals->build	(CL.getV(),int(CL.getVS()),CL.getT(),int(CL.getTS()));
 	} else {
 		rmPortals = 0;

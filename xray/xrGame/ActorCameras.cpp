@@ -117,7 +117,7 @@ ICF void calc_gl_point(Fvector& pt, const Fmatrix& xform, float radius, float an
 	calc_point			(pt,radius,VIEWPORT_NEAR/2,angle);
 	xform.transform_tiny(pt);
 }
-ICF BOOL test_point( const Fvector	&pt, xrXRC& xrc,  const Fmatrix33& mat, const Fvector& ext )
+ICF BOOL test_point( const Fvector	&pt, xrXRC<CDB::GamePayload>& xrc,  const Fmatrix33& mat, const Fvector& ext )
 {
 
 	CDB::RESULT* it	=xrc.r_begin();

@@ -7,6 +7,23 @@
 #include "SoundRender_Cache.h"
 #include "soundrender_environment.h"
 
+struct SomPayload
+{
+	float occ_value;
+};
+using TRI_SOM = CDB::TRI_Generic<SomPayload>;
+using COLLIDER_SOM = CDB::COLLIDER_Generic<SomPayload>;
+using MODEL_SOM = CDB::MODEL_Generic<SomPayload>;
+
+struct EnvPayload
+{
+	u16 front;
+	u16 back;
+};
+using TRI_ENV = CDB::TRI_Generic<EnvPayload>;
+using COLLIDER_ENV = CDB::COLLIDER_Generic<EnvPayload>;
+using MODEL_ENV = CDB::MODEL_Generic<EnvPayload>;
+
 class CSoundRender_Core					: public CSound_manager_interface
 {
     volatile BOOL						bLocked;
@@ -35,11 +52,13 @@ public:
 protected:
 	// Collider
 #ifndef _EDITOR
-	CDB::COLLIDER						geom_DB;
+	COLLIDER_ENV						env_DB;
+	COLLIDER_SOM						som_DB;
+	CDB::COLLIDER						model_DB;
 #endif
-	CDB::MODEL*							geom_SOM;
+	MODEL_SOM*							geom_SOM;
 	CDB::MODEL*							geom_MODEL;
-	CDB::MODEL*							geom_ENV;
+	MODEL_ENV*							geom_ENV;
 
 	// Containers
 	xr_vector<CSoundRender_Source*>		s_sources;

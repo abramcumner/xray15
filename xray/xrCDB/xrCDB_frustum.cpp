@@ -11,13 +11,13 @@ template <bool bClass3, bool bFirst>
 class frustum_collider
 {
 public:
-	COLLIDER*		dest;
-	TRI*			tris;
+	COLLIDER_Base*		dest;
+	void*			tris;
 	Fvector*		verts;
 	
 	const CFrustum*	F;
 	
-	IC void			_init		(COLLIDER* CL, Fvector* V, TRI* T, const CFrustum* _F)
+	IC void			_init		(COLLIDER_Base* CL, Fvector* V, void* T, const CFrustum* _F)
 	{
 		dest		= CL;
 		tris		= T;
@@ -33,28 +33,21 @@ public:
 	}
 	void			_prim		(DWORD prim)
 	{
+		const TRI_Base* T = (const TRI_Base *)((char*)tris + prim * dest->triSize());
 		if (bClass3)	{
 			sPoly		src,dst;
 			src.resize	(3);
-			src[0]		= verts[ tris[prim].verts[0] ];
-			src[1]		= verts[ tris[prim].verts[1] ];
-			src[2]		= verts[ tris[prim].verts[2] ];
+			src[0]		= verts[ T->verts[0] ];
+			src[1]		= verts[T->verts[1] ];
+			src[2]		= verts[T->verts[2] ];
 			if (F->ClipPoly(src,dst))
 			{
-				RESULT& R	= dest->r_add();
-				R.id		= prim;
-				R.verts[0]	= verts[ tris[prim].verts[0] ];
-				R.verts[1]	= verts[ tris[prim].verts[1] ];
-				R.verts[2]	= verts[ tris[prim].verts[2] ];
-				R.dummy		= tris[prim].dummy;
+				Fvector v[3] = { verts[T->verts[0]], verts[T->verts[1]], verts[T->verts[2]] };
+				dest->r_add(prim, v, 0.0f, 0.0f, 0.0f, T);
 			}
 		} else {
-			RESULT& R	= dest->r_add();
-			R.id		= prim;
-			R.verts[0]	= verts[ tris[prim].verts[0] ];
-			R.verts[1]	= verts[ tris[prim].verts[1] ];
-			R.verts[2]	= verts[ tris[prim].verts[2] ];
-			R.dummy		= tris[prim].dummy;
+			Fvector v[3] = { verts[T->verts[0]], verts[T->verts[1]], verts[T->verts[2]] };
+			dest->r_add(prim, v, 0.0f, 0.0f, 0.0f, T);
 		}
 	}
 	
@@ -77,7 +70,7 @@ public:
 	}
 };
 
-void COLLIDER::frustum_query(const MODEL *m_def, const CFrustum& F)
+void COLLIDER_Base::frustum_query(const MODEL_Base *m_def, const CFrustum& F)
 {
 	m_def->syncronize		();
 
@@ -85,7 +78,7 @@ void COLLIDER::frustum_query(const MODEL *m_def, const CFrustum& F)
 	const AABBNoLeafTree*	T	= (const AABBNoLeafTree*)m_def->tree->GetTree();
 	const AABBNoLeafNode*	N	= T->GetNodes();
 	const DWORD				mask= F.getMask();
-	r_clear					();
+	r_free					();
 	
 	// Binary dispatcher
 	if (frustum_mode&OPT_FULL_TEST) 

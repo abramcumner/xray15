@@ -79,7 +79,7 @@ void TestEdge			(Vertex *V1, Vertex *V2, Face* parent)
 		pBuild->err_multiedge.w_fvector3(V2->P);
 	}
 }
-extern void SimplifyCFORM		(CDB::CollectorPacked& CL);
+extern void SimplifyCFORM		(CDB::CollectorPacked_Game& CL);
 void CBuild::BuildCForm	()
 {
 	// Collecting data
@@ -133,7 +133,7 @@ void CBuild::BuildCForm	()
 	p_cost  = 1.f/(cfFaces->size());
 
 	// Collect faces
-	CDB::CollectorPacked CL	(BB,cfVertices->size(),cfFaces->size());
+	CDB::CollectorPacked_Game CL(BB,cfVertices->size(),cfFaces->size());
 	for (vecFaceIt F = cfFaces->begin(); F!=cfFaces->end(); F++)
 	{
 		Face*	T = *F;
@@ -144,7 +144,7 @@ void CBuild::BuildCForm	()
 
 		CL.add_face	(
 			T->v[0]->P, T->v[1]->P, T->v[2]->P,
-			T->dwMaterialGame, materials()[T->dwMaterial].sector, T->sm_group
+			{ T->dwMaterialGame, materials()[T->dwMaterial].sector }, T->sm_group
 			);
 		Progress(p_total+=p_cost);		// progress
 	}

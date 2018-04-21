@@ -121,7 +121,7 @@ void GSaveAsSMF					(LPCSTR fname)
 */
 void CBuild::xrPhase_AdaptiveHT	()
 {
-	CDB::COLLIDER	DB;
+	CDB::COLLIDER_Work DB;
 	DB.ray_options	(0);
 
 	Status			("Tesselating...");

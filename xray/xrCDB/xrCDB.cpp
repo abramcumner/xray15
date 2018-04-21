@@ -26,10 +26,11 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 }
 
 // Model building
-MODEL::MODEL	()
+MODEL_Base::MODEL_Base	(size_t triSize) :
 #ifdef PROFILE_CRITICAL_SECTIONS
-	:cs(MUTEX_PROFILE_ID(MODEL))
+	cs(MUTEX_PROFILE_ID(MODEL_Base)),
 #endif // PROFILE_CRITICAL_SECTIONS
+	m_triSize(triSize)
 {
 	tree		= 0;
 	tris		= 0;
@@ -38,7 +39,7 @@ MODEL::MODEL	()
 	verts_count	= 0;
 	status		= S_INIT;
 }
-MODEL::~MODEL()
+MODEL_Base::~MODEL_Base()
 {
 	syncronize	();		// maybe model still in building
 	status		= S_INIT;
@@ -49,16 +50,17 @@ MODEL::~MODEL()
 
 struct	BTHREAD_params
 {
-	MODEL*				M;
+	MODEL_Base*				M;
 	Fvector*			V;
 	int					Vcnt;
-	TRI*				T;
+	void*				T;
 	int					Tcnt;
 	build_callback*		BC;
 	void*				BCP;
+	size_t triSize;
 };
 
-void	MODEL::build_thread		(void *params)
+void	MODEL_Base::build_thread		(void *params)
 {
 	_initialize_cpu_thread		();
 	FPU::m64r					();
@@ -70,7 +72,7 @@ void	MODEL::build_thread		(void *params)
 	//Msg						("* xrCDB: cform build completed, memory usage: %d K",P.M->memory()/1024);
 }
 
-void	MODEL::build			(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callback* bc, void* bcp)
+void	MODEL_Base::build			(Fvector* V, int Vcnt, void* T, int Tcnt, build_callback* bc, void* bcp)
 {
 	R_ASSERT					(S_INIT == status);
     R_ASSERT					((Vcnt>=4)&&(Tcnt>=2));
@@ -92,7 +94,7 @@ void	MODEL::build			(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callback* bc,
 #endif
 }
 
-void	MODEL::build_internal	(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callback* bc, void* bcp)
+void	MODEL_Base::build_internal	(Fvector* V, int Vcnt, void* T, int Tcnt, build_callback* bc, void* bcp)
 {
 	// verts
 	verts_count	= Vcnt;
@@ -101,7 +103,7 @@ void	MODEL::build_internal	(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callba
 	
 	// tris
 	tris_count	= Tcnt;
-	tris		= xr_alloc<TRI>		(tris_count);
+	tris		= allocTris(tris_count);
 	CopyMemory	(tris,T,tris_count*sizeof(TRI));
 
 	// callback
@@ -120,9 +122,10 @@ void	MODEL::build_internal	(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callba
 	u32*		temp_ptr	= temp_tris;
 	for (int i=0; i<tris_count; i++)
 	{
-		*temp_ptr++	= tris[i].verts[0];
-		*temp_ptr++	= tris[i].verts[1];
-		*temp_ptr++	= tris[i].verts[2];
+		TRI_Base* tri = (TRI_Base*)((char*)tris + i * m_triSize);
+		*temp_ptr++	= tri->verts[0];
+		*temp_ptr++	= tri->verts[1];
+		*temp_ptr++	= tri->verts[2];
 	}
 	
 	// Build a non quantized no-leaf tree
@@ -149,7 +152,7 @@ void	MODEL::build_internal	(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callba
 	return;
 }
 
-u32 MODEL::memory	()
+u32 MODEL_Base::memory	()
 {
 	if (S_BUILD==status)	{ Msg	("! xrCDB: model still isn't ready"); return 0; }
 	u32 V					= verts_count*sizeof(Fvector);
@@ -159,25 +162,18 @@ u32 MODEL::memory	()
 
 // This is the constructor of a class that has been exported.
 // see xrCDB.h for the class definition
-COLLIDER::COLLIDER()
+COLLIDER_Base::COLLIDER_Base(size_t triSize) : _triSize(triSize)
 { 
 	ray_mode		= 0;
 	box_mode		= 0;
 	frustum_mode	= 0;
 }
 
-COLLIDER::~COLLIDER()
+COLLIDER_Base::~COLLIDER_Base()
 {
-	r_free			();
 }
 
-RESULT& COLLIDER::r_add	()
+size_t COLLIDER_Base::triSize() const
 {
-	rd.push_back		(RESULT());
-	return rd.back		();
-}
-
-void COLLIDER::r_free	()
-{
-	rd.clear_and_free	();
+	return _triSize;
 }

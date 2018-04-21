@@ -43,9 +43,9 @@ IRender_Sector* CRender::detectSector(const Fvector& P, Fvector& dir)
 	float	range1	= 500.f;
 	if (rmPortals)	
 	{
-		Sectors_xrc.ray_query	(rmPortals,P,dir,range1);
-		if (Sectors_xrc.r_count()) {
-			CDB::RESULT *RP1 = Sectors_xrc.r_begin();
+		Portals_xrc.ray_query	(rmPortals,P,dir,range1);
+		if (Portals_xrc.r_count()) {
+			auto RP1 = Portals_xrc.r_begin();
 			id1 = RP1->id; range1 = RP1->range; 
 		}
 	}
@@ -69,8 +69,8 @@ IRender_Sector* CRender::detectSector(const Fvector& P, Fvector& dir)
 
 	if (ID==id1) {
 		// Take sector, facing to our point from portal
-		CDB::TRI*	pTri	= rmPortals->get_tris() + ID;
-		CPortal*	pPortal	= (CPortal*) Portals[pTri->dummy];
+		TRI_Portal*	pTri	= rmPortals->get_tris() + ID;
+		CPortal*	pPortal	= (CPortal*) Portals[pTri->index];
 		return pPortal->getSectorFacing(P);
 	} else {
 		// Take triangle at ID and use it's Sector

@@ -193,15 +193,15 @@ void CSoundRender_Core::set_geometry_som(IReader* I)
 	geom_SOM					= ETOOLS::create_model_cl(CL);
     ETOOLS::destroy_collector	(CL);
 #else
-	CDB::Collector				CL;			
+	CDB::Collector_Generic<SomPayload> CL;			
 	while (!geom->eof()){
 		SOM_poly				P;
 		geom->r					(&P,sizeof(P));
-		CL.add_face_packed_D	(P.v1,P.v2,P.v3,*(u32*)&P.occ,0.01f);
+		CL.add_face_packed(P.v1, P.v2, P.v3, { P.occ }, 0.01f);
 		if (P.b2sided)
-			CL.add_face_packed_D(P.v3,P.v2,P.v1,*(u32*)&P.occ,0.01f);
+			CL.add_face_packed(P.v3, P.v2, P.v1, { P.occ }, 0.01f);
 	}
-	geom_SOM			= xr_new<CDB::MODEL> ();
+	geom_SOM			= xr_new<MODEL_SOM> ();
 	geom_SOM->build		(CL.getV(),int(CL.getVS()),CL.getT(),int(CL.getTS()));
 #endif
 
@@ -243,21 +243,20 @@ void CSoundRender_Core::set_geometry_env(IReader* I)
 	hdrCFORM			H;
 	geom->r				(&H,sizeof(hdrCFORM));
 	Fvector*	verts	= (Fvector*)geom->pointer();
-	CDB::TRI*	tris	= (CDB::TRI*)(verts+H.vertcount);
+	TRI_ENV*	tris	= (TRI_ENV*)(verts+H.vertcount);
 	for (u32 it=0; it<H.facecount; it++)
 	{
-		CDB::TRI*	T	= tris+it;
-		u16		id_front= (u16)((T->dummy&0x0000ffff)>>0);		//	front face
-		u16		id_back	= (u16)((T->dummy&0xffff0000)>>16);		//	back face
-		R_ASSERT		(id_front<(u16)ids.size());
-		R_ASSERT		(id_back<(u16)ids.size());
-		T->dummy		= u32(ids[id_back]<<16) | u32(ids[id_front]);
+		TRI_ENV*	T = tris + it;
+		R_ASSERT(T->front<(u16)ids.size());
+		R_ASSERT(T->back<(u16)ids.size());
+		T->front = ids[T->front];
+		T->back = ids[T->back];
 	}
 #ifdef _EDITOR    
 	geom_ENV			= ETOOLS::create_model(verts, H.vertcount, tris, H.facecount);
 	env_apply			();
 #else
-	geom_ENV			= xr_new<CDB::MODEL> ();
+	geom_ENV			= xr_new<MODEL_ENV> ();
 	geom_ENV->build		(verts, H.vertcount, tris, H.facecount);
 #endif
 	geom_ch->close			();
@@ -410,22 +409,20 @@ CSoundRender_Environment*	CSoundRender_Core::get_environment			( const Fvector& 
 			if (ETOOLS::r_count()){
 				CDB::RESULT*		r	= ETOOLS::r_begin();
 #else
-			geom_DB.ray_options		(CDB::OPT_ONLYNEAREST);
-			geom_DB.ray_query		(geom_ENV,P,dir,1000.f);
-			if (geom_DB.r_count()){
-				CDB::RESULT*		r	= geom_DB.r_begin();
+			env_DB.ray_options		(CDB::OPT_ONLYNEAREST);
+			env_DB.ray_query		(geom_ENV,P,dir,1000.f);
+			if (env_DB.r_count()){
+				auto				r	= env_DB.r_begin();
 #endif            
-				CDB::TRI*			T	= geom_ENV->get_tris()+r->id;
-				Fvector*			V	= geom_ENV->get_verts();
+				auto				T	= geom_ENV->get_tris()+r->id;
+				const Fvector*		V	= geom_ENV->get_verts();
 				Fvector tri_norm;
 				tri_norm.mknormal		(V[T->verts[0]],V[T->verts[1]],V[T->verts[2]]);
 				float	dot				= dir.dotproduct(tri_norm);
 				if (dot<0){
-					u16		id_front	= (u16)((T->dummy&0x0000ffff)>>0);		//	front face
-					return	s_environment->Get(id_front);
+					return	s_environment->Get(T->front);
 				}else{
-					u16		id_back		= (u16)((T->dummy&0xffff0000)>>16);	//	back face
-					return	s_environment->Get(id_back);
+					return	s_environment->Get(T->back);
 				}
 			}else{
 				identity.set_identity	();

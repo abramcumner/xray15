@@ -23,7 +23,7 @@ class CLMThread		: public CThread
 {
 private:
 	HASH			H;
-	CDB::COLLIDER	DB;
+	CDB::COLLIDER_Work DB;
 	base_lighting	LightsSelected;
 public:
 	CLMThread	(u32 ID) : CThread(ID)
@@ -236,7 +236,7 @@ public:
 	}
 	virtual void		Execute	()
 	{
-		CDB::COLLIDER	DB;
+		CDB::COLLIDER_Work DB;
 		DB.ray_options	(0);
 		
 		u32	counter		= 0;

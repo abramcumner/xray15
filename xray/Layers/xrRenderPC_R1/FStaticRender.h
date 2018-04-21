@@ -19,6 +19,13 @@
 
 class dxRender_Visual;
 
+struct PortalPayload
+{
+	u32 index;
+};
+using MODEL_Portal = CDB::MODEL_Generic<PortalPayload>;
+using TRI_Portal = CDB::TRI_Generic<PortalPayload>;
+
 // definition
 class CRender													:	public R_dsgraph_structure
 {
@@ -46,8 +53,9 @@ public:
 	u32															uLastLTRACK;
 	xr_vector<IRender_Portal*>									Portals;
 	xr_vector<IRender_Sector*>									Sectors;
-	xrXRC														Sectors_xrc;
-	CDB::MODEL*													rmPortals;
+	xrXRC<CDB::GamePayload>										Sectors_xrc;
+	xrXRC<PortalPayload>										Portals_xrc;
+	MODEL_Portal*												rmPortals;
 	CHOM														HOM;
 //.	R_occlusion													HWOCC;
 	

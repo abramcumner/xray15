@@ -80,12 +80,12 @@ void CHOM::Load			()
 	IReader* S				= fs->open_chunk(1);
 
 	// Load tris and merge them
-	CDB::Collector		CL;
+	CDB::Collector_Generic<HomPayload> CL;
 	while (!S->eof())
 	{
 		HOM_poly				P;
 		S->r					(&P,sizeof(P));
-		CL.add_face_packed_D	(P.v1,P.v2,P.v3,P.flags,0.01f);
+		CL.add_face_packed(P.v1, P.v2, P.v3, { P.flags }, 0.01f);
 	}
 	
 	// Determine adjacency
@@ -96,7 +96,7 @@ void CHOM::Load			()
 	m_pTris				= xr_alloc<occTri>	(u32(CL.getTS()));
 	for (u32 it=0; it<CL.getTS(); it++)
 	{
-		CDB::TRI&	clT = CL.getT()[it];
+		auto&		clT = CL.getT()[it];
 		occTri&		rT	= m_pTris[it];
 		Fvector&	v0	= CL.getV()[clT.verts[0]];
 		Fvector&	v1	= CL.getV()[clT.verts[1]];
@@ -104,7 +104,7 @@ void CHOM::Load			()
 		rT.adjacent[0]	= (0xffffffff==adjacency[3*it+0])?((occTri*) (-1)):(m_pTris+adjacency[3*it+0]);
 		rT.adjacent[1]	= (0xffffffff==adjacency[3*it+1])?((occTri*) (-1)):(m_pTris+adjacency[3*it+1]);
 		rT.adjacent[2]	= (0xffffffff==adjacency[3*it+2])?((occTri*) (-1)):(m_pTris+adjacency[3*it+2]);
-		rT.flags		= clT.dummy;
+		rT.flags		= clT.flags;
 		rT.area			= Area	(v0,v1,v2);
 		if (rT.area<EPS_L)	{
 			Msg	("! Invalid HOM triangle (%f,%f,%f)-(%f,%f,%f)-(%f,%f,%f)",VPUSH(v0),VPUSH(v1),VPUSH(v2));
@@ -115,7 +115,7 @@ void CHOM::Load			()
 	}
 
 	// Create AABB-tree
-	m_pModel			= xr_new<CDB::MODEL> ();
+	m_pModel			= xr_new<MODEL_HOM> ();
 	m_pModel->build		(CL.getV(),int(CL.getVS()),CL.getT(),int(CL.getTS()));
 	bEnabled			= TRUE;
 	S->close			();
@@ -128,24 +128,6 @@ void CHOM::Unload		()
 	xr_free				(m_pTris);
 	bEnabled			= FALSE;
 }
-
-class	pred_fb	{
-public:
-	occTri*		m_pTris	;
-	Fvector		camera	;
-public:
-	pred_fb		(occTri* _t) : m_pTris(_t)	{}
-	pred_fb		(occTri* _t, Fvector& _c) : m_pTris(_t), camera(_c)	{}
-	ICF bool	operator()		(const CDB::RESULT& _1, const CDB::RESULT& _2) const {
-		occTri&	t0	= m_pTris	[_1.id];
-		occTri&	t1	= m_pTris	[_2.id];
-		return	camera.distance_to_sqr(t0.center) < camera.distance_to_sqr(t1.center);
-	}
-	ICF bool	operator()		(const CDB::RESULT& _1)	const {
-		occTri&	T	= m_pTris	[_1.id];
-		return	T.skip>Device.dwFrame;
-	}
-};
 
 void CHOM::Render_DB			(CFrustum& base)
 {
@@ -171,12 +153,19 @@ void CHOM::Render_DB			(CFrustum& base)
 	if (0==xrc.r_count())		return;
 
 	// Prepare
-	CDB::RESULT*	it			= xrc.r_begin	();
-	CDB::RESULT*	end			= xrc.r_end		();
+	auto it = xrc.r_begin();
+	auto end = xrc.r_end();
 	
 	Fvector			COP			= Device.vCameraPosition;
-	end				= std::remove_if	(it,end,pred_fb(m_pTris));
-	std::sort		(it,end,pred_fb(m_pTris,COP));
+    end = std::remove_if(it, end, [this](const auto& _1) {
+        occTri& T = m_pTris[_1.id];
+        return T.skip > Device.dwFrame;
+    });
+    std::sort(it, end, [this, COP](const auto& _1, const auto& _2) {
+        occTri& t0 = m_pTris[_1.id];
+        occTri& t1 = m_pTris[_2.id];
+        return COP.distance_to_sqr(t0.center) < COP.distance_to_sqr(t1.center);
+    });
 
 	// Build frustum with near plane only
 	CFrustum					clip;
@@ -200,7 +189,7 @@ void CHOM::Render_DB			(CFrustum& base)
 		{ T.skip=next; continue; }
 
 		// Access to triangle vertices
-		CDB::TRI& t		= m_pModel->get_tris()	[it->id];
+		auto& t			= m_pModel->get_tris()	[it->id];
 		Fvector*  v		= m_pModel->get_verts();
 		src.clear		();	dst.clear	();
 		src.push_back	(v[t.verts[0]]);
@@ -351,7 +340,7 @@ void CHOM::OnRender	()
 			static LVec	poly;	poly.resize(m_pModel->get_tris_count()*3);
 			static LVec	line;	line.resize(m_pModel->get_tris_count()*6);
 			for (int it=0; it<m_pModel->get_tris_count(); it++){
-				CDB::TRI* T		= m_pModel->get_tris()+it;
+				auto T			= m_pModel->get_tris()+it;
 				Fvector* verts	= m_pModel->get_verts();
 				poly[it*3+0].set(*(verts+T->verts[0]),0x80FFFFFF);
 				poly[it*3+1].set(*(verts+T->verts[1]),0x80FFFFFF);

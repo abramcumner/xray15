@@ -14,7 +14,7 @@ void	light::gi_generate	()
 	CRandom				random;
 	random.seed			(0x12071980);
 
-	xrXRC&		xrc		= RImplementation.Sectors_xrc;
+	xrXRC<CDB::GamePayload>& xrc = RImplementation.Sectors_xrc;
 	CDB::MODEL*	model	= g_pGameLevel->ObjectSpace.GetStaticModel	();
 	CDB::TRI*	tris	= g_pGameLevel->ObjectSpace.GetStaticTris	();
 	Fvector*	verts	= g_pGameLevel->ObjectSpace.GetStaticVerts	();

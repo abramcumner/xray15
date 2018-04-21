@@ -4,30 +4,12 @@
 #include <MxQSlim.h>
 #include "../../xrcdb/xrcdb.h"
 #include "../../common/face_smoth_flags.h"
+#include "SaveAsSmf.h"
 
 #pragma comment (lib,"xrQSlim.lib")
 
 #define MAX_DECIMATE_ERROR 0.0005f
 #define COMPACTNESS_RATIO  0.001f
-
-void SaveAsSMF			(LPCSTR fname, CDB::CollectorPacked& CL)
-{
-	IWriter* W			= FS.w_open(fname);
-	string256 tmp;
-	// vertices
-	for (u32 v_idx=0; v_idx<CL.getVS(); v_idx++){
-		Fvector* v		= CL.getV()+v_idx;
-		sprintf			(tmp,"v %f %f %f",v->x,v->y,-v->z);
-		W->w_string		(tmp);
-	}
-	// transfer faces
-	for (u32 f_idx=0; f_idx<CL.getTS(); f_idx++){
-		CDB::TRI& t		= CL.getT(f_idx);
-		sprintf			(tmp,"f %d %d %d",t.verts[0]+1,t.verts[2]+1,t.verts[1]+1);
-		W->w_string		(tmp);
-	}
-	FS.w_close	(W);
-}
 
 struct face_props	{
 	u16		material;
@@ -64,7 +46,7 @@ bool do_constrain(u32 base_edge_idx, u32 test_edg_idx, face_props& base_fprops, 
 
 DEFINE_VECTOR(face_props,FPVec,FPVecIt);
 
-void SimplifyCFORM		(CDB::CollectorPacked& CL)
+void SimplifyCFORM		(CDB::CollectorPacked_Game& CL)
 {
 	FPVec FPs;
 
@@ -89,7 +71,7 @@ void SimplifyCFORM		(CDB::CollectorPacked& CL)
 	// transfer faces
 	FPs.resize				(base_faces_cnt);
 	for (u32 f_idx=0; f_idx<base_faces_cnt; f_idx++){
-		CDB::TRI& t			= CL.getT(f_idx);
+		const auto& t		= CL.getT(f_idx);
 		mdl->add_face		(t.verts[0],t.verts[1],t.verts[2]);
 		FPs[f_idx].set		(t.material,t.sector,Fvector().mknormal(*(CL.getV()+t.verts[0]),*(CL.getV()+t.verts[1]),*(CL.getV()+t.verts[2])), CL.getfFlags(f_idx));
 	}
@@ -161,7 +143,7 @@ void SimplifyCFORM		(CDB::CollectorPacked& CL)
 			CL.add_face		(*((Fvector*)&mdl->vertex(F[0])),
 							*((Fvector*)&mdl->vertex(F[1])),
 							*((Fvector*)&mdl->vertex(F[2])),
-							FP.material, FP.sector,FP.flags);
+							{ FP.material, FP.sector }, FP.flags);
 		}
 	}
 

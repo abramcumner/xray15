@@ -7,6 +7,7 @@
 #include "../xrLC_Light/xrLC_GlobalData.h"
 #include "../../xrcdb/xrcdb.h"
 #include "../xrLC_Light/xrface.h"
+#include "SaveAsSmf.h"
 
 //.#include "communicate.h"
 
@@ -51,7 +52,7 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 	xr_vector<Face*>			adjacent_vec;
 	adjacent_vec.reserve		(6*2*3);
 
-	CDB::CollectorPacked	CL	(scene_bb,lc_global_data()->g_vertices().size(),lc_global_data()->g_faces().size());
+	CDB::CollectorPacked_Work	CL	(scene_bb,lc_global_data()->g_vertices().size(),lc_global_data()->g_faces().size());
 
 	for (vecFaceIt it=lc_global_data()->g_faces().begin(); it!=lc_global_data()->g_faces().end(); it++)
 	{
@@ -92,7 +93,7 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 		if (!bAlready) 
 		{
 			F->flags.bProcessed	= true;
-			CL.add_face_D		( F->v[0]->P,F->v[1]->P,F->v[2]->P, *((u32*)&F), F->sm_group );
+			CL.add_face(F->v[0]->P, F->v[1]->P, F->v[2]->P, { F }, F->sm_group);
 		}
 	}
 
@@ -111,8 +112,6 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 	Status					("Building search tree...");
 	lc_global_data()->create_rcmodel( CL );
 
-	extern void SaveAsSMF			(LPCSTR fname, CDB::CollectorPacked& CL);
-	
 	// save source SMF
 	string_path				fn;
 
@@ -133,8 +132,8 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 		rc_faces.resize			(CL.getTS());
 		// Prepare faces
 		for (u32 k=0; k<CL.getTS(); k++){
-			CDB::TRI& T			= CL.getT( k );
-			base_Face* F		= (base_Face*)(*((void**)&T.dummy));
+			const auto& T			= CL.getT( k );
+			base_Face* F		= (base_Face*)T.data;
 			b_rc_face& cf		= rc_faces[k];
 			cf.dwMaterial		= F->dwMaterial;
 			cf.dwMaterialGame	= F->dwMaterialGame;

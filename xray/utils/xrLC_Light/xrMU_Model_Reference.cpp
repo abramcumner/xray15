@@ -33,7 +33,7 @@ void xrMU_Reference::Load( IReader& F, xr_vector<xrMU_Model*>& mu_models )
 
 
 
-void xrMU_Reference::export_cform_game(CDB::CollectorPacked& CL)
+void xrMU_Reference::export_cform_game(CDB::CollectorPacked_Game& CL)
 {
 	// Collecting data
 	xrMU_Model::v_faces*	cfFaces		= xr_new<xrMU_Model::v_faces>		();
@@ -84,14 +84,14 @@ void xrMU_Reference::export_cform_game(CDB::CollectorPacked& CL)
 		xform.transform_tiny	(P[1],T->v[1]->P);
 		xform.transform_tiny	(P[2],T->v[2]->P);
 
-		CL.add_face				( P[0], P[1], P[2], T->dwMaterialGame, sector, T->sm_group);
+		CL.add_face(P[0], P[1], P[2], { T->dwMaterialGame, sector }, T->sm_group);
 	}
 
 	xr_delete		(cfFaces);
 	xr_delete		(cfVertices);
 }
 
-void xrMU_Reference::export_cform_rcast(CDB::CollectorPacked& CL)
+void xrMU_Reference::export_cform_rcast(CDB::CollectorPacked_Work& CL)
 {
 	model->export_cform_rcast(CL,xform);
 }

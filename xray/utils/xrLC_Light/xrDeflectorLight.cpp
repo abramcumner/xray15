@@ -104,7 +104,7 @@ BOOL ApplyBorders	(lm_layer &lm, u32 ref)
 	return bNeedContinue;
 }
 
-float getLastRP_Scale(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Face* skip, BOOL bUseFaceDisable)
+float getLastRP_Scale(CDB::COLLIDER_Work* DB, CDB::MODEL_Work* MDL, R_Light& L, Face* skip, BOOL bUseFaceDisable)
 {
 	u32		tris_count	= DB->r_count();
 	float	scale		= 1.f;
@@ -114,11 +114,11 @@ float getLastRP_Scale(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Face* skip
 	{
 		for (u32 I=0; I<tris_count; I++)
 		{
-			CDB::RESULT& rpinf = DB->r_begin()[I];
+			CDB::RESULT_Work& rpinf = DB->r_begin()[I];
 
 			// Access to texture
-			CDB::TRI& clT										= MDL->get_tris()[rpinf.id];
-			base_Face* F										= (base_Face*)(*((void**)&clT.dummy));
+			CDB::TRI_Work& clT									= MDL->get_tris()[rpinf.id];
+			base_Face* F										= (base_Face*)clT.data;
 			if (0==F)											continue;
 			if (skip==F)										continue;
 
@@ -171,7 +171,7 @@ float getLastRP_Scale(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Face* skip
 	return scale;
 }
 
-float rayTrace	(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Fvector& P, Fvector& D, float R, Face* skip, BOOL bUseFaceDisable)
+float rayTrace	(CDB::COLLIDER_Work* DB, CDB::MODEL_Work* MDL, R_Light& L, Fvector& P, Fvector& D, float R, Face* skip, BOOL bUseFaceDisable)
 {
 	R_ASSERT	(DB);
 
@@ -194,7 +194,7 @@ float rayTrace	(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Fvector& P, Fvec
 	return 0;
 }
 
-void LightPoint(CDB::COLLIDER* DB, CDB::MODEL* MDL, base_color_c &C, Fvector &P, Fvector &N, base_lighting& lights, u32 flags, Face* skip)
+void LightPoint(CDB::COLLIDER_Work* DB, CDB::MODEL_Work* MDL, base_color_c &C, Fvector &P, Fvector &N, base_lighting& lights, u32 flags, Face* skip)
 {
 	Fvector		Ldir,Pnew;
 	Pnew.mad	(P,N,0.01f);
@@ -537,7 +537,7 @@ BOOL	compress_RMS		(lm_layer& lm, u32 rms, u32& w, u32& h)
 
 
 
-void CDeflector::Light(CDB::COLLIDER* DB, base_lighting* LightsSelected, HASH& H)
+void CDeflector::Light(CDB::COLLIDER_Work* DB, base_lighting* LightsSelected, HASH& H)
 {
 	// Geometrical bounds
 	Fbox bb;		bb.invalidate	();

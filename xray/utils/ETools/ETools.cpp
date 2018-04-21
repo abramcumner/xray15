@@ -136,31 +136,31 @@ namespace ETOOLS{
 	{
 		xr_delete						(M);
 	}
-	ETOOLS_API void						 __stdcall collector_add_face_d	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
-	{
-		CL->add_face_D					(v0,v1,v2,dummy);
-	}
-	ETOOLS_API void						 __stdcall collector_add_face_pd	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
-	{
-		CL->add_face_packed_D			(v0,v1,v2,dummy,eps);
-	}
+	//ETOOLS_API void						 __stdcall collector_add_face_d	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
+	//{
+	//	CL->add_face_D					(v0,v1,v2,dummy);
+	//}
+	//ETOOLS_API void						 __stdcall collector_add_face_pd	(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps)
+	//{
+	//	CL->add_face_packed_D			(v0,v1,v2,dummy,eps);
+	//}
 
-	ETOOLS_API CDB::CollectorPacked*	 __stdcall create_collectorp		(const Fbox &bb, int apx_vertices, int apx_faces)
+	ETOOLS_API CDB::CollectorPacked_Game*	 __stdcall create_collectorp		(const Fbox &bb, int apx_vertices, int apx_faces)
 	{
-		return							xr_new<CDB::CollectorPacked>	(bb, apx_vertices, apx_faces);
+		return							xr_new<CDB::CollectorPacked_Game>	(bb, apx_vertices, apx_faces);
 	}
-	ETOOLS_API void						 __stdcall destroy_collectorp		(CDB::CollectorPacked*& M)
+	ETOOLS_API void						 __stdcall destroy_collectorp		(CDB::CollectorPacked_Game*& M)
 	{
 		xr_delete						(M);
 	}
-	ETOOLS_API void						 __stdcall collectorp_add_face_d	(CDB::CollectorPacked* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
-	{
-		CL->add_face_D					(v0,v1,v2,dummy,u32(-1));
-	}
+	//ETOOLS_API void						 __stdcall collectorp_add_face_d	(CDB::CollectorPacked_Game* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy)
+	//{
+	//	CL->add_face(v0, v1, v2, { dummy }, u32(-1));
+	//}
 
 	ETOOLS_API CDB::COLLIDER* __stdcall get_collider	(){return XRC.collider();}
 
-	ETOOLS_API CDB::MODEL*	 __stdcall create_model_clp(CDB::CollectorPacked* CL)
+	ETOOLS_API CDB::MODEL*	 __stdcall create_model_clp(CDB::CollectorPacked_Game* CL)
 	{
 		return				create_model(CL->getV(), CL->getVS(), CL->getT(), CL->getTS());
 	}

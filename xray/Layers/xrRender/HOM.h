@@ -13,8 +13,13 @@ class CHOM
 #endif
 {
 private:
-	xrXRC					xrc;
-	CDB::MODEL*				m_pModel;
+	struct HomPayload
+	{
+		u32 flags;
+	};
+	using MODEL_HOM = CDB::MODEL_Generic<HomPayload>;
+	xrXRC<HomPayload>		xrc;
+	MODEL_HOM*				m_pModel;
 	occTri*					m_pTris;
 	BOOL					bEnabled;
 	Fmatrix					m_xform;

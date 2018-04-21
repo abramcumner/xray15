@@ -34,8 +34,14 @@ private:
 	sPoly				sml_poly_dest;
 	sPoly				sml_poly_src;
 
-	xrXRC				xrc;
-	CDB::Collector		sml_collector;
+	struct WallmarkPayload
+	{
+		bool visited;
+	};
+	using Collector_WM = CDB::Collector_Generic<WallmarkPayload>;
+	using TRI_WM = CDB::TRI_Generic<WallmarkPayload>;
+	xrXRC<CDB::GamePayload> xrc;
+	Collector_WM		sml_collector;
 	xr_vector<u32>		sml_adjacency;
 
 	xrCriticalSection	lock;

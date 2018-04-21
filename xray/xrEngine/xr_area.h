@@ -23,7 +23,7 @@ private:
 	xrCriticalSection					Lock;
 	CDB::MODEL							Static;
 	Fbox								m_BoundingVolume;
-	xrXRC								xrc;				// MT: dangerous
+	xrXRC<CDB::GamePayload>			xrc;				// MT: dangerous
 	collide::rq_results					r_temp;				// MT: dangerous
 	xr_vector<ISpatial*>				r_spatial;			// MT: dangerous
 public:

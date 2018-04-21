@@ -26,13 +26,13 @@ xrCriticalSection		task_cs
 u32						task_it;
 
 //////////////////////////////////////////////////////////////////////////
-Fvector		GetPixel_7x7		(CDB::RESULT& rpinf)
+Fvector		GetPixel_7x7		(CDB::RESULT_Work& rpinf)
 {
 	Fvector B,P,R={0,0,0};
 
 	// Access to texture
-	CDB::TRI& clT										= lc_global_data()->RCAST_Model()->get_tris()[rpinf.id];
-	base_Face* F										= (base_Face*)(*((void**)&clT.dummy));
+	const auto& clT										= lc_global_data()->RCAST_Model()->get_tris()[rpinf.id];
+	base_Face* F										= (base_Face*)clT.data;
 	if (0==F)											return R;
 	const Shader_xrLC&	SH								= F->Shader();
 	if (!SH.flags.bLIGHT_CastShadow)					return R;
@@ -79,10 +79,10 @@ public:
 
 	virtual void	Execute	()
 	{
-		CDB::COLLIDER		xrc;
+		CDB::COLLIDER_Work	xrc;
 		xrc.ray_options		(CDB::OPT_CULL|CDB::OPT_ONLYNEAREST);
-		CDB::MODEL*	model	= lc_global_data()->RCAST_Model();
-		CDB::TRI*	tris	= lc_global_data()->RCAST_Model()->get_tris();
+		CDB::MODEL_Work*	model	= lc_global_data()->RCAST_Model();
+		CDB::TRI_Work*	tris	= lc_global_data()->RCAST_Model()->get_tris();
 		Fvector*	verts	= lc_global_data()->RCAST_Model()->get_verts();
 
 		// full iteration
@@ -134,8 +134,8 @@ public:
 				}
 				xrc.ray_query		(model,src.position,dir,src.range);
 				if					(!xrc.r_count()) continue;
-				CDB::RESULT *R		= xrc.r_begin	();
-				CDB::TRI&	T		= tris[R->id];
+				CDB::RESULT_Work *R		= xrc.r_begin	();
+				CDB::TRI_Work&	T		= tris[R->id];
 				Fvector		Tv[3]	= { verts[T.verts[0]],verts[T.verts[1]],verts[T.verts[2]] };
 				Fvector		TN;		TN.mknormal		(Tv[0],Tv[1],Tv[2]);
 				float		dot		= TN.dotproduct	(idir.invert(dir));

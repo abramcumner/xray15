@@ -12,8 +12,11 @@
 //struct _face;
 //struct _vertex;
 namespace CDB{
-class MODEL;
-class CollectorPacked;
+	struct WorkPayload;
+	template<class Payload> class MODEL_Generic;
+	using MODEL_Work = MODEL_Generic<WorkPayload>;
+	template<class Payload> class CollectorPacked;
+	using CollectorPacked_Work = CollectorPacked<WorkPayload>;
 };
 class CLightmap;
 class xrMU_Model;
@@ -35,7 +38,7 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		vecFace							_g_faces;
 		vecDefl							_g_deflectors;
 		base_lighting					_L_static;
-		CDB::MODEL*						_RCAST_Model;
+		CDB::MODEL_Work*				_RCAST_Model;
 		bool							_b_nosun;
 		bool							_gl_linear;
 		bool							_b_norgb;
@@ -69,7 +72,7 @@ public:
 		bool						b_r_vertices	()		;
 		bool						b_r_faces		()		;
 		base_lighting				&L_static		()		{	return _L_static; }
-		CDB::MODEL*					RCAST_Model		()		{	return _RCAST_Model; }
+		CDB::MODEL_Work*			RCAST_Model		()		{	return _RCAST_Model; }
 		xr_vector<xrMU_Model*>		&mu_models		()		{	return _mu_models; }
 		xr_vector<xrMU_Reference*>	&mu_refs		()		{	return _mu_refs; }
 		bool						b_nosun			()		{	return _b_nosun; }
@@ -77,7 +80,7 @@ public:
 IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						initialize		()		;
 		void						destroy_rcmodel	()		;
-		void						create_rcmodel	(CDB::CollectorPacked& CL);
+		void						create_rcmodel	(CDB::CollectorPacked_Work& CL);
 		void						create_write_faces()	;
 		void						destroy_write_faces()	;
 		void						create_read_faces()		;

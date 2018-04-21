@@ -12,7 +12,7 @@
 #include "xrface.h"
 #include "xrLC_GlobalData.h"
 
-void LightPoint(CDB::COLLIDER* DB, CDB::MODEL* MDL, base_color_c &C, Fvector &P, Fvector &N, base_lighting& lights, u32 flags, Face* skip);
+void LightPoint(CDB::COLLIDER_Work* DB, CDB::MODEL_Work* MDL, base_color_c &C, Fvector &P, Fvector &N, base_lighting& lights, u32 flags, Face* skip);
 union var
 {
 	int		i;
@@ -47,7 +47,7 @@ var _x	= var(x);
 */
 
 //-----------------------------------------------------------------------
-void xrMU_Model::calc_lighting	(xr_vector<base_color>& dest, Fmatrix& xform, CDB::MODEL* MDL, base_lighting& lights, u32 flags)
+void xrMU_Model::calc_lighting	(xr_vector<base_color>& dest, Fmatrix& xform, CDB::MODEL_Work* MDL, base_lighting& lights, u32 flags)
 {
 	// trans-map
 	typedef	xr_multimap<float,v_vertices>	mapVert;
@@ -67,7 +67,7 @@ void xrMU_Model::calc_lighting	(xr_vector<base_color>& dest, Fmatrix& xform, CDB
 	Rxform.invert				(tmp	);
 
 	// Perform lighting
-	CDB::COLLIDER				DB;
+	CDB::COLLIDER_Work			DB;
 	DB.ray_options				(0);
 
 	// Disable faces if needed
@@ -209,10 +209,10 @@ void xrMU_Model::calc_lighting	()
 		BB.modify	((*vit)->P);
 
 	// Export CForm
-	CDB::CollectorPacked	CL	(BB,(u32)m_vertices.size(),(u32)m_faces.size());
+	CDB::CollectorPacked_Work CL	(BB,(u32)m_vertices.size(),(u32)m_faces.size());
 	export_cform_rcast		(CL,Fidentity);
 
-	CDB::MODEL*				M	= xr_new<CDB::MODEL>	();
+	CDB::MODEL_Work*		M	= xr_new<CDB::MODEL_Work>	();
 	M->build				(CL.getV(),(u32)CL.getVS(),CL.getT(),(u32)CL.getTS());
 
 	calc_lighting			(color,Fidentity,M,inlc_global_data()->L_static(),LP_dont_rgb+LP_dont_sun);

@@ -83,10 +83,10 @@ void	xrLC_GlobalData	::destroy_rcmodel	()
 {
 	xr_delete		(_RCAST_Model);
 }
-void	xrLC_GlobalData	::create_rcmodel	(CDB::CollectorPacked& CL)
+void	xrLC_GlobalData	::create_rcmodel	(CDB::CollectorPacked_Work& CL)
 {
 	VERIFY(!_RCAST_Model);
-	_RCAST_Model				= xr_new<CDB::MODEL> ();
+	_RCAST_Model				= xr_new<CDB::MODEL_Work> ();
 	_RCAST_Model->build		(CL.getV(),(int)CL.getVS(),CL.getT(),(int)CL.getTS());
 }
 
@@ -122,27 +122,27 @@ void		xrLC_GlobalData	::				initialize		()
 
 //*((u32*)&F)
 
-base_Face* convert_nax( u32 dummy )
-{
-	return (base_Face*)(*((void**)&dummy));
-}
+//base_Face* convert_nax( u32 dummy )
+//{
+//	return (base_Face*)(*((void**)&dummy));
+//}
+//
+//u32 convert_nax( base_Face* F )
+//{
+//	return *((u32*)&F);
+//}
 
-u32 convert_nax( base_Face* F )
-{
-	return *((u32*)&F);
-}
-
-void write( IWriter	&w, const CDB::TRI &tri )
+void write( IWriter	&w, const CDB::TRI_Work &tri )
 {
 	w.w_u32( tri.verts[ 0 ] );
 	w.w_u32( tri.verts[ 1 ] );
 	w.w_u32( tri.verts[ 2 ] );
-	const base_Face* F=  convert_nax( tri.dummy );
+	const base_Face* F= (base_Face*)tri.data;
 	VERIFY( inlc_global_data() );
 	inlc_global_data()->write( w, F );
 }
 
-void read( INetReader	&r, CDB::TRI &tri )
+void read( INetReader	&r, CDB::TRI_Work &tri )
 {
 	tri.verts[ 0 ]  = r.r_u32( );
 	tri.verts[ 1 ]  = r.r_u32( );
@@ -150,13 +150,13 @@ void read( INetReader	&r, CDB::TRI &tri )
 	VERIFY( inlc_global_data() );
 	base_Face* F = 0;
 	inlc_global_data()->read( r, F );
-	tri.dummy = convert_nax( F );
+	tri.data = F;
 }
 
 static xr_vector<Fvector> verts;
-static xr_vector<CDB::TRI> tris;
+static xr_vector<CDB::TRI_Work> tris;
 
-void read( INetReader	&r, CDB::MODEL* &m )
+void read( INetReader	&r, CDB::MODEL_Work* &m )
 {
 	
 	verts.clear();
@@ -169,13 +169,13 @@ void read( INetReader	&r, CDB::MODEL* &m )
 		read( r, tris[i] );
 
 	VERIFY(!m);
-	m = xr_new<CDB::MODEL> ();
+	m = xr_new<CDB::MODEL_Work> ();
 	m->build( &*verts.begin(), (int)verts.size(), &*tris.begin(), (int)tris.size() );
 	verts.clear();
 	tris.clear();
 }
 
-void write( IWriter	&w,  CDB::MODEL &m )
+void write( IWriter	&w,  CDB::MODEL_Work &m )
 {
 	w.w_u32( (u32)m.get_verts_count() );
 	w.w( m.get_verts(), m.get_verts_count() * sizeof(Fvector) );

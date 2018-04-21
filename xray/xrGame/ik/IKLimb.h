@@ -12,7 +12,11 @@
 #include "../ik_limb_state_predict.h"
 
 class	IKinematics	;
-class	CDB::TRI	;
+namespace CDB {
+	struct GamePayload;
+	template<class Payload> struct TRI_Generic;
+	using TRI = TRI_Generic<GamePayload>;
+}
 struct	SCalculateData;
 struct	SIKCollideData;
 class	CGameObject;

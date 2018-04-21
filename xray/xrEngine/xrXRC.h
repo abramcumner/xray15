@@ -8,15 +8,16 @@
 
 #include "../xrCDB/xrCDB.h"
 
-class ENGINE_API xrXRC  
+template<class Payload>
+class xrXRC  
 {
-	CDB::COLLIDER	CL;
+	CDB::COLLIDER_Generic<Payload>	CL;
 public:
 	IC void			ray_options		(u32 f)		
 	{ 
 		CL.ray_options(f); 
 	}
-	IC void			ray_query		(const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range = 10000.f)
+	IC void			ray_query		(const CDB::MODEL_Generic<Payload> *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range = 10000.f)
 	{
 #ifdef DEBUG
 		Device.Statistic->clRAY.Begin();
@@ -31,7 +32,7 @@ public:
 	{	
 		CL.box_options(f);
 	}
-	IC void			box_query		(const CDB::MODEL *m_def, const Fvector& b_center, const Fvector& b_dim)
+	IC void			box_query		(const CDB::MODEL_Generic<Payload> *m_def, const Fvector& b_center, const Fvector& b_dim)
 	{
 #ifdef DEBUG
 		Device.Statistic->clBOX.Begin();
@@ -46,7 +47,7 @@ public:
 	{
 		CL.frustum_options(f);
 	}
-	IC void			frustum_query	(const CDB::MODEL *m_def, const CFrustum& F)
+	IC void			frustum_query	(const CDB::MODEL_Generic<Payload> *m_def, const CFrustum& F)
 	{
 #ifdef DEBUG
 		Device.Statistic->clFRUSTUM.Begin();
@@ -57,16 +58,13 @@ public:
 #endif
 	}
 	
-	IC CDB::RESULT*	r_begin			()	{	return CL.r_begin();		};
-	IC CDB::RESULT*	r_end			()	{	return CL.r_end();			};
+	IC CDB::RESULT_Generic<Payload>*	r_begin			()	{	return CL.r_begin();		};
+	IC CDB::RESULT_Generic<Payload>*	r_end			()	{	return CL.r_end();			};
 	IC void			r_free			()	{	CL.r_free();				}
 	IC int			r_count			()	{	return CL.r_count();		};
 	IC void			r_clear			()	{	CL.r_clear();				};
 	IC void			r_clear_compact	()	{	CL.r_clear_compact();		};
-	
-	xrXRC();
-	~xrXRC();
 };
-ENGINE_API extern xrXRC XRC;
+extern ENGINE_API xrXRC<CDB::GamePayload> XRC;
 
 #endif // !defined(AFX_XRXRC_H__9AA25268_621F_4FCA_BD75_AF2E9822B8E3__INCLUDED_)

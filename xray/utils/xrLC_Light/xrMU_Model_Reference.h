@@ -4,7 +4,14 @@
 #include "base_color.h"
 
 class xrMU_Model;
-namespace CDB { class CollectorPacked; }
+namespace CDB
+{
+	struct GamePayload;
+	struct WorkPayload;
+	template<class Payload> class CollectorPacked;
+	using CollectorPacked_Work = CollectorPacked<WorkPayload>;
+	using CollectorPacked_Game = CollectorPacked<GamePayload>;
+}
 class XRLC_LIGHT_API xrMU_Reference
 {
 public:
@@ -21,8 +28,8 @@ public:
 	void					Load				( IReader& fs, xr_vector<xrMU_Model*>& mu_models );
 	void					calc_lighting		();
 
-	void					export_cform_game	(CDB::CollectorPacked& CL);
-	void					export_cform_rcast	(CDB::CollectorPacked& CL);
+	void					export_cform_game	(CDB::CollectorPacked_Game& CL);
+	void					export_cform_rcast	(CDB::CollectorPacked_Work& CL);
 //	void					export_ogf			();
 };
 

@@ -122,7 +122,7 @@ public:
 	vis_list						m_visibles	[3];	// 0=still, 1=Wave1, 2=Wave2
 
 #ifndef _EDITOR    
-	xrXRC							xrc;
+	xrXRC<CDB::GamePayload>		xrc;
 #endif
 
 	CacheSlot1**					cache_level1;

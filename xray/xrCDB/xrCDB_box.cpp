@@ -83,8 +83,8 @@ template <bool bClass3, bool bFirst>
 class box_collider
 {
 public:
-	COLLIDER*		dest;
-	TRI*			tris;
+	COLLIDER_Base*	dest;
+	void*			tris;
 	Fvector*		verts;
 	
 	Fvector			b_min, b_max;
@@ -92,7 +92,7 @@ public:
 
 	Point			mLeafVerts	[3];
 	
-	IC void			_init		(COLLIDER* CL, Fvector* V, TRI* T, const Fvector& C, const Fvector& E)
+	IC void			_init		(COLLIDER_Base* CL, Fvector* V, void* T, const Fvector& C, const Fvector& E)
 	{
 		dest		= CL;
 		verts		= V;
@@ -188,17 +188,13 @@ public:
 	}
 	void			_prim		(DWORD prim)
 	{
-		TRI&	T	= tris[prim];
-		Fvector& v0	= verts[ T.verts[0] ];	mLeafVerts[0].x = v0.x;	mLeafVerts[0].y = v0.y;	mLeafVerts[0].z = v0.z;
-		Fvector& v1	= verts[ T.verts[1] ];	mLeafVerts[1].x = v1.x;	mLeafVerts[1].y = v1.y;	mLeafVerts[1].z = v1.z;
-		Fvector& v2	= verts[ T.verts[2] ];	mLeafVerts[2].x = v2.x;	mLeafVerts[2].y = v2.y;	mLeafVerts[2].z = v2.z;
+		const TRI_Base* T = (const TRI_Base *)((char*)tris + prim * dest->triSize());
+		Fvector v[3];
+		v[0] = verts[ T->verts[0] ];	mLeafVerts[0].x = v[0].x;	mLeafVerts[0].y = v[0].y;	mLeafVerts[0].z = v[0].z;
+		v[1] = verts[ T->verts[1] ];	mLeafVerts[1].x = v[1].x;	mLeafVerts[1].y = v[1].y;	mLeafVerts[1].z = v[1].z;
+		v[2] = verts[ T->verts[2] ];	mLeafVerts[2].x = v[2].x;	mLeafVerts[2].y = v[2].y;	mLeafVerts[2].z = v[2].z;
 		if (!_tri())			return;
-		RESULT& R	= dest->r_add();
-		R.id		= prim;
-		R.verts[0]	= v0;
-		R.verts[1]	= v1;
-		R.verts[2]	= v2;
-		R.dummy		= T.dummy;
+		dest->r_add(prim, v, 0.0f, 0.0f, 0.0f, T);
 	}
 	void			_stab		(const AABBNoLeafNode* node)
 	{
@@ -218,14 +214,14 @@ public:
 	}
 };
 
-void COLLIDER::box_query(const MODEL *m_def, const Fvector& b_center, const Fvector& b_dim)
+void COLLIDER_Base::box_query(const MODEL_Base *m_def, const Fvector& b_center, const Fvector& b_dim)
 {
 	m_def->syncronize		();
 
 	// Get nodes
 	const AABBNoLeafTree* T = (const AABBNoLeafTree*)m_def->tree->GetTree();
 	const AABBNoLeafNode* N = T->GetNodes();
-	r_clear					();
+	r_free					();
 	
 	// Binary dispatcher
 	if (box_mode&OPT_FULL_TEST) 

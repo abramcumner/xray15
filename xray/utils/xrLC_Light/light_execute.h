@@ -11,7 +11,7 @@ class light_execute
 {
 
 		HASH			H;
-		CDB::COLLIDER	DB;
+		CDB::COLLIDER_Work DB;
 		base_lighting	LightsSelected;
 	 public:
 		 void run( CDeflector& D );

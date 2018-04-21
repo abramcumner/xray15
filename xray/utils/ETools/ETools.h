@@ -23,13 +23,13 @@ extern "C" {
 		ETOOLS_API void					__stdcall	destroy_collector	(CDB::Collector*&);
 		ETOOLS_API void					__stdcall	collector_add_face_d(CDB::Collector* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy);
 		ETOOLS_API void					__stdcall	collector_add_face_pd(CDB::Collector* CL,const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy, float eps = EPS);
-		ETOOLS_API CDB::CollectorPacked*__stdcall	create_collectorp	(const Fbox &bb, int apx_vertices=5000, int apx_faces=5000);
-		ETOOLS_API void					__stdcall	destroy_collectorp	(CDB::CollectorPacked*&);
-		ETOOLS_API void					__stdcall	collectorp_add_face_d(CDB::CollectorPacked* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy);
+		ETOOLS_API CDB::CollectorPacked_Game*__stdcall	create_collectorp	(const Fbox &bb, int apx_vertices=5000, int apx_faces=5000);
+		ETOOLS_API void					__stdcall	destroy_collectorp	(CDB::CollectorPacked_Game*&);
+		ETOOLS_API void					__stdcall	collectorp_add_face_d(CDB::CollectorPacked_Game* CL, const Fvector& v0, const Fvector& v1, const Fvector& v2, u32 dummy);
 
 		ETOOLS_API CDB::COLLIDER*		__stdcall	get_collider		();
 		ETOOLS_API CDB::MODEL*			__stdcall	create_model_cl		(CDB::Collector*);
-		ETOOLS_API CDB::MODEL*			__stdcall	create_model_clp	(CDB::CollectorPacked*);
+		ETOOLS_API CDB::MODEL*			__stdcall	create_model_clp	(CDB::CollectorPacked_Game*);
 		ETOOLS_API CDB::MODEL*			__stdcall	create_model		(Fvector* V, int Vcnt, CDB::TRI* T, int Tcnt);
 		ETOOLS_API void					__stdcall	destroy_model		(CDB::MODEL*&);
 		ETOOLS_API CDB::RESULT*			__stdcall	r_begin				();
