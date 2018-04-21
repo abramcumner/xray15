@@ -5,4 +5,7 @@
 		<DisplayString>{p_->value,s}, $(Type)</DisplayString>
 		<StringView>p_->value, s</StringView>
 	</Type>
+  <Type Name="CAI_Stalker">
+    <DisplayString>{NameObject.p_->value,s}, $(Type)</DisplayString>
+  </Type>
 </AutoVisualizer>
