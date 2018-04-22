@@ -1257,6 +1257,7 @@ Global
 		{FA169092-EA3E-40C1-8E5A-A2B575700FE8}.Release|Win32.ActiveCfg = Release|Win32
 		{FA169092-EA3E-40C1-8E5A-A2B575700FE8}.Release|Win32.Build.0 = Release|Win32
 		{FA169092-EA3E-40C1-8E5A-A2B575700FE8}.Release|x64.ActiveCfg = Release|x64
+		{FA169092-EA3E-40C1-8E5A-A2B575700FE8}.Release|x64.Build.0 = Release|x64
 		{032A10AB-E44C-4751-A290-001EF99E664A}.Debug_Dedicated|Win32.ActiveCfg = Debug|Win32
 		{032A10AB-E44C-4751-A290-001EF99E664A}.Debug_Dedicated|Win32.Build.0 = Debug|Win32
 		{032A10AB-E44C-4751-A290-001EF99E664A}.Debug_Dedicated|x64.ActiveCfg = Release|Win32
