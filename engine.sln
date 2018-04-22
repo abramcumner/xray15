@@ -508,6 +508,7 @@ Global
 		{CA0649DD-D089-423A-981C-46B57A884EB9}.Release|Win32.ActiveCfg = Release|Win32
 		{CA0649DD-D089-423A-981C-46B57A884EB9}.Release|Win32.Build.0 = Release|Win32
 		{CA0649DD-D089-423A-981C-46B57A884EB9}.Release|x64.ActiveCfg = Release|x64
+		{CA0649DD-D089-423A-981C-46B57A884EB9}.Release|x64.Build.0 = Release|x64
 		{200652A6-043E-4634-8837-87983B3BD5E0}.Debug_Dedicated|Win32.ActiveCfg = Debug|Win32
 		{200652A6-043E-4634-8837-87983B3BD5E0}.Debug_Dedicated|x64.ActiveCfg = Debug|x64
 		{200652A6-043E-4634-8837-87983B3BD5E0}.Debug_Dedicated|x64.Build.0 = Debug|x64
