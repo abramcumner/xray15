@@ -14,10 +14,10 @@
 struct lua_State;
 class CScriptThread;
 
-#ifndef MASTER_GOLD
-#	define USE_DEBUGGER
-#	define USE_LUA_STUDIO
-#endif // #ifndef MASTER_GOLD
+//#ifndef MASTER_GOLD
+//#	define USE_DEBUGGER
+//#	define USE_LUA_STUDIO
+//#endif // #ifndef MASTER_GOLD
 
 #ifdef XRGAME_EXPORTS
 //#	ifndef MASTER_GOLD
