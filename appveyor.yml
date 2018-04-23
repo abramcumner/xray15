@@ -24,6 +24,10 @@ build:
   verbosity: minimal
 after_build:
 - cmd: >-
+    IF "%COR_PLAT%" == "x86" set TBB_PLAT=ia32
+
+    IF "%COR_PLAT%" == "x64" set TBB_PLAT=intel64
+
     set BUGTRAP=BugTrap-%COR_PLAT%.dll
 
     IF "%COR_PLAT%" == "x86" set BUGTRAP=BugTrap.dll
@@ -83,6 +87,8 @@ after_build:
     md dist\sdk_%COR_PLAT%\lua\jit
 
     copy SDK\binaries\%COR_PLAT%\lua\jit\* dist\sdk_%COR_PLAT%\lua\jit\
+
+    copy "3rd party\tbb\bin\%TBB_PLAT%\vc14\tbb.dll" dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCore.dll dist\sdk_%COR_PLAT%\
 
