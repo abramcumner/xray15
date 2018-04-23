@@ -8,7 +8,7 @@ How to Build
 
 - install Visual Studio 2015
 - open engine.sln
-- build xrGame
+- build solution
 
 Binaries
 --------
