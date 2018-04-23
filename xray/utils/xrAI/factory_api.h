@@ -1,12 +1,6 @@
 #pragma once
 
-extern "C" {
-	typedef __declspec(dllimport)  ISE_Abstract*	__stdcall Factory_Create	(LPCSTR section);
-	typedef __declspec(dllimport)  void				__stdcall Factory_Destroy	(ISE_Abstract *&);
-};
-
-extern Factory_Create	*create_entity;
-extern Factory_Destroy	*destroy_entity;
+#include "../xrSE_Factory/xrSE_Factory_import_export.h"
 
 IC	CSE_Abstract *F_entity_Create(LPCSTR section)
 {

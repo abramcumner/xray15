@@ -218,9 +218,6 @@ void Startup(LPSTR     lpCmdLine)
 
 #include "quadtree.h"
 
-Factory_Create	*create_entity	= 0;
-Factory_Destroy	*destroy_entity	= 0;
-
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPSTR     lpCmdLine,
@@ -230,32 +227,8 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	compute_build_id();
 	Core._initialize		("xrAI");
 
-	HMODULE					hFactory;
-	LPCSTR					g_name	= "xrSE_Factory.dll";
-	Log						("Loading DLL:",g_name);
-	hFactory				= LoadLibrary	(g_name);
-	if (0==hFactory)		R_CHK			(GetLastError());
-	R_ASSERT2				(hFactory,"Factory DLL raised exception during loading or there is no factory DLL at all");
-
-	create_entity			= (Factory_Create*)		GetProcAddress(hFactory,
-#ifdef _WIN64
-		"create_entity"
-#else
-		"_create_entity@4"
-#endif
-	);	R_ASSERT(create_entity);
-	destroy_entity			= (Factory_Destroy*)	GetProcAddress(hFactory,
-#ifdef _WIN64
-		"destroy_entity"
-#else
-		"_destroy_entity@4"
-#endif
-	);	R_ASSERT(destroy_entity);
-
 	Msg("Command line: '%s'\n", lpCmdLine);
 	Startup					(lpCmdLine);
-
-	FreeLibrary				(hFactory);
 
 	Core._destroy			();
 
