@@ -757,7 +757,7 @@ void Image_DXTC::DecompressDXT1()
 	for( j=0; j < yblocks; j++ )
 	{
 		// 8 bytes per block
-		pBlock = (DXTColBlock*) ( (DWORD)m_pCompBytes + j * xblocks * 8 );
+		pBlock = (DXTColBlock*) ( (DWORD_PTR)m_pCompBytes + j * xblocks * 8 );
 
 
 		for( i=0; i < xblocks; i++, pBlock++ )
@@ -770,7 +770,7 @@ void Image_DXTC::DecompressDXT1()
 			// now decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD*)((DWORD)pBase + i*16 + (j*4) * m_nWidth * 4 );
+			pImPos = (DWORD*)((DWORD_PTR)pBase + i*16 + (j*4) * m_nWidth * 4 );
 
 
 			DecodeColorBlock( pImPos, pBlock, m_nWidth, (DWORD*)&col_0, (DWORD*)&col_1,
@@ -846,7 +846,7 @@ void Image_DXTC::DecompressDXT3()
 		// 8 bytes per block
 		// 1 block for alpha, 1 block for color
 
-		pBlock = (DXTColBlock*) ( (DWORD)m_pCompBytes + j * xblocks * 16 );
+		pBlock = (DXTColBlock*) ( (DWORD_PTR)m_pCompBytes + j * xblocks * 16 );
 
 		for( i=0; i < xblocks; i++, pBlock ++ )
 		{
@@ -864,7 +864,7 @@ void Image_DXTC::DecompressDXT3()
 			// Decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD*)((DWORD)pBase + i*16 + (j*4) * m_nWidth * 4 );
+			pImPos = (DWORD*)((DWORD_PTR)pBase + i*16 + (j*4) * m_nWidth * 4 );
 
 
 			DecodeColorBlock( pImPos, pBlock, m_nWidth, (DWORD*)&col_0, (DWORD*)&col_1,
@@ -930,7 +930,7 @@ void Image_DXTC::DecompressDXT5()
 		// 8 bytes per block
 		// 1 block for alpha, 1 block for color
 
-		pBlock = (DXTColBlock*) ( (DWORD)m_pCompBytes + j * xblocks * 16 );
+		pBlock = (DXTColBlock*) ( (DWORD_PTR)m_pCompBytes + j * xblocks * 16 );
 
 		for( i=0; i < xblocks; i++, pBlock ++ )
 		{
@@ -951,7 +951,7 @@ void Image_DXTC::DecompressDXT5()
 			// Decode the color block into the bitmap bits
 			// inline func:
 
-			pImPos = (DWORD*)((DWORD)pBase + i*16 + (j*4) * m_nWidth * 4 );
+			pImPos = (DWORD*)((DWORD_PTR)pBase + i*16 + (j*4) * m_nWidth * 4 );
 
 
 			DecodeColorBlock( pImPos, pBlock, m_nWidth, (DWORD*)&col_0, (DWORD*)&col_1,
