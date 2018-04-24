@@ -145,7 +145,7 @@ void global_claculation_data::xrLoad()
 					IReader* THM	= FS.r_open("$game_textures$",N);
 					//R_ASSERT2		(THM,	N);
 					if (!THM) {
-						clMsg("cannot find thm: %s", N);
+						Msg("! cannot find thm: %s", N);
 						is_thm_missing = true;
 						continue;
 					}
@@ -182,7 +182,7 @@ void global_claculation_data::xrLoad()
 							BT.pSurface = Surface_Load(N,w,h); 
 							//R_ASSERT2	(BT.pSurface,"Can't load surface");
 							if (!BT.pSurface) {
-								clMsg("cannot find tga texture: %s", N);
+								Msg("! cannot find tga texture: %s", N);
 								is_tga_missing = true;
 								continue;
 							}

@@ -146,7 +146,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 						
 						//R_ASSERT2		(THM,	N);
 						if (!THM) {
-							clMsg("cannot find thm: %s", N);
+							Msg("! cannot find thm: %s", N);
 							is_thm_missing = true;
 							continue;
 						}
@@ -183,7 +183,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 								BT.pSurface = Surface_Load(N,w,h); 
 								//R_ASSERT2	(BT.pSurface,"Can't load surface");
 								if (!BT.pSurface) {
-									clMsg("cannot find tga texture: %s", N);
+									Msg("! cannot find tga texture: %s", N);
 									is_tga_missing = true;
 									continue;
 								}

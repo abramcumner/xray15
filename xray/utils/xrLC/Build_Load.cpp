@@ -320,7 +320,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 				IReader* THM	= FS.r_open(th_name);
 				//R_ASSERT2		(THM,th_name);
 				if (!THM) {
-					clMsg("cannot find thm: %s", N);
+					Msg("! cannot find thm: %s", N);
 					is_thm_missing = true;
 					continue;
 				}
@@ -356,7 +356,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 						BT.pSurface = Surface_Load(N,w,h);
 						//R_ASSERT2	(BT.pSurface,"Can't load surface");
 						if (!BT.pSurface) {
-							clMsg("cannot find tga texture: %s", N);
+							Msg("! cannot find tga texture: %s", N);
 							is_tga_missing = true;
 							continue;
 						}
