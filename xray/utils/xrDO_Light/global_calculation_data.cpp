@@ -110,9 +110,6 @@ void global_claculation_data::xrLoad()
 		transfer("shaders_xrlc",g_shader_compile,		*fs,		EB_Shaders_Compile);
 		post_process_materials( *g_shaders_xrlc, g_shader_compile, g_materials );
 		// process textures
-#ifdef	DEBUG
-		xr_vector<b_texture> dbg_textures;
-#endif
 		Status			("Processing textures...");
 		{
 			Surface_Init		();
@@ -126,9 +123,6 @@ void global_claculation_data::xrLoad()
 
 				b_texture		TEX;
 				F->r			(&TEX,sizeof(TEX));
-#ifdef	DEBUG
-				dbg_textures.push_back( TEX );
-#endif
 
 				b_BuildTexture	BT;
 				CopyMemory		(&BT,&TEX,sizeof(TEX));
