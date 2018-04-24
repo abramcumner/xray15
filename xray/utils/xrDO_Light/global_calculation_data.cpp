@@ -109,23 +109,25 @@ void global_claculation_data::xrLoad()
 		transfer("materials",	g_materials,			*fs,		EB_Materials);
 		transfer("shaders_xrlc",g_shader_compile,		*fs,		EB_Shaders_Compile);
 		post_process_materials( *g_shaders_xrlc, g_shader_compile, g_materials );
+
 		// process textures
 		Status			("Processing textures...");
 		{
 			Surface_Init		();
 			F = fs->open_chunk	(EB_Textures);
-			u32 tex_count	= F->length()/sizeof(b_texture);
+			u32 tex_count	= F->length()/sizeof(b_texture_export);
 			bool is_thm_missing = false;
 			bool is_tga_missing = false;
 			for (u32 t=0; t<tex_count; t++)
 			{
 				Progress		(float(t)/float(tex_count));
 
-				b_texture		TEX;
+				b_texture_export TEX;
 				F->r			(&TEX,sizeof(TEX));
 
 				b_BuildTexture	BT;
 				CopyMemory		(&BT,&TEX,sizeof(TEX));
+				BT.pSurface = nullptr;
 
 				// load thumbnail
 				LPSTR N			= BT.name;

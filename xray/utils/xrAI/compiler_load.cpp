@@ -111,18 +111,19 @@ void xrLoad(LPCSTR name, bool draft_mode)
 			{
 				Surface_Init		();
 				F = fs->open_chunk	(EB_Textures);
-				u32 tex_count		= F->length()/sizeof(b_texture);
+				u32 tex_count		= F->length()/sizeof(b_texture_export);
 				bool is_thm_missing = false;
 				bool is_tga_missing = false;
 				for (u32 t=0; t<tex_count; t++)
 				{
 					Progress		(float(t)/float(tex_count));
 
-					b_texture		TEX;
+					b_texture_export TEX;
 					F->r			(&TEX,sizeof(TEX));
 
 					b_BuildTexture	BT;
 					CopyMemory		(&BT,&TEX,sizeof(TEX));
+					BT.pSurface = nullptr;
 
 					// load thumbnail
 					string128		&N = BT.name;
