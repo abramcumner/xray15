@@ -10,6 +10,9 @@
 extern "C" {
 	FACTORY_API ISE_Abstract* __stdcall create_entity	(LPCSTR section);
 	FACTORY_API void		  __stdcall destroy_entity	(ISE_Abstract *&);
+
+	FACTORY_API void factory_init();
+	FACTORY_API void factory_done();
 };
 
 #endif

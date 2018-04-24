@@ -27,6 +27,8 @@ extern CSE_Abstract *F_entity_Create	(LPCSTR section);
 extern CScriptPropertiesListHelper	*g_property_list_helper;
 extern HMODULE						prop_helper_module;
 
+void setup_luabind_allocator();
+
 extern "C" {
 	FACTORY_API	ISE_Abstract* __stdcall create_entity	(LPCSTR section)
 	{
@@ -39,50 +41,47 @@ extern "C" {
 		F_entity_Destroy		(object);
 		abstract				= 0;
 	}
+
+	FACTORY_API void factory_init()
+	{
+		Debug._initialize(false);
+		Core._initialize("xrSE_Factory", NULL, TRUE, "fsfactory.ltx");
+		string_path					SYSTEM_LTX;
+		FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
+		pSettings = xr_new<CInifile>(SYSTEM_LTX);
+
+		setup_luabind_allocator();
+
+		CCharacterInfo::InitInternal();
+		CSpecificCharacter::InitInternal();
+	}
+
+	FACTORY_API void factory_done()
+	{
+		CCharacterInfo::DeleteSharedData();
+		CCharacterInfo::DeleteIdToIndexData();
+		CSpecificCharacter::DeleteSharedData();
+		CSpecificCharacter::DeleteIdToIndexData();
+
+
+		xr_delete(g_object_factory);
+		xr_delete(pSettings);
+		xr_delete(g_property_list_helper);
+		xr_delete(g_ai_space);
+		xr_delete(g_object_factory);
+		if (prop_helper_module)
+			FreeLibrary(prop_helper_module);
+		Core._destroy();
+	}
 };
-
-//typedef void DUMMY_STUFF (const void*,const u32&,void*);
-//XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
-
-void setup_luabind_allocator		();
-
-//#define TRIVIAL_ENCRYPTOR_DECODER
-//#include UP(xrEngine/trivial_encryptor.h)
 
 BOOL APIENTRY DllMain		(HANDLE module_handle, DWORD call_reason, LPVOID reserved)
 {
 	switch (call_reason) {
 		case DLL_PROCESS_ATTACH: {
-//			g_temporary_stuff			= &trivial_encryptor::decode;
-
-			Debug._initialize			(false);
- 			Core._initialize			("xrSE_Factory",NULL,TRUE,"fsfactory.ltx");
-			string_path					SYSTEM_LTX;
-			FS.update_path				(SYSTEM_LTX,"$game_config$","system.ltx");
-			pSettings					= xr_new<CInifile>(SYSTEM_LTX);
-
-			setup_luabind_allocator		();
-
-			CCharacterInfo::InitInternal					();
-			CSpecificCharacter::InitInternal				();
-
 			break;
 		}
 		case DLL_PROCESS_DETACH: {
-			CCharacterInfo::DeleteSharedData				();
-			CCharacterInfo::DeleteIdToIndexData				();
-			CSpecificCharacter::DeleteSharedData			();
-			CSpecificCharacter::DeleteIdToIndexData			();
-
-
-			xr_delete					(g_object_factory);
-			xr_delete					(pSettings);
-			xr_delete					(g_property_list_helper);
-			xr_delete					(g_ai_space);
-			xr_delete					(g_object_factory);
-			if (prop_helper_module)
-				FreeLibrary				(prop_helper_module);
-			Core._destroy				();
 			break;
 		}
 	}
