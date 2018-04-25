@@ -128,8 +128,8 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 		string_path				fn;
 
 		IWriter*		MFS		= FS.w_open	(strconcat(sizeof(fn),fn,pBuild->path,"build.cform"));
-		xr_vector<b_rc_face>	rc_faces;
-		rc_faces.resize			(CL.getTS());
+		xr_vector<b_rc_face>	rc_faces(CL.getTS());
+		xr_vector<CDB::TRI> export_faces(CL.getTS());
 		// Prepare faces
 		for (u32 k=0; k<CL.getTS(); k++){
 			const auto& T			= CL.getT( k );
@@ -141,6 +141,7 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 			cf.t[0].set			(cuv[0]);
 			cf.t[1].set			(cuv[1]);
 			cf.t[2].set			(cuv[2]);
+			export_faces[k] = { T.verts[0], T.verts[1], T.verts[2], {} };
 		}
 		if (g_params().m_quality!=ebqDraft) {
 			if (keep_temp_files)
@@ -159,11 +160,11 @@ void CBuild::BuildRapid		(BOOL bSaveForOtherCompilers)
 
 		// Data
 		MFS->w					(CL.getV(),(u32)CL.getVS()*sizeof(Fvector));
-		MFS->w					(CL.getT(),(u32)CL.getTS()*sizeof(CDB::TRI));
+		MFS->w					(export_faces.data(),export_faces.size() * sizeof(export_faces[0]));
 		MFS->close_chunk		();
 
 		MFS->open_chunk			(1);
-		MFS->w					(&*rc_faces.begin(),(u32)rc_faces.size()*sizeof(b_rc_face));
+		MFS->w					(rc_faces.data(), rc_faces.size()*sizeof(rc_faces[0]));
 		MFS->close_chunk		();
 	}
 }
