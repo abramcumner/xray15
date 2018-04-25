@@ -38,7 +38,7 @@ void CRenderDevice::initialize_editor	()
 
 PROTECT_API void CRenderDevice::Initialize			()
 {
-	Log("Initializing Engine...");
+	Msg("Initializing Engine %s %s...", CI_VERSION, __DATE__);
 	TimerGlobal.Start			();
 	TimerMM.Start				();
 
