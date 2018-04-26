@@ -57,7 +57,6 @@ struct	BTHREAD_params
 	int					Tcnt;
 	build_callback*		BC;
 	void*				BCP;
-	size_t triSize;
 };
 
 void	MODEL_Base::build_thread		(void *params)
@@ -104,7 +103,7 @@ void	MODEL_Base::build_internal	(Fvector* V, int Vcnt, void* T, int Tcnt, build_
 	// tris
 	tris_count	= Tcnt;
 	tris		= allocTris(tris_count);
-	CopyMemory	(tris,T,tris_count*sizeof(TRI));
+	CopyMemory	(tris,T,tris_count*m_triSize);
 
 	// callback
 	if (bc)		bc	(verts,Vcnt,tris,Tcnt,bcp);
@@ -156,7 +155,7 @@ u32 MODEL_Base::memory	()
 {
 	if (S_BUILD==status)	{ Msg	("! xrCDB: model still isn't ready"); return 0; }
 	u32 V					= verts_count*sizeof(Fvector);
-	u32 T					= tris_count *sizeof(TRI);
+	u32 T					= tris_count *m_triSize;
 	return tree->GetUsedBytes()+V+T+sizeof(*this)+sizeof(*tree);
 }
 
