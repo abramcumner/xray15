@@ -209,6 +209,7 @@ template	<typename K, class V, class P=std::less<K>, typename allocator = xalloc
 	template	<typename K, class V, class _HashFcn=std::hash<K>, class _EqualKey=std::equal_to<K>, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_multimap: public std::hash_multimap<K,V,_HashFcn,_EqualKey,allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
 #else 
 	template	<typename K, class V, class _Traits=stdext::hash_compare<K, std::less<K> >, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_map		: public stdext::hash_map<K,V,_Traits,allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
+	template	<typename K, class _Tr = stdext::hash_compare<K, std::less<K> >, typename allocator = xalloc<K> > class xr_hash_set : public stdext::hash_set<K, _Tr, allocator> { public: u32 size() const { return (u32)__super::size(); } };
 #endif // #ifdef STLPORT
 
 #endif

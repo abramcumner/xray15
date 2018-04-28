@@ -9,51 +9,57 @@ DEF_VECTOR(Nearest, u32);
 class Query
 {
 public:
-    Nearest q_List;
-    Nearest q_Clear;
-    xr_hash_map<u32, bool> q_Marks;
-    Fvector q_Base;
+	Nearest q_List;
 
-    IC void Begin(int count)
+	Query()
     {
         q_List.reserve(8192);
-        q_Clear.reserve(8192);
     }
 
-    IC void Init(const Fvector& P)
+    IC void Perform(u32 ID, const Fvector& P)
     {
-        q_Base.set(P);
-        q_List.clear();
-        q_Clear.clear();
+		q_Base.set(P);
+		q_List.clear();
+		enqueue(ID);
+
+		while (!m_edge.empty()) {
+			u32 node = dequeue();
+
+			const vertex& N = g_nodes[node];
+			if (q_Base.distance_to_sqr(N.Pos) > cover_sqr_dist)
+				continue;
+
+			q_List.push_back(node);
+
+			enqueue(N.n1);
+			enqueue(N.n2);
+			enqueue(N.n3);
+			enqueue(N.n4);
+		}
+
+		m_added.clear();
     }
 
-    IC void Perform(u32 ID)
-    {
-        if (ID == InvalidNode)
-            return;
-        if (q_Marks[ID])
-            return;
+private:
+	Fvector q_Base;
+	xr_deque<u32> m_edge;
+	xr_hash_set<u32> m_added;
 
-        q_Marks[ID] = true;
-        q_Clear.push_back(ID);
-
-        vertex& N = g_nodes[ID];
-        if (q_Base.distance_to_sqr(N.Pos) > cover_sqr_dist)
-            return;
-
-        // ok
-        q_List.push_back(ID);
-
-        Perform(N.n1);
-        Perform(N.n2);
-        Perform(N.n3);
-        Perform(N.n4);
-    }
-
-    IC void Clear()
-    {
-        q_Marks.clear();
-    }
+	bool added(u32 node) { return m_added.find(node) != m_added.end(); }
+	bool invalid(u32 node) { return node == InvalidNode; }
+	u32 dequeue()
+	{
+		u32 node = m_edge[0];
+		m_edge.pop_front();
+		return node;
+	}
+	void enqueue(u32 node)
+	{
+		if (invalid(node) || added(node))
+			return;
+		m_edge.push_back(node);
+		m_added.insert(node);
+	}
 };
 
 // -------------------------------- Ray pick

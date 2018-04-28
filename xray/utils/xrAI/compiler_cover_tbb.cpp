@@ -16,8 +16,7 @@ void compute_cover_value(u32 const& N, vertex& BaseNode, float const& cover_heig
     float c_passed[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
     // perform volumetric query
-    Q.Init(BasePos);
-    Q.Perform(N);
+    Q.Perform(N, BasePos);
 
     // main cycle: trace rays and compute counts
     for (Nearest_it it = Q.q_List.begin(); it != Q.q_List.end(); it++) {
@@ -38,7 +37,6 @@ void compute_cover_value(u32 const& N, vertex& BaseNode, float const& cover_heig
         c_total[sector] += 1.f;
         c_passed[sector] += rayTrace(&DB, TestPos, Dir, range, cache[ID].C); //
     }
-    Q.Clear();
 
     // analyze probabilities
     float value[8];
@@ -73,7 +71,6 @@ void xrCover_tbb()
         CDB::COLLIDER DB;
         DB.ray_options(CDB::OPT_CULL);
         Query Q;
-        Q.Begin(g_nodes.size());
         FPU::m24r();
         for (size_t N = r.begin(); N != r.end(); ++N) {
             vertex& BaseNode = g_nodes[N];

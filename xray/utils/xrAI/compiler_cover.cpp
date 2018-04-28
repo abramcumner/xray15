@@ -46,8 +46,7 @@ public:
 		float	c_passed[8]	= {0,0,0,0,0,0,0,0};
 		
 		// perform volumetric query
-		Q.Init			(BasePos);
-		Q.Perform		(N);
+		Q.Perform		(N, BasePos);
 		
 		// main cycle: trace rays and compute counts
 		for (Nearest_it it=Q.q_List.begin(); it!=Q.q_List.end();  it++)
@@ -68,7 +67,6 @@ public:
 			c_total		[sector]	+=	1.f;
 			c_passed	[sector]	+=	rayTrace (&DB, TestPos, Dir, range, cache[ID].C); //
 		}
-		Q.Clear			();
 		
 		// analyze probabilities
 		float	value	[8];
@@ -95,7 +93,6 @@ public:
 
 		FPU::m24r		();
 
-		Q.Begin			(g_nodes.size());
 		for (u32 N=Nstart; N<Nend; N++) {
 			// initialize process
 			thProgress	= float(N-Nstart)/float(Nend-Nstart);
