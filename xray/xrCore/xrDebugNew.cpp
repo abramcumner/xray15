@@ -224,8 +224,9 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		endif // USE_BUG_TRAP
 #       ifndef DEBUG
 			if (strstr(GetCommandLine(),"-show_log"))
-				ShellExecute(nullptr, "open", logFullName(), nullptr, nullptr, SW_SHOWNORMAL);
-			TerminateProcess(GetCurrentProcess(), 1);
+				ShellExecute(nullptr, nullptr, logFullName(), nullptr, nullptr, SW_SHOWNORMAL);
+			//TerminateProcess(GetCurrentProcess(), 1);
+			DEBUG_INVOKE;
 #       else
 		DEBUG_INVOKE;
 #       endif
@@ -433,7 +434,7 @@ please Submit Bug or save report and email it manually (button More...).\
 #endif // #ifndef MASTER_GOLD
 
 	BT_SetDumpType			(minidump_flags);
-	BT_SetSupportEMail		("cs-crash-report@stalker-game.com");
+	//BT_SetSupportEMail		("cs-crash-report@stalker-game.com");
 //	BT_SetSupportServer		("localhost", 9999);
 //	BT_SetSupportURL		("www.gsc-game.com");
 }
