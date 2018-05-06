@@ -98,6 +98,11 @@ class NodePosition {
 	ICF	void xz	(u32 value)	{ CopyMemory	(data,&value,3);		}
 	ICF	void y	(u16 value)	{ CopyMemory	(data + 3,&value,2);	}
 public:
+	// под xz-координаты отводится 3 байта
+	static const u32 MAX_XZ = (1 << 24) - 1;
+	// под y-координату отводится 2 байта
+	static const u32 MAX_Y = (1 << 16) - 1;
+
 	ICF	u32	xz	() const	{
 		return			((*((u32*)data)) & 0x00ffffff);
 	}
@@ -407,5 +412,6 @@ const u32 XRCL_PRODUCTION_VERSION	=	14;	// output
 const u32 CFORM_CURRENT_VERSION		=	4;
 const u32 MAX_AI_NODES				=	NodeCompressed::LINK_MASK_0;
 const u32 XRAI_CURRENT_VERSION		=	11;
+const u32 MAX_NODE_XZ				=	NodePosition::MAX_XZ;
 
 #endif // xrLevelH
