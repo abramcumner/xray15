@@ -14,6 +14,8 @@
 #include <addons/imguinodegrapheditor/imguinodegrapheditor.h>
 #include <dinput.h>
 #include <imgui.h>
+#include "embedded_editor_se.h"
+#include "embedded_editor_le.h"
 
 bool bShowWindow = true;
 bool show_test_window = true;
@@ -28,6 +30,8 @@ bool show_ae_window = false;
 bool show_ui_editor = false;
 bool show_map_editor = false;
 bool show_hud_editor = false;
+bool show_le_editor = false;
+bool show_se_editor = false;
 
 static bool isAlt = false;
 
@@ -69,8 +73,10 @@ void ShowMain()
         show_occ_window ^= 1;
     if (ImGui::Button("AE"))
         show_ae_window ^= 1;
-    ImGui::Button("LE");
-    ImGui::Button("SE");
+    if (ImGui::Button("LE"))
+		show_le_editor = !show_le_editor;
+    if (ImGui::Button("SE"))
+		show_se_editor = !show_se_editor;
     ImGui::Button("PP Editor");
     if (ImGui::Button("UI Editor"))
         show_ui_editor = !show_ui_editor;
@@ -118,6 +124,10 @@ void ShowEditor()
         ShowMapEditor(show_map_editor);
 	if (show_hud_editor)
 		ShowHudEditor(show_hud_editor);
+	if (show_le_editor)
+		showLeEditor(show_le_editor);
+	if (show_se_editor)
+		showSeEditor(show_se_editor);
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;

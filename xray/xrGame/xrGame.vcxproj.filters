@@ -7518,6 +7518,15 @@
     <ClInclude Include="embedded_editor\embedded_editor_hud.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_le.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
+    <ClInclude Include="embedded_editor\embedded_editor_se.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
+    <ClInclude Include="embedded_editor\editor_render.h">
+      <Filter>Embedded editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11211,6 +11220,15 @@
       <Filter>Embedded editor</Filter>
     </ClCompile>
     <ClCompile Include="embedded_editor\embedded_editor_hud.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_le.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\embedded_editor_se.cpp">
+      <Filter>Embedded editor</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\editor_render.cpp">
       <Filter>Embedded editor</Filter>
     </ClCompile>
   </ItemGroup>
