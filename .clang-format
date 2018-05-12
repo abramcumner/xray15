@@ -11,3 +11,4 @@ IncludeCategories:
     Priority: -1
   - Regex: '\"pch_script\.h'
     Priority: -1
+IndentPPDirectives: AfterHash

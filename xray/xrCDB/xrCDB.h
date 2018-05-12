@@ -8,6 +8,9 @@
 // that uses this DLL. This way any other project whose source files include this file see
 // XRCDB_API functions as being imported from a DLL, wheras this DLL sees symbols
 // defined with this macro as being exported.
+
+#include <xmmintrin.h>
+
 #ifdef XRCDB_EXPORTS
 #define XRCDB_API __declspec(dllexport)
 #else
@@ -207,7 +210,7 @@ namespace CDB
 
 		template<bool bClass3, bool bFirst> friend class box_collider;
 		template <bool bClass3, bool bFirst> friend class frustum_collider;
-		template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> friend class _MM_ALIGN16 ray_collider;
+		template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> friend class ray_collider;
 	};
 
 	template<class Payload>
