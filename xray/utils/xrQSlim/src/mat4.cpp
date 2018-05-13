@@ -6,8 +6,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "mat4.h"
 
 Mat4 Mat4::I()

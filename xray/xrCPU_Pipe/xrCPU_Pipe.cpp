@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#pragma hdrstop
+
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 

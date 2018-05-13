@@ -8,7 +8,7 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "MxDefines.h"
 #include "MxQMetric3.h"

@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#pragma hdrstop
+
 
 #ifndef DEBUG_MEMORY_MANAGER
 void	xrMemory::dbg_register		(void* _p, size_t _size, const char* _name)	{ }

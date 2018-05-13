@@ -8,8 +8,6 @@
  * "Portions Copyright (C) Tom Forsyth, 2001"
  */
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "object.h"
 #include "MxQMetric.h"
 #include "quad.h"

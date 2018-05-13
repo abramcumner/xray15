@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#pragma hdrstop
 
 #ifdef __BORLANDC__
 MEMPOOL		mem_pools			[mem_pools_count];

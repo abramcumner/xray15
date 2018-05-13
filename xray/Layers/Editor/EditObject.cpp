@@ -3,7 +3,7 @@
 //----------------------------------------------------
 
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #if defined (_MAX_EXPORT)
 	#include "..\..\..\xrEngine\fmesh.h"

@@ -6,8 +6,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "mat3.h"
 
 Mat3 Mat3::I() { return Mat3(Vec3(1,0,0), Vec3(0,1,0), Vec3(0,0,1)); }

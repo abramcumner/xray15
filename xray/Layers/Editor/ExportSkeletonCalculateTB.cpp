@@ -3,7 +3,7 @@
 // file: ExportSkeleton.cpp
 //----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #ifndef	_EDITOR
 //

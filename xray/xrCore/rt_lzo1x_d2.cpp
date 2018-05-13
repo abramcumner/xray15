@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 /* lzo1x_d2.c -- LZO1X decompression with overrun testing
 

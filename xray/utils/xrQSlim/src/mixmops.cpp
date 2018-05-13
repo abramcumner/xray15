@@ -8,8 +8,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "MxMatrix.h"
 
 // This section originally from Paul's matrix library.

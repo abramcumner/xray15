@@ -3,8 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "xrXRC.h"
 
 ENGINE_API xrXRC XRC;

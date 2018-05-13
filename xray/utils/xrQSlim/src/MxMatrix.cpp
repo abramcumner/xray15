@@ -8,7 +8,7 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "MxMatrix.h"
 

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 #ifdef DEBUG
 #include "ode_include.h"
 #include "../xrEngine/StatGraph.h"

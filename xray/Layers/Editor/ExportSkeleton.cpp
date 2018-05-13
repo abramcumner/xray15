@@ -2,7 +2,7 @@
 // file: ExportSkeleton.cpp
 //----------------------------------------------------
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "ExportSkeleton.h"
 #include "ExportObjectOGF.h"

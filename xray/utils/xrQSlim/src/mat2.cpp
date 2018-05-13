@@ -6,8 +6,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "MxDefines.h"
 #include "mat2.h"
 

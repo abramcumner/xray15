@@ -8,8 +8,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "MxHeap.h"
 
 #define ref(i) ((*this)[i])

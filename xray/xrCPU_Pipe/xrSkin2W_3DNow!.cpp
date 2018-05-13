@@ -38,7 +38,7 @@
 	};
 */
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #ifdef _EDITOR
 #include "skeletonX.h"

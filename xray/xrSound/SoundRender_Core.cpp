@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "../xrEngine/xrLevel.h"
 #include "soundrender_core.h"

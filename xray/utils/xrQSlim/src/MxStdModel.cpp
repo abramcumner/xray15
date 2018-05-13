@@ -8,7 +8,7 @@ $Id: MxStdModel.cxx,v 1.42 2000/11/20 20:36:38 garland Exp $
 
 ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "MxStdModel.h"
 #include "MxVector.h"

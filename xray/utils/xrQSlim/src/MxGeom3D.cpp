@@ -8,8 +8,6 @@
 
  ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "MxGeom3D.h"
 
 void mx3d_box_corners(const Vec3& min, const Vec3& max, Vec3 *v)

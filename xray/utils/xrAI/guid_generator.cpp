@@ -6,10 +6,7 @@
 //	Description : GUID generator
 ////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "guid_generator.h"
-
 #ifdef WINVER
 #	include <rpcdce.h>
 #	include <rpc.h>

@@ -13,8 +13,6 @@ Comments:
 
 ******************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
-
 #ifndef nv_algebraH
 #include "nv_math.h"
 #endif

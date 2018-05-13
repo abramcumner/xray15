@@ -8,7 +8,7 @@ $Id: MxPropSlim.cxx,v 1.9 2000/11/20 20:36:38 garland Exp $
 
 ************************************************************************/
 #include "stdafx.h"
-#pragma hdrstop
+
 
 #include "MxPropSlim.h"
 #include "MxGeom3D.h"
