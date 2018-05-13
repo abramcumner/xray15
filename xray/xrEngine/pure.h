@@ -9,17 +9,55 @@
 #define REG_PRIORITY_INVALID	0xfffffffful
 
 typedef void __fastcall RP_FUNC		(void *obj);
-#define DECLARE_MESSAGE(name)		extern ENGINE_API RP_FUNC rp_##name; class ENGINE_API pure##name { public: virtual void  On##name(void)=0;	}
-#define DECLARE_RP(name) void __fastcall rp_##name(void *p) { ((pure##name *)p)->On##name(); }
 
-DECLARE_MESSAGE(Frame);
-DECLARE_MESSAGE(Render);
-DECLARE_MESSAGE(AppActivate);
-DECLARE_MESSAGE(AppDeactivate);
-DECLARE_MESSAGE(AppStart);
-DECLARE_MESSAGE(AppEnd);
-DECLARE_MESSAGE(DeviceReset);
+extern ENGINE_API RP_FUNC rp_Frame;
+class ENGINE_API pureFrame
+{
+public:
+	virtual void  OnFrame(void) = 0;
+};
 
+extern ENGINE_API RP_FUNC rp_Render;
+class ENGINE_API pureRender
+{
+public:
+	virtual void  OnRender(void) = 0;
+};
+
+extern ENGINE_API RP_FUNC rp_AppActivate;
+class ENGINE_API pureAppActivate
+{
+public:
+	virtual void  OnAppActivate(void) = 0;
+};
+
+extern ENGINE_API RP_FUNC rp_AppDeactivate;
+class ENGINE_API pureAppDeactivate
+{
+public:
+	virtual void  OnAppDeactivate(void) = 0;
+};
+
+extern ENGINE_API RP_FUNC rp_AppStart;
+class ENGINE_API pureAppStart
+{
+public:
+	virtual void  OnAppStart(void) = 0;
+};
+
+extern ENGINE_API RP_FUNC rp_AppEnd;
+class ENGINE_API pureAppEnd
+{
+public:
+	virtual void  OnAppEnd(void) = 0;
+};
+
+extern ENGINE_API RP_FUNC rp_DeviceReset;
+class ENGINE_API pureDeviceReset
+{
+public:
+	virtual void  OnDeviceReset(void) = 0;
+};
 
 
 //-----------------------------------------------------------------------------

@@ -10,11 +10,38 @@ ENGINE_API int	__cdecl	_REG_Compare(const void *e1, const void *e2)
 	return (p2->Prio - p1->Prio);
 }
 
-DECLARE_RP(Frame);
-DECLARE_RP(Render);
-DECLARE_RP(AppActivate);
-DECLARE_RP(AppDeactivate);
-DECLARE_RP(AppStart);
-DECLARE_RP(AppEnd);
-DECLARE_RP(DeviceReset);
+void __fastcall rp_Frame(void *p)
+{
+	((pureFrame *)p)->OnFrame();
+}
+
+void __fastcall rp_Render(void *p)
+{
+	((pureRender *)p)->OnRender();
+}
+
+void __fastcall rp_AppActivate(void *p)
+{
+	((pureAppActivate *)p)->OnAppActivate();
+}
+
+void __fastcall rp_AppDeactivate(void *p)
+{
+	((pureAppDeactivate *)p)->OnAppDeactivate();
+}
+
+void __fastcall rp_AppStart(void *p)
+{
+	((pureAppStart *)p)->OnAppStart();
+}
+
+void __fastcall rp_AppEnd(void *p)
+{
+	((pureAppEnd *)p)->OnAppEnd();
+}
+
+void __fastcall rp_DeviceReset(void *p)
+{
+	((pureDeviceReset *)p)->OnDeviceReset();
+}
 

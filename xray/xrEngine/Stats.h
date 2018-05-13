@@ -11,7 +11,12 @@ class ENGINE_API CGameFont;
 #include "../Include/xrRender/FactoryPtr.h"
 #include "../Include/xrRender/StatsRender.h"
 
-DECLARE_MESSAGE(Stats);
+extern ENGINE_API RP_FUNC rp_Stats;
+class ENGINE_API pureStats
+{
+public:
+	virtual void  OnStats(void)=0;
+};
 
 class ENGINE_API CStats: public pureRender
 {
@@ -86,7 +91,7 @@ public:
 	CStatTimer	TEST3;				// debug counter
 
 	void			Show			(void);
-	virtual void 	OnRender		();
+	void OnRender() override;
 	void			OnDeviceCreate	(void);
 	void			OnDeviceDestroy	(void);
 public:
