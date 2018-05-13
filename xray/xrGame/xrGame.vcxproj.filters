@@ -3405,9 +3405,6 @@
     <ClInclude Include="alife_registry_container_composition.h">
       <Filter>AI\ALife\simulator_base\registry_container</Filter>
     </ClInclude>
-    <ClInclude Include="alife_registry_container_inline.h">
-      <Filter>AI\ALife\simulator_base\registry_container</Filter>
-    </ClInclude>
     <ClInclude Include="alife_registry_container_space.h">
       <Filter>AI\ALife\simulator_base\registry_container</Filter>
     </ClInclude>

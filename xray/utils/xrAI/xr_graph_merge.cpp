@@ -195,7 +195,8 @@ public:
 			IReader									*F = FS.r_open(fName);
 			u32										id;
 			IReader									*O = F->open_chunk_iterator(id);
-			for (int i=0; O; O = F->open_chunk_iterator(id,O))	{
+			int i = 0;
+			for (; O; O = F->open_chunk_iterator(id,O))	{
 				NET_Packet							P;
 				P.B.count							= O->length();
 				O->r								(P.B.data,P.B.count);
