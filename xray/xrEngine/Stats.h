@@ -118,4 +118,6 @@ enum{
 
 extern Flags32 g_stats_flags;
 
+extern ENGINE_API CStats Statistic;
+
 #endif // !defined(AFX_STATS_H__4C8D1860_0EE2_11D4_B4E3_4854E82A090D__INCLUDED_)

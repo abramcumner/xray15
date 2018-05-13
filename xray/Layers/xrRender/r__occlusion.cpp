@@ -97,7 +97,7 @@ R_occlusion::occq_result R_occlusion::occq_get		(u32&	ID		)
 	// Msg			("get  : [%2d] - %d => %d", used[ID].order, ID, fragments);
 	CTimer	T;
 	T.Start	();
-	Device.Statistic->RenderDUMP_Wait.Begin	();
+	Statistic.RenderDUMP_Wait.Begin	();
 	//while	((hr=used[ID].Q->GetData(&fragments,sizeof(fragments),D3DGETDATA_FLUSH))==S_FALSE) {
 	VERIFY2( ID<used.size(),make_string("_Pos = %d, size() = %d ", ID, used.size()));
 	while	((hr=GetData(used[ID].Q, &fragments,sizeof(fragments)))==S_FALSE) 
@@ -111,7 +111,7 @@ R_occlusion::occq_result R_occlusion::occq_get		(u32&	ID		)
 			break;
 		}
 	}
-	Device.Statistic->RenderDUMP_Wait.End	();
+	Statistic.RenderDUMP_Wait.End	();
 	if		(hr == D3DERR_DEVICELOST)	fragments = 0xffffffff;
 
 	if (0==fragments)	RImplementation.stats.o_culled	++;

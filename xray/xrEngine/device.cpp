@@ -335,23 +335,23 @@ void CRenderDevice::on_idle		()
 	Sleep						(0);
 
 #ifndef DEDICATED_SERVER
-	Statistic->RenderTOTAL_Real.FrameStart	();
-	Statistic->RenderTOTAL_Real.Begin		();
+	Statistic.RenderTOTAL_Real.FrameStart	();
+	Statistic.RenderTOTAL_Real.Begin		();
 	if (b_is_Active)							{
 		if (Begin())				{
 
 			seqRender.Process						(rp_Render);
-			if (psDeviceFlags.test(rsCameraPos) || psDeviceFlags.test(rsStatistic) || Statistic->errors.size())	
-				Statistic->Show						();
+			if (psDeviceFlags.test(rsCameraPos) || psDeviceFlags.test(rsStatistic) || Statistic.errors.size())	
+				Statistic.Show						();
 			//	TEST!!!
-			//Statistic->RenderTOTAL_Real.End			();
+			//Statistic.RenderTOTAL_Real.End			();
 			//	Present goes here
 			End										();
 		}
 	}
-	Statistic->RenderTOTAL_Real.End			();
-	Statistic->RenderTOTAL_Real.FrameEnd	();
-	Statistic->RenderTOTAL.accum	= Statistic->RenderTOTAL_Real.accum;
+	Statistic.RenderTOTAL_Real.End			();
+	Statistic.RenderTOTAL_Real.FrameEnd	();
+	Statistic.RenderTOTAL.accum	= Statistic.RenderTOTAL_Real.accum;
 #endif // #ifndef DEDICATED_SERVER
 	// *** Suspend threads
 	// Capture startup point
@@ -511,14 +511,14 @@ void CRenderDevice::FrameMove()
 	}
 
 	// Frame move
-	Statistic->EngineTOTAL.Begin	();
+	Statistic.EngineTOTAL.Begin	();
 
 	//	TODO: HACK to test loading screen.
 	//if(!g_bLoaded) 
 		ProcessLoading				(rp_Frame);
 	//else
 	//	seqFrame.Process			(rp_Frame);
-	Statistic->EngineTOTAL.End	();
+	Statistic.EngineTOTAL.End	();
 }
 
 void ProcessLoading				(RP_FUNC *f)

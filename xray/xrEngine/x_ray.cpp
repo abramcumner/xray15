@@ -93,9 +93,9 @@ struct _SoundProcessor	: public pureFrame
 	virtual void OnFrame	( )
 	{
 		//Msg							("------------- sound: %d [%3.2f,%3.2f,%3.2f]",u32(Device.dwFrame),VPUSH(Device.vCameraPosition));
-		Device.Statistic->Sound.Begin();
+		Statistic.Sound.Begin();
 		::Sound->update				(Device.vCameraPosition,Device.vCameraDirection,Device.vCameraTop);
-		Device.Statistic->Sound.End	();
+		Statistic.Sound.End	();
 	}
 }	SoundProcessor;
 
@@ -212,7 +212,7 @@ void slowdownthread	( void* )
 {
 //	Sleep		(30*1000);
 	for (;;)	{
-		if (Device.Statistic->fFPS<30) Sleep(1);
+		if (Statistic.fFPS<30) Sleep(1);
 		if (Device.mt_bMustExit)	return;
 		if (0==pSettings)			return;
 		if (0==Console)				return;

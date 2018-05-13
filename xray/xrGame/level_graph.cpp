@@ -96,7 +96,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 {
 	START_PROFILE("Level_Graph::find vertex")
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Node.Begin	();
+	Statistic.AI_Node.Begin	();
 #endif
 
 	u32						id;
@@ -106,7 +106,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 		if (valid_vertex_id(current_node_id) && inside(vertex(current_node_id),position)) {
 			// so, our node corresponds to the position
 #ifndef AI_COMPILER
-			Device.Statistic->AI_Node.End();
+			Statistic.AI_Node.End();
 #endif
 			return				(current_node_id);
 		}
@@ -123,7 +123,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 					for (u32 i=0; i<4; ++i) {
 						if (vertex.link(i) == _vertex_id) {
 #ifndef AI_COMPILER
-							Device.Statistic->AI_Node.End();
+							Statistic.AI_Node.End();
 #endif // AI_COMPILER
 							return			(_vertex_id);
 						}
@@ -134,7 +134,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 					for (u32 i=0; i<4; ++i) {
 						if (vertex.link(i) == current_node_id) {
 #ifndef AI_COMPILER
-							Device.Statistic->AI_Node.End();
+							Statistic.AI_Node.End();
 #endif // AI_COMPILER
 							return			(_vertex_id);
 						}
@@ -167,7 +167,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 			}
 			if (ok) {
 #ifndef AI_COMPILER
-				Device.Statistic->AI_Node.End();
+				Statistic.AI_Node.End();
 #endif
 				return			(_vertex_id);
 			}
@@ -180,7 +180,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 		id					= vertex(position);
 		VERIFY				(valid_vertex_id(id));
 #ifndef AI_COMPILER
-		Device.Statistic->AI_Node.End();
+		Statistic.AI_Node.End();
 #endif
 		return				(id);
 	}
@@ -216,7 +216,7 @@ u32 CLevelGraph::vertex		(u32 current_node_id, const Fvector& position) const
 	}
 
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Node.End();
+	Statistic.AI_Node.End();
 #endif
 	return					(best_vertex_id);
 

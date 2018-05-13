@@ -118,7 +118,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		cache_vCount		= vCount;
 		cache_vOffset		= vOffset;
 		
-		Device.Statistic->RenderDUMP_SKIN.Begin	();
+		Statistic.RenderDUMP_SKIN.Begin	();
 		if (*Vertices1W)
 		{
 			PSGP.skin1W(
@@ -157,7 +157,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		}else
 			R_ASSERT2(0,"unsupported soft rendering");
 
-		Device.Statistic->RenderDUMP_SKIN.End	();
+		Statistic.RenderDUMP_SKIN.End	();
 		_VS.Unlock			(vCount,hGeom->vb_stride);
 	}
 

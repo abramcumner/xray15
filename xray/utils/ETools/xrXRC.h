@@ -20,11 +20,11 @@ public:
 	IC void			ray_query		(const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
 	{
 #ifndef NO_XRC_STATS
-		Device.Statistic->clRAY.Begin();
+		Statistic.clRAY.Begin();
 #endif
         CL.ray_query(m_def,r_start,r_dir,r_range);
 #ifndef NO_XRC_STATS
-		Device.Statistic->clRAY.End	();
+		Statistic.clRAY.End	();
 #endif
 	}
 	IC void			ray_query		(const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
@@ -43,11 +43,11 @@ public:
 	IC void			box_query		(const CDB::MODEL *m_def, const Fvector& b_center, const Fvector& b_dim)
 	{
 #ifndef NO_XRC_STATS
-		Device.Statistic->clBOX.Begin();
+		Statistic.clBOX.Begin();
 #endif
         CL.box_query(m_def,b_center,b_dim);
 #ifndef NO_XRC_STATS
-		Device.Statistic->clBOX.End	();
+		Statistic.clBOX.End	();
 #endif
 	}
 	IC void			box_query		(const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fbox& src)
@@ -67,11 +67,11 @@ public:
 	IC void			frustum_query	(const CDB::MODEL *m_def, const CFrustum& F)
 	{
 #ifndef NO_XRC_STATS
-		Device.Statistic->clFRUSTUM.Begin();
+		Statistic.clFRUSTUM.Begin();
 #endif
 		CL.frustum_query(m_def,F);
 #ifndef NO_XRC_STATS
-		Device.Statistic->clFRUSTUM.End	();
+		Statistic.clFRUSTUM.End	();
 #endif
 	}
 

@@ -146,7 +146,7 @@ void CGlowManager::add	(ref_glow G_)
 	if (G->dwFrame	==Device.dwFrame)		return;
 	G->dwFrame		= Device.dwFrame;
 #ifdef DEBUG
-	Device.Statistic->RenderDUMP_Glows.Begin();
+	Statistic.RenderDUMP_Glows.Begin();
 #endif
 
 	float	dt		= Device.fTimeDelta;
@@ -170,7 +170,7 @@ void CGlowManager::add	(ref_glow G_)
 	G->fade -= dt*FADE_SCALE_DOWN;
 	if (G->fade<1.) G->fade = 1;
 #ifdef DEBUG
-	Device.Statistic->RenderDUMP_Glows.End();
+	Statistic.RenderDUMP_Glows.End();
 #endif
 }
 
@@ -198,9 +198,9 @@ void CGlowManager::Render			()
 	if (Selected.empty())					return		;
 	RCache.set_xform_world					(Fidentity)	;
 
-	Device.Statistic->RenderDUMP_Glows.Begin	();
+	Statistic.RenderDUMP_Glows.Begin	();
 	render_sw								();
-	Device.Statistic->RenderDUMP_Glows.End	();
+	Statistic.RenderDUMP_Glows.End	();
 }
 
 void CGlowManager::render_sw		()

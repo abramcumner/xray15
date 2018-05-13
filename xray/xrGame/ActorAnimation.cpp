@@ -601,7 +601,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 		HUD().Font().pFontStat->OutNext	("V         [%3.2f, %3.2f, %3.2f]",VPUSH(m_PhysicMovementControl->GetVelocity()));
 		HUD().Font().pFontStat->OutNext	("vertex ID   %d",ai_location().level_vertex_id());
 		
-		Game().m_WeaponUsageStatistic->Draw();
+		Game().m_WeaponUsageStatistic.Draw();
 		*/
 	};
 #endif

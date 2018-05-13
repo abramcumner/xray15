@@ -113,7 +113,7 @@ void	CObjectList::SingleUpdate	(CObject* O)
 	if (O->H_Parent())
 		SingleUpdate			(O->H_Parent());
 
-	Device.Statistic->UpdateClient_updated	++;
+	Statistic.UpdateClient_updated	++;
 	O->dwFrame_UpdateCL			= Device.dwFrame;
 
 //	Msg							("[%d][0x%08x]IAmNotACrowAnyMore (CObjectList::SingleUpdate)", Device.dwFrame, dynamic_cast<void*>(O));
@@ -193,7 +193,7 @@ void CObjectList::Update		(bool bForce)
 		if (Device.fTimeDelta>EPS_S || bForce)			
 		{
 			// Select Crow-Mode
-			Device.Statistic->UpdateClient_updated	= 0;
+			Statistic.UpdateClient_updated	= 0;
 
 			Objects& crows				= m_crows[0];
 
@@ -224,7 +224,7 @@ void CObjectList::Update		(bool bForce)
 #	endif // ifdef DEBUG
 #endif
 
-			Device.Statistic->UpdateClient_crows	= crows.size	();
+			Statistic.UpdateClient_crows	= crows.size	();
 			Objects* workload			= 0;
 			if (!psDeviceFlags.test(rsDisableObjectsAsCrows))	
 				workload				= &crows;
@@ -233,9 +233,9 @@ void CObjectList::Update		(bool bForce)
 				clear_crow_vec			(crows);
 			}
 
-			Device.Statistic->UpdateClient.Begin	();
-			Device.Statistic->UpdateClient_active	= objects_active.size();
-			Device.Statistic->UpdateClient_total	= objects_active.size() + objects_sleeping.size();
+			Statistic.UpdateClient.Begin	();
+			Statistic.UpdateClient_active	= objects_active.size();
+			Statistic.UpdateClient_total	= objects_active.size() + objects_sleeping.size();
 
 			u32 const objects_count		= workload->size();
 			CObject** objects			= (CObject**)_alloca(objects_count*sizeof(CObject*));
@@ -253,7 +253,7 @@ void CObjectList::Update		(bool bForce)
 			for (CObject** i = b; i != e; ++i)
 				SingleUpdate			(*i);
 
-			Device.Statistic->UpdateClient.End		();
+			Statistic.UpdateClient.End		();
 		}
 	}
 

@@ -92,12 +92,12 @@ void dxRainRender::Render(CEffect_Rain &owner)
 		float dt		= Device.fTimeDelta;
 		one.P.mad		(one.D,one.fSpeed*dt);
 
-		Device.Statistic->TEST1.Begin();
+		Statistic.TEST1.Begin();
 		Fvector	wdir;	wdir.set(one.P.x-vEye.x,0,one.P.z-vEye.z);
 		float	wlen	= wdir.square_magnitude();
 		if (wlen>b_radius_wrap_sqr)	{
 			wlen		= _sqrt(wlen);
-			//.			Device.Statistic->TEST3.Begin();
+			//.			Statistic.TEST3.Begin();
 			if ((one.P.y-vEye.y)<sink_offset){
 				// need born
 				one.invalidate();
@@ -127,9 +127,9 @@ void dxRainRender::Render(CEffect_Rain &owner)
 					//					Log("4");
 				}
 			}
-			//.			Device.Statistic->TEST3.End();
+			//.			Statistic.TEST3.End();
 		}
-		Device.Statistic->TEST1.End();
+		Statistic.TEST1.End();
 
 		// Build line
 		Fvector&	pos_head	= one.P;

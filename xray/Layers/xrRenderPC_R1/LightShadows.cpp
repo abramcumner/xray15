@@ -185,7 +185,7 @@ void CLightShadows::calculate	()
 	if (casters.empty())		return;
 
 	BOOL bRTS					= FALSE;
-	Device.Statistic->RenderDUMP_Scalc.Begin	();
+	Statistic.RenderDUMP_Scalc.Begin	();
 	HW.pDevice->SetRenderState	(D3DRS_ZENABLE, D3DZB_FALSE);
 	
 	// iterate on objects
@@ -349,7 +349,7 @@ void CLightShadows::calculate	()
 	
 	// Finita la comedia
 	HW.pDevice->SetRenderState				(D3DRS_ZENABLE, D3DZB_TRUE);
-	Device.Statistic->RenderDUMP_Scalc.End	();
+	Statistic.RenderDUMP_Scalc.End	();
 	
 	RCache.set_xform_project	(Device.mProject);
 	RCache.set_xform_view		(Device.mView);
@@ -402,7 +402,7 @@ void CLightShadows::render	()
 	FVF::LIT* pv				= (FVF::LIT*) RCache.Vertex.Lock	(batch_size*3,geom_World->vb_stride,Offset);
 	for (u32 s_it=0; s_it<shadows.size(); s_it++)
 	{
-		Device.Statistic->RenderDUMP_Srender.Begin	();
+		Statistic.RenderDUMP_Srender.Begin	();
 		shadow&		S			=	shadows[s_it];
 		float		Le			=	S.L->color.intensity()*S.E;
 		int			s_x			=	S.slot%slot_line;
@@ -535,7 +535,7 @@ void CLightShadows::render	()
 				batch					= 0;
 			}
 		}
-		Device.Statistic->RenderDUMP_Srender.End	();
+		Statistic.RenderDUMP_Srender.End	();
 	}
 
 	// Flush if nessesary

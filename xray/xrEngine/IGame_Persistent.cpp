@@ -169,9 +169,9 @@ void IGame_Persistent::OnFrame		()
 		Environment().OnFrame	();
 
 
-	Device.Statistic->Particles_starting= ps_needtoplay.size	();
-	Device.Statistic->Particles_active	= ps_active.size		();
-	Device.Statistic->Particles_destroy	= ps_destroy.size		();
+	Statistic.Particles_starting= ps_needtoplay.size	();
+	Statistic.Particles_active	= ps_active.size		();
+	Statistic.Particles_destroy	= ps_destroy.size		();
 
 	// Play req particle systems
 	while (ps_needtoplay.size())

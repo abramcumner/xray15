@@ -201,9 +201,9 @@ void CLevel::ClientSend()
 
 		if (P.B.count>2)
 		{
-			Device.Statistic->TEST3.Begin();
+			Statistic.TEST3.Begin();
 				Send	(P, net_flags(FALSE));
-			Device.Statistic->TEST3.End();
+			Statistic.TEST3.End();
 		}else
 			break;
 	}
@@ -295,15 +295,15 @@ void CLevel::net_Update	()
 {
 	if(game_configured){
 		// If we have enought bandwidth - replicate client data on to server
-		Device.Statistic->netClient2.Begin	();
+		Statistic.netClient2.Begin	();
 		ClientSend					();
-		Device.Statistic->netClient2.End		();
+		Statistic.netClient2.End		();
 	}
 	// If server - perform server-update
 	if (Server && OnServer())	{
-		Device.Statistic->netServer.Begin();
+		Statistic.netServer.Begin();
 		Server->Update					();
-		Device.Statistic->netServer.End	();
+		Statistic.netServer.End	();
 	}
 }
 

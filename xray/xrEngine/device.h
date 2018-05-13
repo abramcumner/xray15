@@ -96,7 +96,6 @@ public:
 
 	// Dependent classes
 	//CResourceManager*						Resources;	  
-	CStats*									Statistic;
 
 	// Engine flow-control
 	float									fTimeDelta;

@@ -4,8 +4,8 @@
 #include "cl_intersect.h"
 
 #ifdef ENGINE_BUILD
-#define R_BEGIN Device.Statistic->clRAY.Begin()
-#define R_END Device.Statistic->clRAY.End()
+#define R_BEGIN Statistic.clRAY.Begin()
+#define R_END Statistic.clRAY.End()
 #else
 #define R_BEGIN
 #define R_END

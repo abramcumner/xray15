@@ -136,7 +136,7 @@ void dxRenderDeviceRender::OnDeviceCreate(LPCSTR shName)
 	m_Gamma.Update				();
 	Resources->OnDeviceCreate	(shName);
 	::Render->create			();
-	Device.Statistic->OnDeviceCreate	();
+	Statistic.OnDeviceCreate	();
 
 //#ifndef DEDICATED_SERVER
 	if (!g_dedicated_server)

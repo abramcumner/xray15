@@ -11,7 +11,7 @@ void CRenderDevice::_Destroy	(BOOL bKeepTextures)
 
 	// before destroy
 	b_is_Ready					= FALSE;
-	Statistic->OnDeviceDestroy	();
+	Statistic.OnDeviceDestroy	();
 	::Render->destroy			();
 	m_pRender->OnDeviceDestroy(bKeepTextures);
 	//Resources->OnDeviceDestroy	(bKeepTextures);
@@ -48,7 +48,6 @@ void CRenderDevice::Destroy	(void) {
 
 	RenderFactory->DestroyRenderDeviceRender(m_pRender);
 	m_pRender = 0;
-	xr_delete					(Statistic);
 }
 
 #include "IGame_Level.h"

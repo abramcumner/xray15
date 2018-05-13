@@ -574,9 +574,9 @@ void CLevel::OnFrame	()
 	else								psDeviceFlags.set(rsDisableObjectsAsCrows,false);
 
 	// commit events from bullet manager from prev-frame
-	Device.Statistic->TEST0.Begin		();
+	Statistic.TEST0.Begin		();
 	BulletManager().CommitEvents		();
-	Device.Statistic->TEST0.End			();
+	Statistic.TEST0.End			();
 
 	// Client receive
 	if (net_isDisconnected())	
@@ -593,11 +593,11 @@ void CLevel::OnFrame	()
 		return;
 	} else {
 
-		Device.Statistic->netClient1.Begin();
+		Statistic.netClient1.Begin();
 
 		ClientReceive					();
 
-		Device.Statistic->netClient1.End	();
+		Statistic.netClient1.End	();
 	}
 
 	ProcessGameEvents	();
@@ -718,18 +718,18 @@ void CLevel::OnFrame	()
 //	g_pGamePersistent->Environment().SetGameTime	(GetGameDayTimeSec(),GetGameTimeFactor());
 	g_pGamePersistent->Environment().SetGameTime	(GetEnvironmentGameDayTimeSec(),game->GetEnvironmentGameTimeFactor());
 
-	//Device.Statistic->cripting.Begin	();
+	//Statistic.cripting.Begin	();
 	if (!g_dedicated_server)
 		ai().script_engine().script_process	(ScriptEngine::eScriptProcessorLevel)->update();
-	//Device.Statistic->Scripting.End	();
+	//Statistic.Scripting.End	();
 	m_ph_commander->update				();
 	m_ph_commander_scripts->update		();
 //	autosave_manager().update			();
 
 	//просчитать полет пуль
-	Device.Statistic->TEST0.Begin		();
+	Statistic.TEST0.Begin		();
 	BulletManager().CommitRenderSet		();
-	Device.Statistic->TEST0.End			();
+	Statistic.TEST0.End			();
 
 	// update static sounds
 	if(!g_dedicated_server)
@@ -782,9 +782,9 @@ void CLevel::OnRender()
 
 	Game().OnRender();
 	//отрисовать трассы пуль
-	//Device.Statistic->TEST1.Begin();
+	//Statistic.TEST1.Begin();
 	BulletManager().Render();
-	//Device.Statistic->TEST1.End();
+	//Statistic.TEST1.End();
 	//отрисовать интерфейc пользователя
 	HUD().RenderUI();
 

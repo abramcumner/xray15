@@ -1437,7 +1437,7 @@ public:
 			return;
 		}
 		sv_game->DumpRoundStatistics();
-		//Game().m_WeaponUsageStatistic->SaveData();
+		//Game().m_WeaponUsageStatistic.SaveData();
 	}
 	virtual void	Info	(TInfo& I)	{strcpy_s(I,"saving statistic data"); }
 };
