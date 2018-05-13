@@ -12,6 +12,7 @@
     <ClCompile>
       <DisableSpecificWarnings>4456;4457;4458;4459;4577;4595</DisableSpecificWarnings>
       <PreprocessorDefinitions>CI_VERSION="$(APPVEYOR_VERSION)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/we5037 /we4840 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
