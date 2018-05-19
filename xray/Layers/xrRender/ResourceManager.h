@@ -95,6 +95,7 @@ public:
 //.	BOOL							_GetDetailTexture	(LPCSTR Name, LPCSTR& T, R_constant_setup* &M);
 
 	map_Blender&					_GetBlenders		()		{	return m_blenders;	}
+	const xr_vector<Shader*>&		_GetShaders() { return v_shaders; }
 
 	// Debug
 	void							DBG_VerifyGeoms		();

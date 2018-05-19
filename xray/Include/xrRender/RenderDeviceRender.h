@@ -2,6 +2,8 @@
 #define RenderDeviceRender_included
 #pragma once
 
+struct Shader;
+
 class IRenderDeviceRender
 {
 public:
@@ -57,6 +59,8 @@ public:
 	virtual void	ClearTarget() = 0;
 	virtual void	SetCacheXform(Fmatrix &mView, Fmatrix &mProject) = 0;
 	virtual void	OnAssetsChanged() = 0;
+
+	virtual const xr_vector<Shader*>& GetShaders() = 0;
 };
 
 #endif	//	RenderDeviceRender_included

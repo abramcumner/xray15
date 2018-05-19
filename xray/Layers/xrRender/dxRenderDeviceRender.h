@@ -69,6 +69,8 @@ public:
 	virtual void	SetCacheXform(Fmatrix &mView, Fmatrix &mProject);
 	virtual void	OnAssetsChanged();
 
+	virtual const xr_vector<Shader*>& GetShaders();
+
 public:
 	CResourceManager*	Resources;
 	ref_shader			m_WireShader;
