@@ -120,7 +120,7 @@ public:
 typedef	resptr_core<ShaderElement,resptr_base<ShaderElement> >								ref_selement;
 
 //////////////////////////////////////////////////////////////////////////
-struct 	 ECORE_API	Shader			: public xr_resource_flagged									{
+struct 	 ECORE_API	Shader			: public xr_resource_named									{
 public:
 	ref_selement		E		[6];	// R1 - 0=norm_lod0(det),	1=norm_lod1(normal),	2=L_point,		3=L_spot,	4=L_for_models,	
 										// R2 - 0=deffer,			1=norm_lod1(normal),	2=psm,			3=ssm,		4=dsm

@@ -150,6 +150,7 @@ Shader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_te
 {
 	CBlender_Compile	C;
 	Shader				S;
+	S.set_name			(B->getName());
 
 	//.
 	// if (strstr(s_shader,"transparent"))	__asm int 3;

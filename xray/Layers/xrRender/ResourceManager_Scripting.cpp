@@ -219,6 +219,7 @@ Shader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
 {
 	CBlender_Compile	C;
 	Shader				S;
+	S.set_name			(d_shader);
 
 	// undecorate
 	string256	undercorated;
