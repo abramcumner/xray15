@@ -46,6 +46,9 @@ void renderAiMap()
 	if (!isRenderAiMap)
 		return;
 
+	if (!ai().get_level_graph())
+		return;
+
 	if (!sh_Tracer->inited())
 		sh_Tracer->create("editor\\ai_node", "ed\\ed_ai_arrows_01");
 
