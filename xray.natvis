@@ -8,4 +8,7 @@
   <Type Name="CAI_Stalker">
     <DisplayString>{NameObject.p_->value,s}, $(Type)</DisplayString>
   </Type>
+  <Type Name="Shader">
+    <DisplayString>{cName.p_->value,s}, $(Type)</DisplayString>
+  </Type>  
 </AutoVisualizer>
