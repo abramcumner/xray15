@@ -338,8 +338,9 @@ static void ImGui_ImplDX10_CreateFontsTexture()
     }
 
     // Cleanup (don't clear the input data if you want to append new fonts later)
-    io.Fonts->ClearInputData();
-    io.Fonts->ClearTexData();
+    // io.Fonts->ClearInputData();
+    // io.Fonts->ClearTexData();
+	// Если не закомментировать не работает показ курсора.
 }
 
 bool    ImGui_ImplDX10_CreateDeviceObjects()
