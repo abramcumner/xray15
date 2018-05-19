@@ -10,6 +10,7 @@ class ENGINE_API CGameFont;
 
 #include "../Include/xrRender/FactoryPtr.h"
 #include "../Include/xrRender/StatsRender.h"
+#include <memory>
 
 extern ENGINE_API RP_FUNC rp_Stats;
 class ENGINE_API pureStats
@@ -104,7 +105,7 @@ public:
 	IC CGameFont*	Font			(){return pFont;}
 
 private:
-	FactoryPtr<IStatsRender>	m_pRender;
+	std::unique_ptr<IStatsRender, void(*)(IStatsRender*)> m_pRender;
 };
 
 enum{

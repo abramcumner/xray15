@@ -50,7 +50,7 @@ ENGINE_API CStats Statistic;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 BOOL			g_bDisableRedText	= FALSE;
-CStats::CStats	()
+CStats::CStats() : m_pRender(nullptr, [](IStatsRender* obj) { RenderFactory->DestroyStatsRender(obj); })
 {
 	fFPS				= 30.f;
 	fRFPS				= 30.f;
@@ -443,6 +443,7 @@ void CStats::OnDeviceCreate			()
 #ifdef DEBUG
 	if (!g_bDisableRedText)			SetLogCB	(_LogCallback);
 #endif
+	m_pRender.reset(RenderFactory->CreateStatsRender());
 }
 
 void CStats::OnDeviceDestroy		()
