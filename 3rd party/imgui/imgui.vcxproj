@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addons\ImGuiColorTextEdit\TextEditor.cpp" />
     <ClCompile Include="addons\imguinodegrapheditor\imguinodegrapheditor.cpp" />
     <ClCompile Include="addons\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="imgui.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="imgui_draw.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="addons\ImGuiColorTextEdit\TextEditor.h" />
     <ClInclude Include="addons\imguinodegrapheditor\imguinodegrapheditor.h" />
     <ClInclude Include="addons\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="imgui.h" />

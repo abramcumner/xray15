@@ -33,6 +33,9 @@
     <ClCompile Include="addons\ImGuizmo\ImGuizmo.cpp">
       <Filter>addons</Filter>
     </ClCompile>
+    <ClCompile Include="addons\ImGuiColorTextEdit\TextEditor.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui.h">
@@ -54,6 +57,9 @@
       <Filter>addons</Filter>
     </ClInclude>
     <ClInclude Include="addons\ImGuizmo\ImGuizmo.h">
+      <Filter>addons</Filter>
+    </ClInclude>
+    <ClInclude Include="addons\ImGuiColorTextEdit\TextEditor.h">
       <Filter>addons</Filter>
     </ClInclude>
   </ItemGroup>
