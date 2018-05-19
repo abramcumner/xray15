@@ -5,18 +5,6 @@
 #include "RenderFactory.h"
 #include "../../Include/xrAPI/xrAPI.h"
 
-#define FACTORY_PTR_INSTANCIATE(Class) \
-	inline void FactoryPtr<I##Class>::CreateObject(void) \
-{ \
-	m_pObject = RenderFactory->Create##Class(); \
-} \
-	inline void FactoryPtr<I##Class>::DestroyObject(void) \
-{ \
-	RenderFactory->Destroy##Class(m_pObject); \
-	m_pObject = NULL; \
-}
-	
-
 template<class T> 
 class FactoryPtr
 {
@@ -54,42 +42,188 @@ private:
 
 
 #ifndef _EDITOR
-	FACTORY_PTR_INSTANCIATE(UISequenceVideoItem)
-	FACTORY_PTR_INSTANCIATE(UIShader)
-	FACTORY_PTR_INSTANCIATE(StatGraphRender)
-	FACTORY_PTR_INSTANCIATE(ConsoleRender)
-	FACTORY_PTR_INSTANCIATE(RenderDeviceRender)
-#	ifdef DEBUG
-		FACTORY_PTR_INSTANCIATE(ObjectSpaceRender)
-#	endif // DEBUG
-	FACTORY_PTR_INSTANCIATE(ApplicationRender)
-	FACTORY_PTR_INSTANCIATE(WallMarkArray)
-	FACTORY_PTR_INSTANCIATE(StatsRender);
-#endif // _EDITOR
+inline void FactoryPtr<IUISequenceVideoItem>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateUISequenceVideoItem();
+}
+inline void FactoryPtr<IUISequenceVideoItem>::DestroyObject(void)
+{
+	RenderFactory->DestroyUISequenceVideoItem(m_pObject);
+	m_pObject = NULL;
+}
 
-#ifndef _EDITOR
-    FACTORY_PTR_INSTANCIATE(FlareRender)
-    FACTORY_PTR_INSTANCIATE(ThunderboltRender)
-    FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
-    FACTORY_PTR_INSTANCIATE(LensFlareRender)
-    FACTORY_PTR_INSTANCIATE(RainRender)
-    FACTORY_PTR_INSTANCIATE(EnvironmentRender)
-    FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
-    FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
-#endif // _EDITOR
-	FACTORY_PTR_INSTANCIATE(FontRender)
-/*
-void FactoryPtr<IStatsRender>::CreateObject(void)
+inline void FactoryPtr<IUIShader>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateUIShader();
+}
+inline void FactoryPtr<IUIShader>::DestroyObject(void)
+{
+	RenderFactory->DestroyUIShader(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IStatGraphRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateStatGraphRender();
+}
+inline void FactoryPtr<IStatGraphRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyStatGraphRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IConsoleRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateConsoleRender();
+}
+inline void FactoryPtr<IConsoleRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyConsoleRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IRenderDeviceRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateRenderDeviceRender();
+}
+inline void FactoryPtr<IRenderDeviceRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyRenderDeviceRender(m_pObject);
+	m_pObject = NULL;
+}
+
+#	ifdef DEBUG
+inline void FactoryPtr<IObjectSpaceRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateObjectSpaceRender();
+}
+inline void FactoryPtr<IObjectSpaceRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyObjectSpaceRender(m_pObject);
+	m_pObject = NULL;
+}
+#	endif // DEBUG
+
+inline void FactoryPtr<IApplicationRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateApplicationRender();
+}
+inline void FactoryPtr<IApplicationRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyApplicationRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IWallMarkArray>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateWallMarkArray();
+}
+inline void FactoryPtr<IWallMarkArray>::DestroyObject(void)
+{
+	RenderFactory->DestroyWallMarkArray(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IStatsRender>::CreateObject(void)
 {
 	m_pObject = RenderFactory->CreateStatsRender();
 }
-
-void FactoryPtr<IStatsRender>::DestroyObject(void)
+inline void FactoryPtr<IStatsRender>::DestroyObject(void)
 {
 	RenderFactory->DestroyStatsRender(m_pObject);
 	m_pObject = NULL;
 }
-*/
 
+inline void FactoryPtr<IFlareRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateFlareRender();
+}
+inline void FactoryPtr<IFlareRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyFlareRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IThunderboltRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateThunderboltRender();
+}
+inline void FactoryPtr<IThunderboltRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyThunderboltRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IThunderboltDescRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateThunderboltDescRender();
+}
+inline void FactoryPtr<IThunderboltDescRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyThunderboltDescRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<ILensFlareRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateLensFlareRender();
+}
+inline void FactoryPtr<ILensFlareRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyLensFlareRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IRainRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateRainRender();
+}
+inline void FactoryPtr<IRainRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyRainRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IEnvironmentRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateEnvironmentRender();
+}
+inline void FactoryPtr<IEnvironmentRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyEnvironmentRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IEnvDescriptorRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateEnvDescriptorRender();
+}
+inline void FactoryPtr<IEnvDescriptorRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyEnvDescriptorRender(m_pObject);
+	m_pObject = NULL;
+}
+
+inline void FactoryPtr<IEnvDescriptorMixerRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateEnvDescriptorMixerRender();
+}
+inline void FactoryPtr<IEnvDescriptorMixerRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyEnvDescriptorMixerRender(m_pObject);
+	m_pObject = NULL;
+}
+
+#endif // _EDITOR
+
+inline void FactoryPtr<IFontRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateFontRender();
+}
+inline void FactoryPtr<IFontRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyFontRender(m_pObject);
+	m_pObject = NULL;
+}
 
 #endif	//	FactoryPtr_included
