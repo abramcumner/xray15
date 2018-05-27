@@ -43,13 +43,14 @@ void CLevelChanger::net_Destroy	()
 	if(it != g_lchangers.end())
 		g_lchangers.erase(it);
 }
-#define DEF_INVITATION "level_changer_invitation"
+static LPCSTR DEF_INVITATION = "level_changer_invitation";
+static LPCSTR LEAVE_ZONE_INVITATION = "leave_zone_invitation";
+static LPCSTR ZONE_EXIT = "$exit$";
 
 BOOL CLevelChanger::net_Spawn	(CSE_Abstract* DC) 
 {
 	m_entrance_time				= 0;
 	m_b_enabled					= true;
-	m_invite_str				= DEF_INVITATION;
 	CCF_Shape *l_pShape			= xr_new<CCF_Shape>(this);
 	collidable.model			= l_pShape;
 	
@@ -57,6 +58,12 @@ BOOL CLevelChanger::net_Spawn	(CSE_Abstract* DC)
 	CSE_ALifeLevelChanger		*l_tpALifeLevelChanger = smart_cast<CSE_ALifeLevelChanger*>(l_tpAbstract);
 	R_ASSERT					(l_tpALifeLevelChanger);
 
+	if (l_tpALifeLevelChanger->m_caLevelToChange == ZONE_EXIT) {
+		m_isExit = true;
+		m_invite_str = LEAVE_ZONE_INVITATION;
+	}
+	else
+		m_invite_str = DEF_INVITATION;
 	m_game_vertex_id			= l_tpALifeLevelChanger->m_tNextGraphID;
 	m_level_vertex_id			= l_tpALifeLevelChanger->m_dwNextNodeID;
 	m_position					= l_tpALifeLevelChanger->m_tNextPosition;
@@ -107,6 +114,9 @@ void CLevelChanger::shedule_Update(u32 dt)
 
 	update_actor_invitation		();
 }
+
+void start_tutorial(LPCSTR name);
+
 #include "patrol_path.h"
 #include "patrol_path_storage.h"
 void CLevelChanger::feel_touch_new	(CObject *tpObject)
@@ -117,20 +127,25 @@ void CLevelChanger::feel_touch_new	(CObject *tpObject)
 		return;
 
 	if (m_bSilentMode) {
-		NET_Packet	p;
-		p.w_begin	(M_CHANGE_LEVEL);
-		p.w			(&m_game_vertex_id,sizeof(m_game_vertex_id));
-		p.w			(&m_level_vertex_id,sizeof(m_level_vertex_id));
-		p.w_vec3	(m_position);
-		p.w_vec3	(m_angles);
-		Level().Send(p,net_flags(TRUE));
+		if (m_isExit) {
+			start_tutorial("leave_zone");
+		}
+		else {
+			NET_Packet	p;
+			p.w_begin(M_CHANGE_LEVEL);
+			p.w(&m_game_vertex_id, sizeof(m_game_vertex_id));
+			p.w(&m_level_vertex_id, sizeof(m_level_vertex_id));
+			p.w_vec3(m_position);
+			p.w_vec3(m_angles);
+			Level().Send(p, net_flags(TRUE));
+		}
 		return;
 	}
 	Fvector			p,r;
 	bool			b = get_reject_pos(p,r);
 	CUIGameSP		*pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if (pGameSP)
-        pGameSP->ChangeLevel	(m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled);
+		pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
 
 	m_entrance_time	= Device.fTimeGlobal;
 }
@@ -187,8 +202,8 @@ void CLevelChanger::update_actor_invitation()
 			Fvector p,r;
 			bool b = get_reject_pos(p,r);
 			
-			if(pGameSP)
-				pGameSP->ChangeLevel(m_game_vertex_id,m_level_vertex_id,m_position,m_angles,p,r,b, m_invite_str, m_b_enabled);
+			if (pGameSP)
+				pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
 
 			m_entrance_time		= Device.fTimeGlobal;
 		}

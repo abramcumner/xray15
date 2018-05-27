@@ -124,9 +124,24 @@ void CGameSpawnConstructor::process_spawns	()
 	I									= m_level_spawns.begin();
 	for ( ; I != E; ++I)
 		(*I)->update					();
+	fill_zone_exits						();
 
 	verify_level_changers				();
 	verify_spawns						();
+}
+
+void CGameSpawnConstructor::fill_zone_exits()
+{
+	auto& lcList = level_changers();
+	for (u32 i = 0, n = (u32)lcList.size(); i < n; ++i) {
+		auto lc = lcList[i];
+		if (lc->m_caLevelToChange == "$exit$")
+		{
+			lcList.erase(lcList.begin() + i);
+			--i;
+			--n;
+		}
+	}
 }
 
 void CGameSpawnConstructor::verify_spawns			(ALife::_SPAWN_ID spawn_id)

@@ -190,7 +190,8 @@ void CUIGameSP::ChangeLevel(	GameGraph::_GRAPH_ID game_vert_id,
 								Fvector ang2, 
 								bool b_use_position_cancel,
 								const shared_str& message_str,
-								bool b_allow_change_level)
+								bool b_allow_change_level,
+								bool isExit)
 {
 	if( !MainInputReceiver() || MainInputReceiver()!=UIChangeLevelWnd)
 	{
@@ -203,6 +204,7 @@ void CUIGameSP::ChangeLevel(	GameGraph::_GRAPH_ID game_vert_id,
 		UIChangeLevelWnd->m_b_position_cancel	= b_use_position_cancel;
 		UIChangeLevelWnd->m_b_allow_change_level=b_allow_change_level;
 		UIChangeLevelWnd->m_message_str			= message_str;
+		UIChangeLevelWnd->m_isExit				= isExit;
 
 		m_game->StartStopMenu					(UIChangeLevelWnd,true);
 	}
@@ -236,17 +238,23 @@ void CChangeLevelWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 		inherited::SendMessage(pWnd, msg, pData);
 }
 
+void start_tutorial(LPCSTR name);
+
 void CChangeLevelWnd::OnOk()
 {
 	Game().StartStopMenu					(this, true);
-	NET_Packet								p;
-	p.w_begin								(M_CHANGE_LEVEL);
-	p.w										(&m_game_vertex_id,sizeof(m_game_vertex_id));
-	p.w										(&m_level_vertex_id,sizeof(m_level_vertex_id));
-	p.w_vec3								(m_position);
-	p.w_vec3								(m_angles);
-
-	Level().Send							(p,net_flags(TRUE));
+	if (m_isExit) {
+		start_tutorial("leave_zone");
+	}
+	else {
+		NET_Packet								p;
+		p.w_begin(M_CHANGE_LEVEL);
+		p.w(&m_game_vertex_id, sizeof(m_game_vertex_id));
+		p.w(&m_level_vertex_id, sizeof(m_level_vertex_id));
+		p.w_vec3(m_position);
+		p.w_vec3(m_angles);
+		Level().Send(p, net_flags(TRUE));
+	}
 }
 
 void CChangeLevelWnd::OnCancel()

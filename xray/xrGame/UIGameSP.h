@@ -35,7 +35,7 @@ public:
 	void				StartUpgrade			(CInventoryOwner* pActorInv, CInventoryOwner* pMech);
 	void				StartCarBody			(CInventoryOwner* pActorInv, CInventoryOwner* pOtherOwner);
 	void				StartCarBody			(CInventoryOwner* pActorInv, CInventoryBox* pBox);
-	void				ChangeLevel				(GameGraph::_GRAPH_ID game_vert_id, u32 level_vert_id, Fvector pos, Fvector ang, Fvector pos2, Fvector ang2, bool b, const shared_str& message, bool b_allow_change_level);
+	void				ChangeLevel				(GameGraph::_GRAPH_ID game_vert_id, u32 level_vert_id, Fvector pos, Fvector ang, Fvector pos2, Fvector ang2, bool b, const shared_str& message, bool b_allow_change_level, bool isExit);
 
 	virtual void		HideShownDialogs		();
 
@@ -63,6 +63,7 @@ public:
 	bool					m_b_position_cancel;
 	bool					m_b_allow_change_level;
 	shared_str				m_message_str;
+	bool					m_isExit;
 
 						CChangeLevelWnd				();
 	virtual				~CChangeLevelWnd			()									{};
