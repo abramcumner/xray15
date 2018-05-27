@@ -126,6 +126,8 @@ void CLevelChanger::feel_touch_new	(CObject *tpObject)
 	if (!l_tpActor->g_Alive())
 		return;
 
+	auto offset = Fvector().sub(tpObject->Position(), Position());
+	auto nextPosition = Fvector().add(m_position, offset);
 	if (m_bSilentMode) {
 		if (m_isExit) {
 			start_tutorial("leave_zone");
@@ -135,7 +137,7 @@ void CLevelChanger::feel_touch_new	(CObject *tpObject)
 			p.w_begin(M_CHANGE_LEVEL);
 			p.w(&m_game_vertex_id, sizeof(m_game_vertex_id));
 			p.w(&m_level_vertex_id, sizeof(m_level_vertex_id));
-			p.w_vec3(m_position);
+			p.w_vec3(nextPosition);
 			p.w_vec3(m_angles);
 			Level().Send(p, net_flags(TRUE));
 		}
@@ -143,9 +145,10 @@ void CLevelChanger::feel_touch_new	(CObject *tpObject)
 	}
 	Fvector			p,r;
 	bool			b = get_reject_pos(p,r);
+	p.add(offset);
 	CUIGameSP		*pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if (pGameSP)
-		pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
+		pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, nextPosition, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
 
 	m_entrance_time	= Device.fTimeGlobal;
 }
@@ -201,9 +204,12 @@ void CLevelChanger::update_actor_invitation()
 			CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 			Fvector p,r;
 			bool b = get_reject_pos(p,r);
+			auto offset = Fvector().sub(l_tpActor->Position(), Position());
+			auto nextPosition = Fvector().add(m_position, offset);
+			p.add(offset);
 			
 			if (pGameSP)
-				pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, m_position, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
+				pGameSP->ChangeLevel(m_game_vertex_id, m_level_vertex_id, nextPosition, m_angles, p, r, b, m_invite_str, m_b_enabled, m_isExit);
 
 			m_entrance_time		= Device.fTimeGlobal;
 		}
