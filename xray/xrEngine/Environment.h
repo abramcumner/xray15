@@ -35,6 +35,9 @@ class ENGINE_API	CEnvModifier
 public:
 	Fvector3			position;
 	float				radius;
+	u8					shape_type;
+	Fobb				obb;
+
 	float				power;
 
 	float				far_plane;
