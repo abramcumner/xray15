@@ -147,6 +147,7 @@ struct SFillPropData{
         VERIFY					(level_ids.empty());
         for (k = 0; Ini->r_line("levels",k,&N,&V); ++k)
             level_ids.push_back	(Ini->r_string_wb(N,"caption"));
+		level_ids.push_back("$exit$");
 
         // story names
 		{
