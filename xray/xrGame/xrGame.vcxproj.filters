@@ -7518,6 +7518,9 @@
     <ClInclude Include="embedded_editor\render\editor_render.h">
       <Filter>Embedded editor\render</Filter>
     </ClInclude>
+    <ClInclude Include="embedded_editor\render\editor_render_ai_map.h">
+      <Filter>Embedded editor\render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="damage_manager.cpp">
@@ -11214,6 +11217,9 @@
       <Filter>Embedded editor</Filter>
     </ClCompile>
     <ClCompile Include="embedded_editor\render\editor_render.cpp">
+      <Filter>Embedded editor\render</Filter>
+    </ClCompile>
+    <ClCompile Include="embedded_editor\render\editor_render_ai_map.cpp">
       <Filter>Embedded editor\render</Filter>
     </ClCompile>
   </ItemGroup>
