@@ -120,13 +120,12 @@ bool editTexture(shared_str& texName)
         if (ImGui::InputText("##filter", filter, 100)) {
             auto fullList = CUITextureMaster::GetTextureList();
             const char* p = filter;
-			if (p[0] != '\0') {
-				auto e = std::copy_if(fullList.begin(), fullList.end(), list.begin(),
-					[p](const auto& x) { return StrStrI(x.c_str(), p) != nullptr; });
-				list.resize(e - list.begin());
-			}
-			else
-				list = fullList;
+            if (p[0] != '\0') {
+                auto e = std::copy_if(fullList.begin(), fullList.end(), list.begin(),
+                    [p](const auto& x) { return StrStrI(x.c_str(), p) != nullptr; });
+                list.resize(e - list.begin());
+            } else
+                list = fullList;
         }
         auto it = std::lower_bound(list.begin(), list.end(), texName.data());
         int cur = (it != list.end()) ? (it - list.begin()) : -1;
@@ -237,11 +236,12 @@ void showWndHud()
     ImGuiIO& io = ImGui::GetIO();
     ImGui::SetNextWindowPos(ImVec2());
     bool open = true;
-	ImGui::SetNextWindowBgAlpha(0.0f);
-	ImGui::SetNextWindowSize(io.DisplaySize);
-    ImGui::Begin("ALL_SCREEN", &open, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar
-		| ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoFocusOnAppearing
-		| ImGuiWindowFlags_NoBringToFrontOnFocus);
+    ImGui::SetNextWindowBgAlpha(0.0f);
+    ImGui::SetNextWindowSize(io.DisplaySize);
+    ImGui::Begin("ALL_SCREEN", &open,
+        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar
+            | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoFocusOnAppearing
+            | ImGuiWindowFlags_NoBringToFrontOnFocus);
     ImGui::PushClipRect(ImVec2(), io.DisplaySize, false);
 
     Frect r;

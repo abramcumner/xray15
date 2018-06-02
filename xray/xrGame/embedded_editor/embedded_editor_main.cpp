@@ -5,17 +5,17 @@
 #include "embedded_editor_ae.h"
 #include "embedded_editor_helper.h"
 #include "embedded_editor_hud.h"
+#include "embedded_editor_le.h"
 #include "embedded_editor_logic.h"
 #include "embedded_editor_map.h"
 #include "embedded_editor_prop.h"
+#include "embedded_editor_se.h"
 #include "embedded_editor_stats.h"
 #include "embedded_editor_ui.h"
 #include "embedded_editor_weather.h"
 #include <addons/imguinodegrapheditor/imguinodegrapheditor.h>
 #include <dinput.h>
 #include <imgui.h>
-#include "embedded_editor_se.h"
-#include "embedded_editor_le.h"
 
 bool bShowWindow = true;
 bool show_test_window = true;
@@ -74,9 +74,9 @@ void ShowMain()
     if (ImGui::Button("AE"))
         show_ae_window ^= 1;
     if (ImGui::Button("LE"))
-		show_le_editor = !show_le_editor;
+        show_le_editor = !show_le_editor;
     if (ImGui::Button("SE"))
-		show_se_editor = !show_se_editor;
+        show_se_editor = !show_se_editor;
     ImGui::Button("PP Editor");
     if (ImGui::Button("UI Editor"))
         show_ui_editor = !show_ui_editor;
@@ -122,12 +122,12 @@ void ShowEditor()
         showUiEditor(show_ui_editor);
     if (show_map_editor)
         ShowMapEditor(show_map_editor);
-	if (show_hud_editor)
-		ShowHudEditor(show_hud_editor);
-	if (show_le_editor)
-		showLeEditor(show_le_editor);
-	if (show_se_editor)
-		showSeEditor(show_se_editor);
+    if (show_hud_editor)
+        ShowHudEditor(show_hud_editor);
+    if (show_le_editor)
+        showLeEditor(show_le_editor);
+    if (show_se_editor)
+        showSeEditor(show_se_editor);
 }
 
 bool isRControl = false, isLControl = false, isRShift = false, isLShift = false;

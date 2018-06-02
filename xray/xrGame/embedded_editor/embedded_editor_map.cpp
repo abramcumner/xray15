@@ -17,46 +17,46 @@ void ShowMapEditor(bool& show)
     ImguiWnd wnd("Map Editor", &show);
     if (wnd.Collapsed)
         return;
-	ImVec2 size = ImGui::CalcTextSize("LT");
-	size.y = size.x + 2;
+    ImVec2 size = ImGui::CalcTextSize("LT");
+    size.y = size.x + 2;
 
     ImGui::Indent(size.x);
-	if (ImGui::Button("^##lt", size))
-		OffsetConer(3, 1.0f);
-	ImGui::Unindent(size.x);
+    if (ImGui::Button("^##lt", size))
+        OffsetConer(3, 1.0f);
+    ImGui::Unindent(size.x);
     if (ImGui::Button("<##lt", size))
-		OffsetConer(0, -1.0f);
+        OffsetConer(0, -1.0f);
     ImGui::SameLine(0.0f, 0.0f);
     if (ImGui::Button("LT", size))
         SetLeftTopConer();
-	ImGui::SameLine(0.0f, 0.0f);
+    ImGui::SameLine(0.0f, 0.0f);
     if (ImGui::Button(">##lt", size))
-		OffsetConer(0, 1.0f);
+        OffsetConer(0, 1.0f);
     ImGui::Indent(size.x);
     if (ImGui::Button("v##lt", size))
-		OffsetConer(3, -1.0f);
-	ImGui::Unindent(size.x);
+        OffsetConer(3, -1.0f);
+    ImGui::Unindent(size.x);
 
     ImGui::Spacing();
 
     ImGui::Indent(5 * size.x);
     if (ImGui::Button("^##rb", size))
-		OffsetConer(1, 1.0f);
-	ImGui::Unindent(size.x);
+        OffsetConer(1, 1.0f);
+    ImGui::Unindent(size.x);
     if (ImGui::Button("<##rb", size))
-		OffsetConer(2, -1.0f);
-	ImGui::SameLine(0.0f, 0.0f);
+        OffsetConer(2, -1.0f);
+    ImGui::SameLine(0.0f, 0.0f);
     if (ImGui::Button("RB", size))
         SetRightBottomConer();
-	ImGui::SameLine(0.0f, 0.0f);
+    ImGui::SameLine(0.0f, 0.0f);
     if (ImGui::Button(">##rb", size))
-		OffsetConer(2, 1.0f);
+        OffsetConer(2, 1.0f);
     ImGui::Indent(size.x);
     if (ImGui::Button("v##rb", size))
-		OffsetConer(1, -1.0f);
-	ImGui::Unindent(0.0f);
+        OffsetConer(1, -1.0f);
+    ImGui::Unindent(0.0f);
 
-	ImGui::Separator();
+    ImGui::Separator();
 }
 
 // static CUIMiniMap* miniMap = nullptr;
@@ -102,8 +102,8 @@ void SetRightBottomConer()
 
 void OffsetConer(int what, float dist)
 {
-	CUICustomMap* map = HUD().GetUI()->UIMainIngameWnd->MiniMap();
-	Frect r = map->BoundRect();
-	r.m[what] += dist;
-	map->SetBoundRect(r);
+    CUICustomMap* map = HUD().GetUI()->UIMainIngameWnd->MiniMap();
+    Frect r = map->BoundRect();
+    r.m[what] += dist;
+    map->SetBoundRect(r);
 }

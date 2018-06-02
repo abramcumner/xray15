@@ -91,11 +91,11 @@ void ShowMainWindow(bool& show)
             ka->PlayCycle("$editor");
         }
     }
-	ImGui::SameLine();
+    ImGui::SameLine();
     if (ImGui::Button("set can")) {
         obj->cNameVisual_set("dynamics\\barrels\\milk_can_01");
     }
-	ImGui::SameLine();
+    ImGui::SameLine();
     if (ImGui::Button("set 16K20")) {
         obj->cNameVisual_set("16K20_cleaned");
     }
@@ -162,7 +162,7 @@ void ShowMotionWindow(u16 motion)
         sprintf(buf, "Motion [%d] - not available###Motion%d", motion, motion);
     }
     bool opened = true;
-	ImGui::SetNextWindowSize(ImVec2(100, 100), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(100, 100), ImGuiCond_FirstUseEver);
     ImguiWnd wnd(buf, &opened);
     if (!opened)
         opened_motions.erase(motion);

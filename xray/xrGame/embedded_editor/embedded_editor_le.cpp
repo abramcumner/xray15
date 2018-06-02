@@ -6,16 +6,12 @@ bool isRenderAiMap = false;
 
 void showMainWindow(bool& show);
 
-void showLeEditor(bool& show)
-{
-    showMainWindow(show);
-}
+void showLeEditor(bool& show) { showMainWindow(show); }
 
 void showMainWindow(bool& show)
 {
     ImguiWnd wnd("Level Editor", &show);
     if (wnd.Collapsed)
         return;
-	ImGui::Checkbox("AI Map", &isRenderAiMap);
+    ImGui::Checkbox("AI Map", &isRenderAiMap);
 }
-

@@ -4,8 +4,8 @@
 
 void ShowStats(bool& show)
 {
-	ImGui::SetNextWindowSize(ImVec2(100, 100), ImGuiCond_FirstUseEver);
-	ImguiWnd wnd("Stats", &show);
-	if (wnd.Collapsed)
-		return;
+    ImGui::SetNextWindowSize(ImVec2(100, 100), ImGuiCond_FirstUseEver);
+    ImguiWnd wnd("Stats", &show);
+    if (wnd.Collapsed)
+        return;
 }

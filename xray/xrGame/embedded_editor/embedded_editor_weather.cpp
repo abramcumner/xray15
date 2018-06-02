@@ -299,11 +299,11 @@ void ShowWeatherEditor(bool& show)
     }
     if (ImGui::ColorEdit3("ambient_color", (float*)&cur->ambient))
         changed = true;
-    //Fvector4 temp1;
-   // temp1 = convert(cur->clouds_color);
+    // Fvector4 temp1;
+    // temp1 = convert(cur->clouds_color);
     if (ImGui::ColorEdit4("clouds_color", (float*)&cur->clouds_color, ImGuiColorEditFlags_AlphaBar))
         changed = true;
-    //cur->clouds_color = convert(temp1);
+    // cur->clouds_color = convert(temp1);
     char buf[100];
     if (editTexture("clouds_texture", cur->clouds_texture_name)) {
         cur->on_device_create();
@@ -331,12 +331,12 @@ void ShowWeatherEditor(bool& show)
     cur->sky_color = convert(temp);
     if (ImGui::SliderFloat("sky_rotation", &cur->sky_rotation, 0.0f, 6.28318f))
         changed = true;
-	if (editTexture("sky_texture", cur->sky_texture_name)) {
-		strconcat(sizeof(buf), buf, cur->sky_texture_name.data(), "#small");
-		cur->sky_texture_env_name = buf;
-		cur->on_device_create();
-		changed = true;
-	}
+    if (editTexture("sky_texture", cur->sky_texture_name)) {
+        strconcat(sizeof(buf), buf, cur->sky_texture_name.data(), "#small");
+        cur->sky_texture_env_name = buf;
+        cur->on_device_create();
+        changed = true;
+    }
     sel = -1;
     for (int i = 0; i != env.m_suns_config->sections().size(); i++)
         if (cur->lens_flare_id == env.m_suns_config->sections()[i]->Name)
