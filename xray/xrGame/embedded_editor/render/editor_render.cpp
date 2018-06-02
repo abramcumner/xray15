@@ -3,8 +3,8 @@
 #include "ui_defs.h"
 #include "../Include/xrRender/UIShader.h"
 #include "../Include/xrRender/UIRender.h" 
-#include "../level_graph.h"
-#include "../ai_space.h"
+#include "../../level_graph.h"
+#include "../../ai_space.h"
 
 void renderAiMap();
 

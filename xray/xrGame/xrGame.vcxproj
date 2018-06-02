@@ -1132,7 +1132,6 @@
     <ClInclude Include="ElectricBall.h" />
     <ClInclude Include="ElevatorState.h" />
     <ClInclude Include="EliteDetector.h" />
-    <ClInclude Include="embedded_editor\editor_render.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ae.h" />
     <ClInclude Include="embedded_editor\embedded_editor_helper.h" />
     <ClInclude Include="embedded_editor\embedded_editor_hud.h" />
@@ -1146,6 +1145,7 @@
     <ClInclude Include="embedded_editor\embedded_editor_stats.h" />
     <ClInclude Include="embedded_editor\embedded_editor_ui.h" />
     <ClInclude Include="embedded_editor\embedded_editor_weather.h" />
+    <ClInclude Include="embedded_editor\render\editor_render.h" />
     <ClInclude Include="encyclopedia_article.h" />
     <ClInclude Include="encyclopedia_article_defs.h" />
     <ClInclude Include="enemy_manager.h" />
@@ -3947,7 +3947,6 @@
     <ClCompile Include="ElectricBall.cpp" />
     <ClCompile Include="ElevatorState.cpp" />
     <ClCompile Include="EliteDetector.cpp" />
-    <ClCompile Include="embedded_editor\editor_render.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_ae.cpp" />
     <ClCompile Include="embedded_editor\embedded_editor_helper.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -3997,6 +3996,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="embedded_editor\render\editor_render.cpp" />
     <ClCompile Include="encyclopedia_article.cpp" />
     <ClCompile Include="enemy_manager.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>

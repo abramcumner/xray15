@@ -2581,6 +2581,9 @@
     <Filter Include="Embedded editor">
       <UniqueIdentifier>{9e7da499-55df-4d00-b59f-3338b00484de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Embedded editor\render">
+      <UniqueIdentifier>{4dcf3546-414e-4284-b013-52fa2ab1c26d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mt_config.h">
@@ -7512,8 +7515,8 @@
     <ClInclude Include="embedded_editor\embedded_editor_se.h">
       <Filter>Embedded editor</Filter>
     </ClInclude>
-    <ClInclude Include="embedded_editor\editor_render.h">
-      <Filter>Embedded editor</Filter>
+    <ClInclude Include="embedded_editor\render\editor_render.h">
+      <Filter>Embedded editor\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -11210,8 +11213,8 @@
     <ClCompile Include="embedded_editor\embedded_editor_se.cpp">
       <Filter>Embedded editor</Filter>
     </ClCompile>
-    <ClCompile Include="embedded_editor\editor_render.cpp">
-      <Filter>Embedded editor</Filter>
+    <ClCompile Include="embedded_editor\render\editor_render.cpp">
+      <Filter>Embedded editor\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -59,7 +59,7 @@
 #	include "debug_text_tree.h"
 #endif
 #include "embedded_editor/embedded_editor_main.h"
-#include "embedded_editor/editor_render.h"
+#include "embedded_editor/render/editor_render.h"
 
 ENGINE_API bool g_dedicated_server;
 
