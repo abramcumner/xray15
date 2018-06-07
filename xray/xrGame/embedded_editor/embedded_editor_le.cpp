@@ -3,6 +3,7 @@
 #include "embedded_editor_helper.h"
 
 bool isRenderAiMap = false;
+bool isRenderSpawnElement = false;
 
 void showMainWindow(bool& show);
 
@@ -14,4 +15,5 @@ void showMainWindow(bool& show)
     if (wnd.Collapsed)
         return;
     ImGui::Checkbox("AI Map", &isRenderAiMap);
+    ImGui::Checkbox("Spawn Element", &isRenderSpawnElement);
 }
