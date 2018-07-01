@@ -4000,10 +4000,7 @@
     </ClCompile>
     <ClCompile Include="embedded_editor\render\editor_render.cpp" />
     <ClCompile Include="embedded_editor\render\editor_render_ai_map.cpp" />
-    <ClCompile Include="embedded_editor\render\editor_render_spawn_element.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_script.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
-    </ClCompile>
+    <ClCompile Include="embedded_editor\render\editor_render_spawn_element.cpp" />
     <ClCompile Include="encyclopedia_article.cpp" />
     <ClCompile Include="enemy_manager.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>

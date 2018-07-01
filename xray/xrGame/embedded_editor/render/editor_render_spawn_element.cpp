@@ -1,4 +1,4 @@
-#include "pch_script.h"
+#include "stdafx.h"
 #include "editor_render_spawn_element.h"
 #include "../../ai_space.h"
 #include "../../alife_object_registry.h"
