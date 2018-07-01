@@ -136,8 +136,9 @@ bool editTexture(shared_str& texName)
                     return true;
                 },
                 &list, list.size(), ImVec2(-1.0f, -50.0f))) {
+            texName = list[cur].c_str();
+            changed = true;
         }
-        ImGui::SameLine();
         if (ImGui::Button("OK", ImVec2(120, 0))) {
             ImGui::CloseCurrentPopup();
             texName = list[cur].c_str();
