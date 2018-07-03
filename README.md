@@ -2,17 +2,17 @@
 
 # XRAY 1.5
 
-## Как собрать
+## РљР°Рє СЃРѕР±СЂР°С‚СЊ
 
-- установить Visual Studio 2017,
-- открыть engine.sln,
-- выбрать платформу(Win32 или х64) и конфигурацию(Debug или Release),
-- выбрать в меню "Сборка-Собрать решение".
+- СѓСЃС‚Р°РЅРѕРІРёС‚СЊ Visual Studio 2017,
+- РѕС‚РєСЂС‹С‚СЊ engine.sln,
+- РІС‹Р±СЂР°С‚СЊ РїР»Р°С‚С„РѕСЂРјСѓ(Win32 РёР»Рё С…64) Рё РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ(Debug РёР»Рё Release),
+- РІС‹Р±СЂР°С‚СЊ РІ РјРµРЅСЋ "РЎР±РѕСЂРєР°-РЎРѕР±СЂР°С‚СЊ СЂРµС€РµРЅРёРµ".
 
-## Как запустить
-- установить [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/ru-ru/help/2977003/the-latest-supported-visual-c-downloads),
-- установить [библиотеки OpenAL](https://www.openal.org/downloads/oalinst.zip).
+## РљР°Рє Р·Р°РїСѓСЃС‚РёС‚СЊ
+- СѓСЃС‚Р°РЅРѕРІРёС‚СЊ [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/ru-ru/help/2977003/the-latest-supported-visual-c-downloads),
+- СѓСЃС‚Р°РЅРѕРІРёС‚СЊ [Р±РёР±Р»РёРѕС‚РµРєРё OpenAL](https://www.openal.org/downloads/oalinst.zip).
 
-## Готовые сборки
+## Р“РѕС‚РѕРІС‹Рµ СЃР±РѕСЂРєРё
 
-Находятся в разделе [Release](https://github.com/abramcumner/xray15/releases).
+РќР°С…РѕРґСЏС‚СЃСЏ РІ СЂР°Р·РґРµР»Рµ [Release](https://github.com/abramcumner/xray15/releases).
