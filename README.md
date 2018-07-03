@@ -1,18 +1,18 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/au84qs0smablpyh5?svg=true)](https://ci.appveyor.com/project/abramcumner/xray15)
 
-XRAY 1.5
-========
+# XRAY 1.5
 
-How to Build
-------------
+## Как собрать
 
-- install Visual Studio 2015
-- open engine.sln
-- build solution
+- установить Visual Studio 2017,
+- открыть engine.sln,
+- выбрать платформу(Win32 или х64) и конфигурацию(Debug или Release),
+- выбрать в меню "Сборка-Собрать решение".
 
-Binaries
---------
+## Как запустить
+- установить [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/ru-ru/help/2977003/the-latest-supported-visual-c-downloads),
+- установить [библиотеки OpenAL](https://www.openal.org/downloads/oalinst.zip).
 
-See [Release](https://github.com/abramcumner/xray15/releases) section.
+## Готовые сборки
 
-[Visual C++ Redistributable for Visual Studio 2015 Update 3](https://www.microsoft.com/ru-ru/download/details.aspx?id=53587) is required to run programs.
+Находятся в разделе [Release](https://github.com/abramcumner/xray15/releases).
