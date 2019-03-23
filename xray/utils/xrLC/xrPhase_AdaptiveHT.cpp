@@ -125,7 +125,7 @@ void CBuild::xrPhase_AdaptiveHT	()
 	DB.ray_options	(0);
 
 	Status			("Tesselating...");
-	if (1)
+	if (!lc_global_data()->skipAhtTesselate())
 	{
 		for (u32 fit=0; fit<lc_global_data()->g_faces().size(); fit++)	{		// clear split flag from all faces + calculate normals
 			lc_global_data()->g_faces()[fit]->flags.bSplitted		= false;
@@ -210,19 +210,18 @@ void CollectProblematicFaces(const Face &F, int max_id, xr_vector<Face*> & reult
 	adjacent_vec.erase	(std::unique(adjacent_vec.begin(),adjacent_vec.end()),adjacent_vec.end());
 }
 
-bool check_and_destroy_splited( u32 face_it )
+bool check_and_destroy_splited(Face* f)
 {
-	Face* F	= lc_global_data()->g_faces()[face_it];
-	VERIFY( F );
-	if (F->flags.bSplitted)	
+	VERIFY(f);
+	if (f->flags.bSplitted)	
 	{
-		if (!F->flags.bLocked)	
-			lc_global_data()->destroy_face	(lc_global_data()->g_faces()[face_it]);
-		return false;//continue;
+		if (!f->flags.bLocked)	
+			lc_global_data()->destroy_face(f);
+		return false;
 	}
 	return true;
 }
-bool do_tesselate_face( const Face &F, tesscb_estimator* cb_E, int &max_id )
+bool need_tesselate_face( const Face &F, tesscb_estimator* cb_E, int &max_id )
 {
 	if (F.CalcArea()<EPS_L)	
 		return false;//continue;
@@ -335,12 +334,62 @@ void	tessalate_faces( xr_vector<Face*> & faces, Vertex* V1, Vertex* V2,  tesscb_
 			if (cb_V)				cb_V	(V);
 		}
 }
+
+void saveTesselateWarning(const xr_vector<Face*>& faces)
+{
+    string_path log_name;
+    strconcat(sizeof(log_name), log_name, "build_", Core.UserName, "_tesselate.err");
+    FS.update_path(log_name, "$logs$", log_name);
+
+    IWriter* fs = FS.w_open(log_name);
+	if (!fs) {
+		Msg("! Can`t write tesselate warning (%s)", log_name);
+		return;
+	}
+    IWriter& err = *fs;
+
+    // t-junction
+    err.open_chunk(0);
+    err.w_u32(0);
+    err.close_chunk();
+
+    // m-edje
+    err.open_chunk(1);
+    err.w_u32(0);
+    err.close_chunk();
+
+    // invalid
+    err.open_chunk(2);
+    err.w_u32(faces.size());
+	for (auto f : faces) {
+		err.w(&f->v[0]->P, sizeof(f->v[0]->P));
+		err.w(&f->v[1]->P, sizeof(f->v[0]->P));
+		err.w(&f->v[2]->P, sizeof(f->v[0]->P));
+	}
+    err.close_chunk();
+
+	FS.w_close(fs);
+}
+
 void CBuild::u_Tesselate(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_vertex* cb_V)
 {
 	// main process
 	FPU::m64r					();
 	Status						("Tesselating...");
 	g_bUnregister				= false;
+
+	{
+		// Сохраняю треугольники, которые будут тесселированы, чтобы их можно было открыть в ЛЕ и посмотреть
+		xr_vector<Face*> toTesselating;
+		for (auto f : lc_global_data()->g_faces())
+		{
+			int maxId = -1;
+			if (f && check_and_destroy_splited(f) && need_tesselate_face(*f, cb_E, maxId))
+				toTesselating.push_back(f);
+		}
+		saveTesselateWarning(toTesselating);
+	}
+
 
 	u32		counter_create		= 0;
 	u32		cnt_verts			= lc_global_data()->g_vertices().size();
@@ -351,12 +400,12 @@ void CBuild::u_Tesselate(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_verte
 		Face* F					= lc_global_data()->g_faces()[I];
 		if (0==F)				
 			continue;
-		if( !check_and_destroy_splited( I ) )
+		if( !check_and_destroy_splited( F ) )
 			continue;
 
 		Progress				(float(I)/float(lc_global_data()->g_faces().size()));
 		int max_id = -1;
-		if( !do_tesselate_face( *F, cb_E, max_id ) )
+		if( !need_tesselate_face( *F, cb_E, max_id ) )
 			continue;
 
 		xr_vector<Face*>		adjacent_vec;

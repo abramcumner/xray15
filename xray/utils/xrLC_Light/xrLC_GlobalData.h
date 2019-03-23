@@ -46,6 +46,7 @@ class	XRLC_LIGHT_API xrLC_GlobalData
 		bool							_b_skip_invalid;
 		bool							_b_lmap_rgba;
 		u32								_numThread;
+		bool							m_skipAhtTesselate;
 public:
 
 public:
@@ -97,6 +98,8 @@ IC		void						b_nosun_set		(bool v){	_b_nosun = v; }
 		void						b_lmap_rgba_set(bool v) { _b_lmap_rgba = v; }
 		u32							numThread() { return _numThread; }
 		void						setNumThread(u32 v) { _numThread = v; }
+		bool						skipAhtTesselate() { return m_skipAhtTesselate; }
+		void						setSkipAhtTesselate(bool v) { m_skipAhtTesselate = v; }
 
 private:
 //std::pair<u32,u32>					get_id		( const _face * v ) const;
