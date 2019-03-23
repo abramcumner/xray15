@@ -210,17 +210,19 @@ void CollectProblematicFaces(const Face &F, int max_id, xr_vector<Face*> & reult
 	adjacent_vec.erase	(std::unique(adjacent_vec.begin(),adjacent_vec.end()),adjacent_vec.end());
 }
 
-bool check_and_destroy_splited(Face* f)
+bool check_and_destroy_splited(u32 face_it)
 {
-	VERIFY(f);
-	if (f->flags.bSplitted)	
+	Face* F = lc_global_data()->g_faces()[face_it];
+	VERIFY(F);
+	if (F->flags.bSplitted)
 	{
-		if (!f->flags.bLocked)	
-			lc_global_data()->destroy_face(f);
-		return false;
+		if (!F->flags.bLocked)
+			lc_global_data()->destroy_face(lc_global_data()->g_faces()[face_it]);
+		return false;//continue;
 	}
 	return true;
 }
+
 bool need_tesselate_face( const Face &F, tesscb_estimator* cb_E, int &max_id )
 {
 	if (F.CalcArea()<EPS_L)	
@@ -381,10 +383,10 @@ void CBuild::u_Tesselate(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_verte
 	{
 		// Сохраняю треугольники, которые будут тесселированы, чтобы их можно было открыть в ЛЕ и посмотреть
 		xr_vector<Face*> toTesselating;
-		for (auto f : lc_global_data()->g_faces())
+		for (auto& f : lc_global_data()->g_faces())
 		{
 			int maxId = -1;
-			if (f && check_and_destroy_splited(f) && need_tesselate_face(*f, cb_E, maxId))
+			if (f && need_tesselate_face(*f, cb_E, maxId))
 				toTesselating.push_back(f);
 		}
 		saveTesselateWarning(toTesselating);
@@ -400,7 +402,7 @@ void CBuild::u_Tesselate(tesscb_estimator* cb_E, tesscb_face* cb_F, tesscb_verte
 		Face* F					= lc_global_data()->g_faces()[I];
 		if (0==F)				
 			continue;
-		if( !check_and_destroy_splited( F ) )
+		if( !check_and_destroy_splited( I ) )
 			continue;
 
 		Progress				(float(I)/float(lc_global_data()->g_faces().size()));
