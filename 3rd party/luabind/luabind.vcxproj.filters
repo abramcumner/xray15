@@ -34,6 +34,9 @@
     <Filter Include="include">
       <UniqueIdentifier>{363303d2-1dcb-46ba-9b21-340ee3005f70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\detail">
+      <UniqueIdentifier>{2e366bdb-79ab-4424-9497-4b7a75fd1513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="luabind\test\benchmark.cpp">
@@ -275,6 +278,132 @@
     </ClInclude>
     <ClInclude Include="include\luabind\yield_policy.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\calc_arity.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\calc_has_arg.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\call.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\call_function.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\call_member.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\class_cache.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\class_registry.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\class_rep.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\class_rep_scope.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\construct_rep.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\constructor.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\convert_to_lua.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\debug.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\decorate_type.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\enum_maker.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\find_best_match.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\garbage_collector.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\get_overload_signature.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\get_signature.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\implicit_cast.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\is_indirect_const.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\link_compatibility.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\method_rep.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\object_funs.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\object_rep.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\open.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\operator_id.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\other.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\overload_rep.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\overload_rep_base.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\overload_rep_impl.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\pcall.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\pointee_sizeof.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\pointee_typeid.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\policy.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\policy_cons.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\primitives.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\property.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\ref.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\signature_match.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\stack_utils.hpp">
+      <Filter>include\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="include\luabind\detail\typetraits.hpp">
+      <Filter>include\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
