@@ -1,10 +1,7 @@
 #include "stdafx.h"
-
 #include "UIMainIngameWnd.h"
 #include "UIMessagesWindow.h"
 #include "../UIZoneMap.h"
-
-
 #include <dinput.h>
 #include "../actor.h"
 #include "../ActorCondition.h"
@@ -24,31 +21,23 @@
 #include "../game_cl_base.h"
 #include "../level.h"
 #include "../seniority_hierarchy_holder.h"
-
 #include "../date_time.h"
 #include "../xrServerEntities/xrServer_Objects_ALife_Monsters.h"
 #include "../../xrEngine/LightAnimLibrary.h"
-
 #include "UIInventoryUtilities.h"
-
-
 #include "UIXmlInit.h"
 #include "UIPdaMsgListItem.h"
 #include "../alife_registry_wrappers.h"
 #include "../actorcondition.h"
-
 #include "../string_table.h"
-
 #ifdef DEBUG
 #	include "../attachable_item.h"
 #	include "../../xrEngine/xr_input.h"
 #endif
-
 #include "UIScrollView.h"
 #include "map_hint.h"
 #include "UIColorAnimatorWrapper.h"
 #include "../game_news.h"
-
 #include "static_cast_checked.hpp"
 #include "game_cl_capture_the_artefact.h"
 #include "UIHudStatesWnd.h"
@@ -60,6 +49,7 @@ void test_key	(int dik);
 #include "../Include/xrRender/Kinematics.h"
 #include <functional>
 
+using namespace std::placeholders;
 using namespace InventoryUtilities;
 //BOOL		g_old_style_ui_hud			= FALSE;
 const u32	g_clWhite					= 0xffffffff;
@@ -419,7 +409,7 @@ void CUIMainIngameWnd::Update()
 		// ≈сли его нет, то берем последнее меньшее значение ()
 		if ( rit == m_Thresholds[i].rend() )
 		{
-			rit = std::find_if(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), std::bind2nd(std::less<float>(), value));
+			rit = std::find_if(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), std::bind(std::less<float>(), _1, value));
 		}
 
 		// ћинимальное и максимальное значени€ границы

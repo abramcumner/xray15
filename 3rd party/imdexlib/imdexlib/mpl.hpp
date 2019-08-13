@@ -1,6 +1,7 @@
 #pragma once
 
 #include <type_traits>
+#include <utility>
 
 namespace imdex {
 
@@ -14,24 +15,13 @@ struct find_if<Predicate, T, Ts...>
 {
 private:
     using result = typename Predicate::template type<T>;
+    constexpr static size_t dummy = sizeof(result);
+
 public:
     using type = std::conditional_t<
         result::value,
         T,
         typename find_if<Predicate, Ts...>::type
-    >;
-};
-
-template <typename Predicate, typename T>
-struct find_if<Predicate, T>
-{
-private:
-    using result = typename Predicate::template type<T>;
-public:
-    using type = std::conditional_t<
-        result::value,
-        T,
-        end_t
     >;
 };
 

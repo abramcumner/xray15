@@ -16,11 +16,12 @@
 #include "Missile.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "clsid_game.h"
-
 //#define DELAYED_ROUND_TIME	7000
 #include "ui\UIBuyWndShared.h"
 #include "../xrEngine/xr_ioconsole.h"
 #include <functional>
+
+using namespace std::placeholders;
 
 #define UNBUYABLESLOT		20
 
@@ -1764,8 +1765,7 @@ void game_sv_Deathmatch::OnDetach(u16 eid_who, u16 eid_what)
 			u_EventSend						(EventPack);
 
 		std::for_each(to_reject.begin(), to_reject.end(),
-			std::bind1st(std::mem_fun<void,	game_sv_mp, CSE_Abstract*>(
-			&game_sv_mp::RejectGameItem), this));
+			std::bind(&game_sv_mp::RejectGameItem, this, _1));
 	};
 }
 

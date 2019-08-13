@@ -1,14 +1,12 @@
 #include "stdafx.h"
-
 #include "net_task_manager.h"
-
-
 #include "hxgrid/Interface/IGenericStream.h"
-
 #include "net_stream.h"
 #include "xrLC_GlobalData.h"
 #include "xrDeflector.h"
 //#include "net.h"
+#include <random>
+
 void compress( LPCSTR f_in_out );
 
 #ifdef NET_CMP
@@ -88,7 +86,7 @@ void net_task_manager::create_global_data_write( LPCSTR save_path )
 	inlc_global_data()->read( fr );
 #endif
 #if !defined(NET_CMP) && !defined(LOAD_GL_DATA)
-	std::random_shuffle	(inlc_global_data()->g_deflectors().begin(),inlc_global_data()->g_deflectors().end());
+	std::shuffle		(inlc_global_data()->g_deflectors().begin(),inlc_global_data()->g_deflectors().end(), std::random_device());
 #endif
 
 #ifndef LOAD_GL_DATA

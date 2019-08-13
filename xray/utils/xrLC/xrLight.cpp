@@ -1,15 +1,14 @@
 #include "stdafx.h"
 #include "build.h"
-
 #include "../xrLC_Light/light_point.h"
 #include "../xrlc_light/xrdeflector.h"
 #include "../xrlc_light/xrThread.h"
 #include "../xrLC_Light/xrLC_GlobalData.h"
 #include "../xrLC_Light/xrface.h"
-
 #include "../../xrcore/xrSyncronize.h"
 #include "net.h"
 #include "../xrLC_Light/net_task_manager.h"
+#include <random>
 
 xrCriticalSection	task_CS
 #ifdef PROFILE_CRITICAL_SECTIONS
@@ -70,7 +69,7 @@ void	CBuild::LMapsLocal				()
 
 		// Randomize deflectors
 #ifndef NET_CMP
-		std::random_shuffle	(lc_global_data()->g_deflectors().begin(),lc_global_data()->g_deflectors().end());
+		std::shuffle	(lc_global_data()->g_deflectors().begin(),lc_global_data()->g_deflectors().end(), std::random_device());
 #endif
 
 #ifndef NET_CMP	
