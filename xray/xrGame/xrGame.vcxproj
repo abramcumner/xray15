@@ -342,7 +342,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DisableSpecificWarnings>4237;4297;4315;4589;4913;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj -Wno-deprecated-declarations -Wno-microsoft-unqualified-friend -Wno-microsoft-template -Wno-typename-missing -Wno-nonportable-include-path -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-reorder -Wno-unused-local-typedef -Wno-bitwise-op-parentheses -Wno-unknown-pragmas -Wno-inline-new-delete -Wno-implicit-exception-spec-mismatch -Wno-ignored-attributes -Wno-macro-redefined -Wno-microsoft-enum-forward-reference -Wno-missing-braces -Wno-unused-const-variable -Wno-switch -Wno-comment -Wno-overloaded-virtual -Wno-infinite-recursion -Wno-microsoft-extra-qualification -Wno-inconsistent-missing-override -Wno-writable-strings -Wno-return-type -Wno-sign-compare -Wno-undefined-inline -Wno-delete-abstract-non-virtual-dtor -Wno-dangling-else -Wno-unused-function -Wno-parentheses-equality -Wno-null-dereference -Wno-extra-tokens -Wno-delete-non-abstract-non-virtual-dtor -Wno-enum-compare -Wno-logical-op-parentheses -Wno-uninitialized -Wno-unused-variable -Wno-tautological-constant-out-of-range-compare -Wno-microsoft-pure-definition -Wno-unused-private-field -Wno-invalid-token-paste %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Wno-deprecated-declarations -Wno-microsoft-unqualified-friend -Wno-microsoft-template -Wno-typename-missing -Wno-nonportable-include-path -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-reorder -Wno-unused-local-typedef -Wno-bitwise-op-parentheses -Wno-unknown-pragmas -Wno-inline-new-delete -Wno-implicit-exception-spec-mismatch -Wno-ignored-attributes -Wno-macro-redefined -Wno-microsoft-enum-forward-reference -Wno-missing-braces -Wno-unused-const-variable -Wno-switch -Wno-comment -Wno-overloaded-virtual -Wno-infinite-recursion -Wno-microsoft-extra-qualification -Wno-inconsistent-missing-override -Wno-writable-strings -Wno-return-type -Wno-sign-compare -Wno-undefined-inline -Wno-delete-abstract-non-virtual-dtor -Wno-dangling-else -Wno-unused-function -Wno-parentheses-equality -Wno-null-dereference -Wno-extra-tokens -Wno-delete-non-abstract-non-virtual-dtor -Wno-enum-compare -Wno-logical-op-parentheses -Wno-uninitialized -Wno-unused-variable -Wno-tautological-constant-out-of-range-compare -Wno-microsoft-pure-definition -Wno-unused-private-field -Wno-invalid-token-paste -Wno-microsoft-void-pseudo-dtor %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1734,10 +1734,6 @@
     <ClInclude Include="script_binder_object_wrapper.h" />
     <ClInclude Include="script_bind_macroses.h" />
     <ClInclude Include="script_callback_ex.h" />
-    <ClInclude Include="script_callback_ex_generators.h" />
-    <ClInclude Include="script_callback_ex_inline.h" />
-    <ClInclude Include="script_callback_ex_nonvoid.h" />
-    <ClInclude Include="script_callback_ex_void.h" />
     <ClInclude Include="script_effector.h" />
     <ClInclude Include="script_effector_inline.h" />
     <ClInclude Include="script_effector_wrapper.h" />
