@@ -62,7 +62,6 @@
 #include <stdarg.h>
 #include <math.h>
 #include <string.h>
-#include <typeinfo.h>
 //#include <process.h>
 
 #ifndef DEBUG
@@ -170,6 +169,7 @@
 #include <list>
 #include <set>
 #include <map>
+#include <typeinfo>
 
 #ifndef _EDITOR
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
