@@ -100,10 +100,12 @@ void Phase			(const char *phase_name)
 	// Replace phase name with TIME:Name 
 	char	tbuf		[512];
 	bPhaseChange		= TRUE;
-	phase_total_time	= timeGetTime()-phase_start_time;
-	sprintf				( tbuf,"%s : %s",make_time(phase_total_time/1000).c_str(),	phase);
-	SendMessage			( hwPhaseTime, LB_DELETESTRING, SendMessage(hwPhaseTime,LB_GETCOUNT,0,0)-1,0);
-	SendMessage			( hwPhaseTime, LB_ADDSTRING, 0, (LPARAM) tbuf);
+	if (phase_start_time != 0 || phase[0] != '\0') {
+		phase_total_time = timeGetTime() - phase_start_time;
+		sprintf(tbuf, "%s : %s", make_time(phase_total_time / 1000).c_str(), phase);
+		SendMessage(hwPhaseTime, LB_DELETESTRING, SendMessage(hwPhaseTime, LB_GETCOUNT, 0, 0) - 1, 0);
+		SendMessage(hwPhaseTime, LB_ADDSTRING, 0, (LPARAM)tbuf);
+	}
 
 	// Start _new phase
 	phase_start_time	= timeGetTime();
