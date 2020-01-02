@@ -2,6 +2,7 @@
 #include "xrdebug.h"
 #include "os_clipboard.h"
 #include "../../3rd party/DxErr/src/dxerr.h"
+#include "blackbox/CrashHandler.h"
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
@@ -117,9 +118,9 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 	memory_monitor::flush_each_time	(false);
 #endif // USE_MEMORY_MONITOR
 
-	if (!IsDebuggerPresent() && !strstr(GetCommandLine(),"-no_call_stack_assert")) {
+	if (!strstr(GetCommandLine(),"-no_call_stack_assert")) {
 		if (shared_str_initialized)
-			Msg			("stack trace:\n");
+			Msg			("stack trace:");
 
 #ifdef USE_OWN_ERROR_MESSAGE_WINDOW
 		buffer			+= sprintf(buffer,"stack trace:%s%s",endline,endline);
@@ -587,6 +588,8 @@ void format_message	(LPSTR buffer, const u32 &buffer_size)
 
 LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 {
+	Msg("\n%s", GetFaultReason(pExceptionInfo));
+
 	string256				error_message;
 	format_message			(error_message,sizeof(error_message));
 
@@ -596,7 +599,7 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		*pExceptionInfo->ContextRecord = save;
 
 		if (shared_str_initialized)
-			Msg				("stack trace:\n");
+			Msg				("stack trace:");
 
 		if (!IsDebuggerPresent())
 		{
