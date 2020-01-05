@@ -116,6 +116,9 @@ private:
 
 public:
 	typedef allocator					allocator_type;
+	using const_reference = typename inherited::const_reference;
+	using size_type = typename inherited::size_type;
+	using reference = typename inherited::reference;
 
 public:
 			xr_vector			()									: inherited	()					{}
@@ -162,7 +165,7 @@ public:
 template <typename T, typename allocator = xalloc<T> >
 class xr_deque : public std::deque<T,allocator> {
 public: 
-	typedef typename allocator								allocator_type;
+	typedef allocator										allocator_type;
 	typedef typename allocator_type::value_type				value_type;
 	typedef typename allocator_type::size_type				size_type;
 	u32		size				() const							{return (u32)__super::size();	} 

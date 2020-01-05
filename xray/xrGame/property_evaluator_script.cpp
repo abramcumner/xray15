@@ -14,6 +14,7 @@
 using namespace luabind;
 
 #pragma optimize("s",on)
+template<>
 void CPropertyEvaluator<CScriptGameObject>::script_register(lua_State *L)
 {
 	module(L)

@@ -43,7 +43,7 @@ public:
 	}
 	IC	void clear()
 	{
-		xr_vector<T*>::iterator i=blocks.begin(),e=blocks.end();
+		typename xr_vector<T*>::iterator i=blocks.begin(),e=blocks.end();
 		for(;i!=e;++i) xr_free(*i);
 		blocks.clear();
 		init();

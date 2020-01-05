@@ -16,17 +16,17 @@ namespace cs {
 namespace lua_debugger {
 
 enum icon_type {
-	icon_type_nil				= unsigned int(0),
-	icon_type_boolean			= unsigned int(0),
-	icon_type_number			= unsigned int(0),
-	icon_type_string			= unsigned int(0),
-	icon_type_table				= unsigned int(1),
-	icon_type_function			= unsigned int(3),
-	icon_type_thread			= unsigned int(0),
-	icon_type_class				= unsigned int(2),
-	icon_type_class_base		= unsigned int(5),
-	icon_type_class_instance	= unsigned int(4),
-	icon_type_unknown			= unsigned int(0),
+	icon_type_nil				= 0u,
+	icon_type_boolean			= 0u,
+	icon_type_number			= 0u,
+	icon_type_string			= 0u,
+	icon_type_table				= 1u,
+	icon_type_function			= 3u,
+	icon_type_thread			= 0u,
+	icon_type_class				= 2u,
+	icon_type_class_base		= 5u,
+	icon_type_class_instance	= 4u,
+	icon_type_unknown			= 0u,
 }; // enum icon_type
 
 struct DECLSPEC_NOVTABLE backend {

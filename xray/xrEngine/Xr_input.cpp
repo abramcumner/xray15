@@ -295,6 +295,11 @@ BOOL CInput::iGetAsyncBtnState( int btn )
 	return !!mouseState[btn];
 }
 
+constexpr size_t offsetofButton(size_t i)
+{
+	return offsetof(DIMOUSESTATE2, rgbButtons) + i * sizeof(DIMOUSESTATE2::rgbButtons[0]);
+}
+
 void CInput::MouseUpdate( )
 {
 	HRESULT hr;
@@ -319,52 +324,52 @@ void CInput::MouseUpdate( )
 	offs[0] = offs[1] = offs[2] = 0;
 	for (u32 i = 0; i < dwElements; i++){
 		switch (od[i].dwOfs){
-		case DIMOFS_X:	offs[0]	+= od[i].dwData; timeStamp[0] = od[i].dwTimeStamp;	break;
-		case DIMOFS_Y:	offs[1]	+= od[i].dwData; timeStamp[1] = od[i].dwTimeStamp;	break;
-		case DIMOFS_Z:	offs[2]	+= od[i].dwData; timeStamp[2] = od[i].dwTimeStamp;	break;
-		case DIMOFS_BUTTON0:
+		case offsetof(DIMOUSESTATE, lX):	offs[0]	+= od[i].dwData; timeStamp[0] = od[i].dwTimeStamp;	break;
+		case offsetof(DIMOUSESTATE, lY):	offs[1]	+= od[i].dwData; timeStamp[1] = od[i].dwTimeStamp;	break;
+		case offsetof(DIMOUSESTATE, lZ):	offs[2]	+= od[i].dwData; timeStamp[2] = od[i].dwTimeStamp;	break;
+		case offsetofButton(0):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[0] = TRUE;				cbStack.back()->IR_OnMousePress(0);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[0] = FALSE;			cbStack.back()->IR_OnMouseRelease(0);	}
 			break;
-		case DIMOFS_BUTTON1:
+		case offsetofButton(1):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[1] = TRUE;				cbStack.back()->IR_OnMousePress(1);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[1] = FALSE;			cbStack.back()->IR_OnMouseRelease(1);	}
 			break;
-		case DIMOFS_BUTTON2:
+		case offsetofButton(2):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnMousePress(2);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[2] = FALSE;			cbStack.back()->IR_OnMouseRelease(2);	}
 			break;
-		case DIMOFS_BUTTON3:
+		case offsetofButton(3):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnKeyboardPress(0xED + 103);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[2] = FALSE;			cbStack.back()->IR_OnKeyboardRelease(0xED + 103);	}
 			break;
-		case DIMOFS_BUTTON4:
+		case offsetofButton(4):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnKeyboardPress(0xED + 104);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[2] = FALSE;			cbStack.back()->IR_OnKeyboardRelease(0xED + 104);	}
 			break;
-		case DIMOFS_BUTTON5:
+		case offsetofButton(5):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnKeyboardPress(0xED + 105);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[2] = FALSE;			cbStack.back()->IR_OnKeyboardRelease(0xED + 105);	}
 			break;
-		case DIMOFS_BUTTON6:
+		case offsetofButton(6):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnKeyboardPress(0xED + 106);		}
 			if ( !(od[i].dwData & 0x80))
 			{ mouseState[2] = FALSE;			cbStack.back()->IR_OnKeyboardRelease(0xED + 106);	}
 			break;
-		case DIMOFS_BUTTON7:
+		case offsetofButton(7):
 			if ( od[i].dwData & 0x80 )	
 			{ mouseState[2] = TRUE;				cbStack.back()->IR_OnKeyboardPress(0xED + 107);		}
 			if ( !(od[i].dwData & 0x80))

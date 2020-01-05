@@ -208,9 +208,9 @@ namespace CDB
 		u32				frustum_mode;
 		size_t			_triSize;
 
-		template<bool bClass3, bool bFirst> friend class box_collider;
-		template <bool bClass3, bool bFirst> friend class frustum_collider;
-		template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> friend class ray_collider;
+		template<bool bClass3, bool bFirst> friend class ::box_collider;
+		template <bool bClass3, bool bFirst> friend class ::frustum_collider;
+		template <bool bUseSSE, bool bCull, bool bFirst, bool bNearest> friend class ::ray_collider;
 	};
 
 	template<class Payload>
@@ -351,8 +351,8 @@ namespace CDB
 			edge							*edges = (edge*)_alloca(edge_count * sizeof(edge));
 #endif
 			edge							*i = edges;
-			xr_vector<Face>::const_iterator	B = faces.begin(), I = B;
-			xr_vector<Face>::const_iterator	E = faces.end();
+			typename xr_vector<Face>::const_iterator	B = faces.begin(), I = B;
+			typename xr_vector<Face>::const_iterator	E = faces.end();
 			for (; I != E; ++I) {
 				u32							face_id = u32(I - B);
 

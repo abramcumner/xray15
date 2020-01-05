@@ -108,7 +108,7 @@ IC	void CSolverPathManager::create_path			(T &vertex)
 {
 	VERIFY					(this->data_storage);
 	if (m_edge_path)
-		data_storage->get_edge_path	(*m_edge_path,&vertex,typename _Graph::reverse_search);
+		data_storage->get_edge_path	(*m_edge_path,&vertex, _Graph::reverse_search);
 }
 
 #undef TEMPLATE_SPECIALIZATION

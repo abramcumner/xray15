@@ -13,6 +13,7 @@
 using namespace luabind;
 
 #pragma optimize("s",on)
+template<>
 void CScriptSoundType::script_register(lua_State *L)
 {
 	module(L)

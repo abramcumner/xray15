@@ -12,6 +12,7 @@
 using namespace luabind;
 
 #pragma optimize("s",on)
+template<>
 void CScriptFvector::script_register(lua_State *L)
 {
 	module(L)

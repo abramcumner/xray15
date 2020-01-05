@@ -25,10 +25,10 @@ void CSE_ALifeTraderAbstract::script_register(lua_State *L)
 			("cse_alife_trader_abstract")
 //			.def(		constructor<LPCSTR>())
 #ifdef XRGAME_EXPORTS
-			.def("community",		&CommunityName)
+			.def("community",		&CSE_ALifeTraderAbstract::CommunityName)
 			.def("profile_name",	&profile_name_script)
-			.def("rank",			&Rank)
-			.def("reputation",		&Reputation)
+			.def("rank",			&CSE_ALifeTraderAbstract::Rank)
+			.def("reputation",		&CSE_ALifeTraderAbstract::Reputation)
 #endif // XRGAME_EXPORTS
 	];
 }

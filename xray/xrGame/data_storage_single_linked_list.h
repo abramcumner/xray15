@@ -28,10 +28,10 @@ struct CDataStorageSingleLinkedList {
 		typename _data_storage,
 		template <typename _T> class _vertex = CEmptyClassTemplate
 	>
-	class CDataStorage : public _data_storage::template CDataStorage<SingleLinkedList<_vertex>::_vertex> {
+	class CDataStorage : public _data_storage::template CDataStorage<SingleLinkedList<_vertex>::template _vertex> {
 	public:
 		typedef typename _data_storage::template CDataStorage<
-			SingleLinkedList<_vertex>::_vertex
+			SingleLinkedList<_vertex>::template _vertex
 		>											inherited;
 		typedef typename inherited::CGraphVertex	CGraphVertex;
 		typedef typename CGraphVertex::_dist_type	_dist_type;

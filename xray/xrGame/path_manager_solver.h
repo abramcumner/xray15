@@ -43,6 +43,7 @@ template <
 protected:
 	typedef CProblemSolver<T1,T2,T3,T4,T5,T6,T7,T8>	_Graph;
 	typedef typename _Graph::_edge_type				_edge_type;
+	using inherited = CPathManagerGeneric<_Graph, _DataStorage, _Parameters, _dist_type, _index_type, _iteration_type>;
 
 public:
 	using const_iterator = typename _Graph::const_iterator;
@@ -55,7 +56,7 @@ public:
 	virtual						~CPathManager	();
 	IC		void				setup			(const _Graph *graph, _DataStorage *_data_storage, xr_vector<_edge_type> *_path, const _index_type	&_start_node_index, const _index_type &_goal_node_index, const _Parameters &params);
 	IC		bool				is_goal_reached	(const _index_type &vertex_id) const;
-	IC		const _index_type	&get_value		(const_iterator &i, bool reverse_search = typename _Graph::reverse_search) const;
+	IC		const _index_type	&get_value		(const_iterator &i, bool reverse_search = _Graph::reverse_search) const;
 	IC		const _edge_type	&edge			(const_iterator &i) const;
 	IC		_dist_type			evaluate		(const _index_type &node_index1, const _index_type &node_index2, const const_iterator &i) const;
 	IC		_dist_type			estimate		(const _index_type &vertex_id) const;

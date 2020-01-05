@@ -86,7 +86,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LLVM|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>ClangCL</PlatformToolset>
+    <PlatformToolset>llvm</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -342,7 +342,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DisableSpecificWarnings>4237;4297;4315;4589;4913;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj -Wno-deprecated-declarations -Wno-microsoft-unqualified-friend -Wno-microsoft-template -Wno-typename-missing -Wno-nonportable-include-path -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-reorder -Wno-unused-local-typedef -Wno-bitwise-op-parentheses -Wno-unknown-pragmas -Wno-inline-new-delete -Wno-implicit-exception-spec-mismatch -Wno-ignored-attributes -Wno-macro-redefined -Wno-microsoft-enum-forward-reference -Wno-missing-braces -Wno-unused-const-variable -Wno-switch -Wno-comment -Wno-overloaded-virtual -Wno-infinite-recursion -Wno-microsoft-extra-qualification -Wno-inconsistent-missing-override -Wno-writable-strings -Wno-return-type -Wno-sign-compare -Wno-undefined-inline -Wno-delete-abstract-non-virtual-dtor -Wno-dangling-else -Wno-unused-function -Wno-parentheses-equality -Wno-null-dereference -Wno-extra-tokens -Wno-delete-non-abstract-non-virtual-dtor -Wno-enum-compare -Wno-logical-op-parentheses -Wno-uninitialized -Wno-unused-variable -Wno-tautological-constant-out-of-range-compare -Wno-microsoft-pure-definition -Wno-unused-private-field -Wno-invalid-token-paste %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -357,6 +357,7 @@
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>shlwapi.lib;$(TargetDir)xrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">

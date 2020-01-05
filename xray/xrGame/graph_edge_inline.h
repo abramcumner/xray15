@@ -24,7 +24,7 @@ IC	CSGraphEdge::CEdgeBase	(const _edge_weight_type &weight, _vertex_type *vertex
 }
 
 TEMPLATE_SPECIALIZATION
-IC	typename const CSGraphEdge::_edge_weight_type &CSGraphEdge::weight	() const
+IC	const typename CSGraphEdge::_edge_weight_type &CSGraphEdge::weight	() const
 {
 	return			(m_weight);
 }
@@ -110,7 +110,7 @@ IC	CSGraphEdge::CEdge	(const _edge_weight_type &weight, _vertex_type *vertex) :
 }
 
 TEMPLATE_SPECIALIZATION
-IC	bool CSGraphEdge::operator==	(const _vertex_id_type &vertex_id) const
+IC	bool CSGraphEdge::operator==	(const typename _vertex_type::_vertex_id_type &vertex_id) const
 {
 	return			(vertex()->vertex_id() == vertex_id);
 }

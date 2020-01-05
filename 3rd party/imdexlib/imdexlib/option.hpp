@@ -257,86 +257,86 @@ public:
         return std::addressof(get());
     }
 
-    void swap(option& that) noexcept(std::is_nothrow_swappable_v<T&>         &&
-                                     std::is_nothrow_move_constructible_v<T> &&
-                                     std::is_nothrow_destructible_v<T>) {
-        if constexpr (std::is_swappable_v<T&> && std::is_move_constructible_v<T>) {
-            using std::swap;
+    //void swap(option& that) noexcept(std::is_nothrow_swappable_v<T&>         &&
+    //                                 std::is_nothrow_move_constructible_v<T> &&
+    //                                 std::is_nothrow_destructible_v<T>) {
+    //    if constexpr (std::is_swappable_v<T&> && std::is_move_constructible_v<T>) {
+    //        using std::swap;
 
-            if (!(empty() && that.empty())) {
-                if (non_empty() && that.non_empty()) {
-                    swap(value(), that.value());
-                } else if (empty()) {
-                    initialize(std::move(that.value()));
-                    that.reset();
-                } else {
-                    that.initialize(std::move(value()));
-                    reset();
-                }
-            }
-        } else {
-            static_assert(false, "Optional type needs to be swapable and move constructible");
-        }
-    }
+    //        if (!(empty() && that.empty())) {
+    //            if (non_empty() && that.non_empty()) {
+    //                swap(value(), that.value());
+    //            } else if (empty()) {
+    //                initialize(std::move(that.value()));
+    //                that.reset();
+    //            } else {
+    //                that.initialize(std::move(value()));
+    //                reset();
+    //            }
+    //        }
+    //    } else {
+    //        static_assert(false, "Optional type needs to be swapable and move constructible");
+    //    }
+    //}
 
-    void swap(T& that) noexcept(std::is_nothrow_swappable_v<T&> &&
-                                std::is_nothrow_move_constructible_v<T>) {
-        if constexpr (std::is_swappable_v<T&> && std::is_move_constructible_v<T>) {
-            using std::swap;
-            if (empty()) initialize(std::move(that));
-            else         swap(value(), that);
-        } else {
-            static_assert(false, "Optional type needs to be swapable and move constructible");
-        }
-    }
+    //void swap(T& that) noexcept(std::is_nothrow_swappable_v<T&> &&
+    //                            std::is_nothrow_move_constructible_v<T>) {
+    //    if constexpr (std::is_swappable_v<T&> && std::is_move_constructible_v<T>) {
+    //        using std::swap;
+    //        if (empty()) initialize(std::move(that));
+    //        else         swap(value(), that);
+    //    } else {
+    //        static_assert(false, "Optional type needs to be swapable and move constructible");
+    //    }
+    //}
 
-    template <typename Handler>
-    auto map(Handler&& handler) const & {
-        if constexpr (is_callable_v<Handler&&, const T&>) {
-            using Ret = std::decay_t<std::result_of_t<Handler&&(const T&)>>;
-            return empty() ? option<Ret>() : option<Ret>(get());
-        } else {
-            static_assert(false, "Invalid handler");
-            return option();
-        }
-    }
+    //template <typename Handler>
+    //auto map(Handler&& handler) const & {
+    //    if constexpr (is_callable_v<Handler&&, const T&>) {
+    //        using Ret = std::decay_t<std::result_of_t<Handler&&(const T&)>>;
+    //        return empty() ? option<Ret>() : option<Ret>(get());
+    //    } else {
+    //        static_assert(false, "Invalid handler");
+    //        return option();
+    //    }
+    //}
 
-    template <typename Handler>
-    auto map(Handler&& handler) && {
-        if constexpr (is_callable_v<Handler&&, T&&>) {
-            using Ret = std::decay_t<std::result_of_t<Handler&&(T&&)>>;
-            return empty() ? option<Ret>() : option<Ret>(std::move(get()));
-        } else {
-            static_assert(false, "Invalid handler");
-            return option();
-        }
-    }
+    //template <typename Handler>
+    //auto map(Handler&& handler) && {
+    //    if constexpr (is_callable_v<Handler&&, T&&>) {
+    //        using Ret = std::decay_t<std::result_of_t<Handler&&(T&&)>>;
+    //        return empty() ? option<Ret>() : option<Ret>(std::move(get()));
+    //    } else {
+    //        static_assert(false, "Invalid handler");
+    //        return option();
+    //    }
+    //}
 
-    auto flatten() const & {
-        if constexpr (is_option_v<T>) {
-            using Value = typename T::value_type;
+    //auto flatten() const & {
+    //    if constexpr (is_option_v<T>) {
+    //        using Value = typename T::value_type;
 
-            if (empty()) return T();
-            const T& value = get();
-            return value.empty() ? T() : option<Value>(value.get());
-        } else {
-            static_assert(false, "Optional type needs to be an option");
-            return option();
-        }
-    }
+    //        if (empty()) return T();
+    //        const T& value = get();
+    //        return value.empty() ? T() : option<Value>(value.get());
+    //    } else {
+    //        static_assert(false, "Optional type needs to be an option");
+    //        return option();
+    //    }
+    //}
 
-    auto flatten() && {
-        if constexpr (is_option_v<T>) {
-            using Value = typename T::value_type;
+    //auto flatten() && {
+    //    if constexpr (is_option_v<T>) {
+    //        using Value = typename T::value_type;
 
-            if (empty()) return T();
-            T& value = get();
-            return value.empty() ? T() : option<Value>(std::move(value.get()));
-        } else {
-            static_assert(false, "Optional type needs to be an option");
-            return option();
-        }
-    }
+    //        if (empty()) return T();
+    //        T& value = get();
+    //        return value.empty() ? T() : option<Value>(std::move(value.get()));
+    //    } else {
+    //        static_assert(false, "Optional type needs to be an option");
+    //        return option();
+    //    }
+    //}
 
 private:
     const T* pointer() const noexcept {

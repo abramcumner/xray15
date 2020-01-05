@@ -446,6 +446,8 @@ typedef CustomValue<Fcolor>		ColorValue;
 template <class T>
 class NumericValue: public CustomValue<T>
 {
+	using inherited = CustomValue<T>;
+
 public:
     T					lim_mn;
     T					lim_mx;
@@ -454,8 +456,8 @@ public:
 public:
 						NumericValue	(T* val):CustomValue<T>(val)
 	{
-        value			= val;
-        init_value		= *value;
+        inherited::value= val;
+        init_value		= *inherited::value;
         dec				= 0;
     };
 						NumericValue	(T* val, T mn, T mx, T increm, int decim):CustomValue<T>(val),lim_mn(mn),lim_mx(mx),inc(increm),dec(decim)
@@ -474,7 +476,7 @@ public:
 	{
         xr_string		draw_val;
         if (!OnDrawText.empty())	OnDrawText(this, draw_val);
-        else			draw_sprintf	(draw_val,*value,dec);
+        else			draw_sprintf	(draw_val,*inherited::value,dec);
         return draw_val;
     }
 };

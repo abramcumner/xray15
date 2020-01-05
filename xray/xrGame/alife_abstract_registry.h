@@ -22,7 +22,7 @@ protected:
 	OBJECT_REGISTRY					m_objects;
 
 public:
-	typedef typename _data_type		_data;
+	typedef _data_type		_data;
 
 	IC								CALifeAbstractRegistry	();
 	virtual							~CALifeAbstractRegistry	();

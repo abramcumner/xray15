@@ -29,6 +29,7 @@ CScriptActionPlanner *cast_planner(CScriptActionBase *action)
 }
 
 #pragma optimize("s",on)
+template<>
 void CScriptActionPlanner::script_register(lua_State *L)
 {
 	module(L)

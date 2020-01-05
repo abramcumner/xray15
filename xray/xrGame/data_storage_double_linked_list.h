@@ -30,11 +30,11 @@ struct CDataStorageDoubleLinkedList {
 		typename _data_storage,
 		template <typename _T> class _vertex = CEmptyClassTemplate
 	>
-	class CDataStorage : public CDataStorageSingleLinkedList<sorted>::CDataStorage<_data_storage,DoubleLinkedList<_vertex>::_vertex> {
+	class CDataStorage : public CDataStorageSingleLinkedList<sorted>::CDataStorage<_data_storage,DoubleLinkedList<_vertex>::template _vertex> {
 	public:
 		typedef typename CDataStorageSingleLinkedList<sorted>::CDataStorage<
 			_data_storage,
-			DoubleLinkedList<_vertex>::_vertex
+			DoubleLinkedList<_vertex>::template _vertex
 		>											inherited;
 		typedef typename inherited::inherited		inherited_base;
 		typedef typename inherited::CGraphVertex	CGraphVertex;

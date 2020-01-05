@@ -8,7 +8,7 @@
 
 class IClient;
 
-class	game_sv_Deathmatch			: public game_sv_mp,private pure_relcase
+class	game_sv_Deathmatch			: public game_sv_mp,public pure_relcase
 {
 	typedef game_sv_mp inherited;
 protected:

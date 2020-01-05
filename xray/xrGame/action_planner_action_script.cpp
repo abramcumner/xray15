@@ -13,6 +13,7 @@
 using namespace luabind;
 
 #pragma optimize("s",on)
+template<>
 void CActionPlannerAction<CScriptGameObject>::script_register(lua_State *L)
 {
 	module(L)
