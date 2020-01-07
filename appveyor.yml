@@ -47,6 +47,8 @@ after_build:
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\*.dll dist\engine\bin_%COR_PLAT%\
 
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\*.pdb dist\engine\bin_%COR_PLAT%\
+
     copy SDK\binaries\%COR_PLAT%\lua51.dll dist\engine\bin_%COR_PLAT%\
 
     md dist\engine\bin_%COR_PLAT%\lua\jit
@@ -93,19 +95,33 @@ after_build:
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCore.dll dist\sdk_%COR_PLAT%\
 
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCore.pdb dist\sdk_%COR_PLAT%\
+
     copy intermediate\%PLATFORM%-%CONFIGURATION%\luabind.dll dist\sdk_%COR_PLAT%\
+
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\luabind.pdb dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCDB.dll dist\sdk_%COR_PLAT%\
 
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\xrCDB.pdb dist\sdk_%COR_PLAT%\
+
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrAPI.dll dist\sdk_%COR_PLAT%\
+
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\xrAPI.pdb dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\xrXMLParser.dll dist\sdk_%COR_PLAT%\
 
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\xrXMLParser.pdb dist\sdk_%COR_PLAT%\
+
     copy intermediate\%PLATFORM%-%CONFIGURATION%\ETools.dll dist\sdk_%COR_PLAT%\
+
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\ETools.pdb dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.exe dist\sdk_%COR_PLAT%\
 
     copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.dll dist\sdk_%COR_PLAT%\
+
+    copy intermediate\%PLATFORM%-%CONFIGURATION%\SDK\*.pdb dist\sdk_%COR_PLAT%\
 
     7z a cs_compilers_%APPVEYOR_REPO_TAG_NAME%_%COR_PLAT%.7z dist\sdk_%COR_PLAT%\*
 
