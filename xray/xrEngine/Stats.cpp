@@ -448,6 +448,7 @@ void CStats::OnDeviceCreate			()
 
 void CStats::OnDeviceDestroy		()
 {
+	m_pRender.reset();
 	SetLogCB(0);
 	xr_delete	(pFont);
 }
