@@ -4,13 +4,13 @@
 
 ## Как собрать
 
-- установить Visual Studio 2017,
+- установить Visual Studio 2019,
 - открыть engine.sln,
 - выбрать платформу(Win32 или х64) и конфигурацию(Debug или Release),
 - выбрать в меню "Сборка-Собрать решение".
 
 ## Как запустить
-- установить [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/ru-ru/help/2977003/the-latest-supported-visual-c-downloads),
+- установить [Visual C++ Redistributable for Visual Studio 2019](https://support.microsoft.com/ru-ru/help/2977003/the-latest-supported-visual-c-downloads),
 - установить [библиотеки OpenAL](https://www.openal.org/downloads/oalinst.zip).
 
 ## Готовые сборки
