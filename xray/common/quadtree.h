@@ -9,6 +9,7 @@
 #pragma once
 
 #include "profiler.h"
+#include <memory>
 
 template <typename _object_type>
 class CQuadTree {
@@ -33,57 +34,51 @@ public:
 	};
 
 	template <typename T>
-	struct CFixedStorage {
-		T						*m_objects;
-		T						*m_free;
-		u32						m_max_object_count;
-
-		IC			CFixedStorage			(u32 max_object_count) :
-						m_max_object_count	(max_object_count)
+	struct CPool {
+		CPool(u32 max_object_count) : m_max_object_count(max_object_count), m_free(0)
 		{
-			m_objects			= xr_alloc<T>(m_max_object_count);
-			T					*B = 0;
-			T					*I = m_objects;
-			T					*E = m_objects + m_max_object_count;
-			for ( ; I != E; B = I, ++I)
-				I->next	()		= B;
-			m_free				= E - 1;
 		}
 
-		virtual		~CFixedStorage			()
+		T* get_object()
 		{
-			xr_free				(m_objects);
+			if (!m_free)
+				createBlock();
+			T* node = m_free;
+			m_free = m_free->next();
+			ZeroMemory(node, sizeof(T));
+			return node;
 		}
 
-		IC	T		*get_object				()
+		void clear()
 		{
-			VERIFY				(m_free);
-			T					*node = m_free;
-			m_free				= m_free->next();
-			ZeroMemory			(node,sizeof(T));
-			return				(node);
+			m_blocks.clear();
 		}
 
-		IC	void	clear					()
+		void remove(T*& node)
 		{
-			T					*B = 0;
-			T					*I = m_objects;
-			T					*E = m_objects + m_max_object_count;
-			m_free				= E - 1;
-			for ( ; I != E; ++I)
-				I->next()		= B;
+			node->next() = m_free;
+			m_free = node;
+			node = 0;
 		}
 
-		IC	void	remove					(T *&node)
+		void createBlock()
 		{
-			node->next()		= m_free;
-			m_free				= node;
-			node				= 0;
+			m_blocks.emplace_back(xr_alloc<T>(m_max_object_count), [](T* p) { xr_free(p); });
+			T* B = 0;
+			T* I = m_blocks.back().get();
+			T* E = I + m_max_object_count;
+			for (; I != E; B = I, ++I)
+				I->next() = B;
+			m_free = E - 1;
 		}
+
+		std::vector<std::unique_ptr<T, void(*)(T*)>> m_blocks;
+		T* m_free;
+		u32 m_max_object_count;
 	};
 
-	typedef CFixedStorage<CQuadNode> CQuadNodeStorage;
-	typedef CFixedStorage<CListItem> CListItemStorage;
+	typedef CPool<CQuadNode> CQuadNodeStorage;
+	typedef CPool<CListItem> CListItemStorage;
 
 protected:
 	Fvector						m_center;
