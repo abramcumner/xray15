@@ -9,7 +9,6 @@
 #pragma once
 
 #include "profiler.h"
-#include <memory>
 
 template <typename _object_type>
 class CQuadTree {
@@ -34,34 +33,57 @@ public:
 	};
 
 	template <typename T>
-	struct CArena {
-		std::vector<std::unique_ptr<T, void(*)(T*)>> m_blocks;
-		size_t m_next;
-		size_t m_max_object_count;
+	struct CFixedStorage {
+		T						*m_objects;
+		T						*m_free;
+		u32						m_max_object_count;
 
-		CArena(size_t max_object_count) : m_max_object_count(max_object_count), m_next(max_object_count)
+		IC			CFixedStorage			(u32 max_object_count) :
+						m_max_object_count	(max_object_count)
 		{
+			m_objects			= xr_alloc<T>(m_max_object_count);
+			T					*B = 0;
+			T					*I = m_objects;
+			T					*E = m_objects + m_max_object_count;
+			for ( ; I != E; B = I, ++I)
+				I->next	()		= B;
+			m_free				= E - 1;
 		}
 
-		T* get_object()
+		virtual		~CFixedStorage			()
 		{
-			if (m_next == m_max_object_count)
-				createBlock();
-			T* node = m_blocks.back().get() + m_next;
-			m_next++;
-			ZeroMemory(node, sizeof(T));
-			return node;
+			xr_free				(m_objects);
 		}
 
-		void createBlock()
+		IC	T		*get_object				()
 		{
-			m_blocks.emplace_back(xr_alloc<T>(m_max_object_count), [](T* p) { xr_free(p); });
-			m_next = 0;
+			VERIFY				(m_free);
+			T					*node = m_free;
+			m_free				= m_free->next();
+			ZeroMemory			(node,sizeof(T));
+			return				(node);
+		}
+
+		IC	void	clear					()
+		{
+			T					*B = 0;
+			T					*I = m_objects;
+			T					*E = m_objects + m_max_object_count;
+			m_free				= E - 1;
+			for ( ; I != E; ++I)
+				I->next()		= B;
+		}
+
+		IC	void	remove					(T *&node)
+		{
+			node->next()		= m_free;
+			m_free				= node;
+			node				= 0;
 		}
 	};
 
-	typedef CArena<CQuadNode> CQuadNodeStorage;
-	typedef CArena<CListItem> CListItemStorage;
+	typedef CFixedStorage<CQuadNode> CQuadNodeStorage;
+	typedef CFixedStorage<CListItem> CListItemStorage;
 
 protected:
 	Fvector						m_center;
@@ -75,7 +97,7 @@ protected:
 protected:
 	IC		u32					neighbour_index	(const Fvector	&position,	Fvector &center, float distance) const;
 	IC		void				nearest			(const Fvector	&position,	float radius, xr_vector<_object_type*> &objects, CQuadNode *node, Fvector center, float distance, int depth) const;
-	//IC		_object_type		*remove			(const _object_type *object,CQuadNode *&node, Fvector center, float distance, int depth);
+	IC		_object_type		*remove			(const _object_type *object,CQuadNode *&node, Fvector center, float distance, int depth);
 	IC		void				all				(xr_vector<_object_type*> &objects, CQuadNode *node, int depth) const;
 
 public:
@@ -83,7 +105,7 @@ public:
 	virtual						~CQuadTree		();
 	IC		void				clear			();
 	IC		void				insert			(_object_type	*object);
-	//IC		_object_type		*remove			(const _object_type *object);
+	IC		_object_type		*remove			(const _object_type *object);
 	IC		_object_type		*find			(const Fvector	&position);
 	IC		void				nearest			(const Fvector	&position,	float radius, xr_vector<_object_type*> &objects, bool clear = true) const;
 	IC		void				all				(xr_vector<_object_type*> &objects, bool clear = true) const;

@@ -222,45 +222,45 @@ IC	void CSQuadTree::nearest	(const Fvector &position, float radius, xr_vector<_o
 	}
 }
 
-//TEMPLATE_SPECIALIZATION
-//IC	_object_type *CSQuadTree::remove		(const _object_type *object)
-//{
-//	START_PROFILE("Covers/remove")
-//	_object_type	*_object = remove(object,m_root,m_center,m_radius,0);
-//	return			(_object);
-//	STOP_PROFILE
-//}
+TEMPLATE_SPECIALIZATION
+IC	_object_type *CSQuadTree::remove		(const _object_type *object)
+{
+	START_PROFILE("Covers/remove")
+	_object_type	*_object = remove(object,m_root,m_center,m_radius,0);
+	return			(_object);
+	STOP_PROFILE
+}
 
-//TEMPLATE_SPECIALIZATION
-//IC	_object_type *CSQuadTree::remove		(const _object_type *object, CQuadNode *&node, Fvector center, float distance, int depth)
-//{
-//	VERIFY			(node);
-//	if (depth == m_max_depth) {
-//		CListItem	*leaf = ((CListItem*)((void*)(node)));
-//		CListItem	*leaf_prev = 0;
-//		for ( ; leaf; leaf_prev = leaf, leaf = leaf->m_next)
-//			if (leaf->m_object == object) {
-//				if (!leaf_prev)
-//					node = 0;
-//				else
-//					leaf_prev->m_next = leaf->m_next;
-//				_object_type	*_object = leaf->m_object;
-//				m_list_items->remove(leaf);
-//				--m_leaf_count;
-//				return	(_object);
-//			}
-//		NODEFAULT;
-//	}
-//
-//	distance		*= .5f;
-//	u32				index = neighbour_index(object->position(),center,distance);
-//	VERIFY			(index < 4);
-//	_object_type	*_object = remove(object,node->m_neighbours[index],center,distance,depth + 1);
-//	if (node->m_neighbours[index] || node->m_neighbours[0] || node->m_neighbours[1] || node->m_neighbours[2] || node->m_neighbours[3])
-//		return		(_object);
-//	m_nodes->remove	(node);
-//	return			(_object);
-//}
+TEMPLATE_SPECIALIZATION
+IC	_object_type *CSQuadTree::remove		(const _object_type *object, CQuadNode *&node, Fvector center, float distance, int depth)
+{
+	VERIFY			(node);
+	if (depth == m_max_depth) {
+		CListItem	*leaf = ((CListItem*)((void*)(node)));
+		CListItem	*leaf_prev = 0;
+		for ( ; leaf; leaf_prev = leaf, leaf = leaf->m_next)
+			if (leaf->m_object == object) {
+				if (!leaf_prev)
+					node = 0;
+				else
+					leaf_prev->m_next = leaf->m_next;
+				_object_type	*_object = leaf->m_object;
+				m_list_items->remove(leaf);
+				--m_leaf_count;
+				return	(_object);
+			}
+		NODEFAULT;
+	}
+
+	distance		*= .5f;
+	u32				index = neighbour_index(object->position(),center,distance);
+	VERIFY			(index < 4);
+	_object_type	*_object = remove(object,node->m_neighbours[index],center,distance,depth + 1);
+	if (node->m_neighbours[index] || node->m_neighbours[0] || node->m_neighbours[1] || node->m_neighbours[2] || node->m_neighbours[3])
+		return		(_object);
+	m_nodes->remove	(node);
+	return			(_object);
+}
 
 TEMPLATE_SPECIALIZATION
 IC	void CSQuadTree::all		(xr_vector<_object_type*> &objects, CQuadNode *node, int depth) const
