@@ -216,8 +216,6 @@ void Startup(LPSTR     lpCmdLine)
 
 #include "factory_api.h"
 
-#include "quadtree.h"
-
 int APIENTRY WinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPSTR     lpCmdLine,

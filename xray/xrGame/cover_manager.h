@@ -9,7 +9,7 @@
 #pragma once
 
 #include "profiler.h"
-#include "quadtree.h"
+#include "../common/quadtree.h"
 
 class CCoverPoint;
 

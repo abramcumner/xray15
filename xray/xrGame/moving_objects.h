@@ -9,8 +9,8 @@
 #ifndef MOVING_OBJECTS_H
 #define MOVING_OBJECTS_H
 
-#include "quadtree.h"
 #include "obstacles_query.h"
+#include "../common/quadtree.h"
 
 class moving_object;
 class CObject;
